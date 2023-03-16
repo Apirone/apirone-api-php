@@ -1,0 +1,23 @@
+{
+    "name": "apirone/apirone-php",
+    "description": "Apirone API Client",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Apirone\\API\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "alex",
+            "email": "alex.zaytseff@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">7.3",
+        "ext-json": "*",
+        "psr/http-message": "^1.0",
+        "guzzlehttp/guzzle": "7.0"
+    }
+}

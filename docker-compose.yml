@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  apirone-php:
+    image: php:7.4-apache
+    volumes:
+      - ./src:/var/www/html/
+      - ./vendor:/var/www/vendor/
+    ports:
+      - 8080:80
