@@ -1,5 +1,5 @@
 {
-    "name": "apirone/apirone-php",
+    "name": "apirone/apirone-api-php",
     "description": "Apirone API Client",
     "type": "library",
     "license": "MIT",
@@ -16,8 +16,6 @@
     ],
     "require": {
         "php": ">7.3",
-        "ext-json": "*",
-        "psr/http-message": "^1.0",
-        "guzzlehttp/guzzle": "7.0"
+        "ext-json": "*"
     }
 }

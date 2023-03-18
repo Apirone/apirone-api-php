@@ -29,11 +29,7 @@ use Apirone\API\Http\Request;
  */
 class Authorization
 {
-    public function __construct()
-    {
-    }
-
-    public function login(string $login, string $password): \stdClass
+    public static function login(string $login, string $password): \stdClass
     {
         $options = [
             'login' => $login,
@@ -43,7 +39,7 @@ class Authorization
         return Request::post('v2/auth/login', $options);
     }
 
-    public function refresh(string $refreshToken): \stdClass
+    public static function refresh(string $refreshToken): \stdClass
     {
         $headers = [
             'Authorization' => "Bearer " . $refreshToken,
@@ -52,7 +48,7 @@ class Authorization
         return  Request::post('v2/auth/refresh-token', [], $headers);
     }
 
-    public function logout(string $accessToken): \stdClass
+    public static function logout(string $accessToken): \stdClass
     {
         $headers = [
             'Authorization' => "Bearer " . $accessToken,

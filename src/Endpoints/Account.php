@@ -41,7 +41,6 @@ use Apirone\API\Http\Request;
  * @see https://apirone.com/docs/account/#account
  * @package Apirone\API\Endpoints
  */
-// class Account extends AbsractApiAuthorization
 class Account
 {
     use EndpointAuthTrait;
@@ -57,7 +56,7 @@ class Account
     /**
      * Account create
      *
-     * Create new accoint.
+     * Create new account.
      *
      * IMPORTANT!
      * When you create new account get details and save account ID & transfer-key
@@ -145,7 +144,7 @@ class Account
      *
      * @param string $account 
      * @param string|null $currency 
-     * @param array $addresses Array of addreses
+     * @param string|array $addresses String or array of addreses
      *
      * @return stdClass
      * @throws RuntimeException 
@@ -155,7 +154,7 @@ class Account
      * @throws NotFoundException 
      * @throws MethodNotAllowedExeption 
      */
-    public function balance( string $currency  = null, array  $addresses = []): \stdClass
+    public function balance( string $currency  = null, $addresses = null): \stdClass
     {
         $url    = sprintf('v2/accounts/%s/balance', $this->account);
         $options = [];
@@ -164,8 +163,13 @@ class Account
             $options['currency'] = $currency;
         }
 
-        if (!empty($addresses)) {
-            $options['addresses'] = implode(',', $addresses);
+        if ($addresses !== null) {
+            if (gettype(($addresses) == 'string')) {
+                $options['addresses'] = $addresses;
+            }
+            if (gettype($addresses) == 'array' && !empty($addresses)) {
+                $options['addresses'] = implode(',', $addresses);
+            }
         }
 
         return Request::get($url, $options);
@@ -180,7 +184,7 @@ class Account
      *
      * @param string $account 
      * @param string $currency 
-     * @param string|null $addr_type 
+     * @param string|null $addrType 
      * @param object|null $callback
      *
      * @return stdClass
@@ -191,14 +195,14 @@ class Account
      * @throws NotFoundException 
      * @throws MethodNotAllowedExeption 
      */
-    public function generateAddress(string $currency, ?string $addr_type = null, ?object $callback = null): \stdClass
+    public function generateAddress(string $currency, ?string $addrType = null, ?object $callback = null): \stdClass
     {
         $url    = sprintf('v2/accounts/%s/addresses', $this->account);
         $options = [];
         $options['currency'] = $currency;
 
-        if ($addr_type !== null) {
-            $options['addr-type'] = $addr_type;
+        if ($addrType !== null) {
+            $options['addr-type'] = $addrType;
         }
 
         if ($callback !== null) {
@@ -611,8 +615,8 @@ class Account
      * Authorization is required.
      * @see https://apirone.com/docs/invoices/#private-invoice-info
      *
-     * @param array|InvoiceHelper $invoice 
-     * @param bool $private 
+     * @param string $invoice - Invoice ID
+     * @param bool $private
      *
      * @return stdClass 
      * @throws RuntimeException 
@@ -623,7 +627,7 @@ class Account
      * @throws MethodNotAllowedExeption 
      * @throws GlobalRuntimeException 
      */
-    public function invoiceInfo($invoice, $private = false): \stdClass
+    public function invoiceInfo(string $invoice, $private = false): \stdClass
     {
         if ($private === false) {
             return Request::get(sprintf('v2/invoices/%s', $invoice));

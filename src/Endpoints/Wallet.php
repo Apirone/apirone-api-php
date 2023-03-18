@@ -326,6 +326,7 @@ class Wallet
     {
         $url = sprintf('v2/wallets/%s/callback', $this->wallet);
         
+        $options = [];
         $headers = [];
         $this->setRequestAuth($options, $headers);
         

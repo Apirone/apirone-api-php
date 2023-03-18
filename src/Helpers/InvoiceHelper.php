@@ -199,7 +199,7 @@ class InvoiceHelper
      * @param null|int $amount 
      * @return $this 
      */
-    public function setPrice (?string $currency = null, ?int $amount = null)
+    public function setDataPrice (?string $currency = null, ?float $amount = null)
     {
         if ($currency == null || $amount == null) {
             $this->price = null;

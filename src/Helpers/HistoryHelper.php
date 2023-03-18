@@ -23,6 +23,8 @@ class HistoryHelper
 
     private ?int $offset;
 
+    private ?string $currency;
+
     private ?string $address;
 
     private ?string $dateFrom;
@@ -31,10 +33,11 @@ class HistoryHelper
 
     private ?string $itemType;
 
-    private function __construct($offset, $limit, $address, $dateFrom, $dateTo, $itemType)
+    private function __construct($offset, $limit, $currency, $address, $dateFrom, $dateTo, $itemType)
     {
         $this->offset   = $offset;
         $this->limit    = $limit;
+        $this->currency = $currency;
         $this->address  = $address;
         $this->dateFrom = $dateFrom;
         $this->dateTo   = $dateTo;
@@ -44,12 +47,13 @@ class HistoryHelper
     public static function create(
         ?int $offset = null,
         ?int $limit = null,
+        ?string $currency = null,
         ?string $address = null,
         ?string $dateFrom = null,
         ?string $dateTo = null,
         ?string $itemType = null
     ) {
-        $options = new static($offset, $limit, $address, $dateFrom, $dateTo, $itemType);
+        $options = new static($offset, $limit, $currency, $address, $dateFrom, $dateTo, $itemType);
 
         return $options;
     }
@@ -74,6 +78,13 @@ class HistoryHelper
     public function setLimit (?int $limit)
     {
         $this->limit = $limit;
+
+        return $this;
+    }
+
+    public function setCurrency (?string $currency)
+    {
+        $this->currency = $currency;
 
         return $this;
     }
@@ -106,16 +117,16 @@ class HistoryHelper
         return $this;
     }
 
-    public function itemTypeInvoice ()
+    public function itemTypeReceipt ()
     {
-        $this->itemType = 'invoice';
+        $this->itemType = 'receipt';
 
         return $this;
     }
 
-    public function itemTypeClear ()
+    public function itemType (?string $itemType = null)
     {
-        $this->itemType = null;
+        $this->itemType = $itemType;
 
         return $this;
     }
@@ -135,6 +146,10 @@ class HistoryHelper
 
         if ($this->offset !== null) {
             $options->offset = $this->offset;
+        }
+
+        if ($this->currency !== null) {
+            $options->currency = $this->currency;
         }
 
         $q = [];
