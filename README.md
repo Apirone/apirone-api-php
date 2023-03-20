@@ -33,7 +33,7 @@ $rate_btc = Service::ticker('btc');
 
 ### Accounts
 
-#### Create new account
+#### Create a new account
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -42,14 +42,14 @@ $new_account_data = Account::create();
 ```
 
 
-#### Init existing account
+#### Init an existing account
 
 ```php
 use Apirone\API\Endpoints\Account;
 
 // Init with params;
 $account = "apr-f9e1211f4b52a50bcf3c36819fdc4ad3";
-$transferKey = "4sSm9aeXQiqMBmeEs42NTjZidJuGrqm7"; // Optional. Can set later
+$transferKey = "4sSm9aeXQiqMBmeEs42NTjZidJuGrqm7"; // Optional. Can be set later
 
 $my_account = Account::init($account, $transferKey);
 
@@ -84,7 +84,7 @@ $account_info_btc = $my_account->info('btc');
 You can use optional parameters:
 
 - currency (btc, ltc, etc...)
-- addresses (comma separated string)
+- addresses (comma-separated string)
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -108,7 +108,7 @@ $account_info_addresses = $my_account->balance($currency, $addresses);
 
 Optional
 
-- addrType - String (p2pkh, p2pkh(c), etc... ) Each currency have own supported types list
+- addrType - String (p2pkh, p2pkh(c), etc... ) Each currency has its own supported types list
 - callback - JSON
 
 ```php
@@ -221,14 +221,14 @@ $addresses = Account::fromJson($json)->addresses('btc', $helper);
 
 #### Estimation and Transfer
 
-Both methods have same params with difference for destinations - string or objects array.
+Both methods have the same params with differences for destinations - string or objects array.
 
 - currency (btc, ltc, etc...)
 - options
 
-Options is an array with next params:
+Options is an array with the next params:
 
-- destinations (required) - Comma separated address and colon separated amount pairs or objects array.
+- destinations (required) - Comma-separated address and colon-separated amount pairs or objects array.
 - subtract-fee-from-amount - ```true``` or ```false```
 - fee - ```normal``` | ```priority``` | ```custom```
 - fee-rate - 1, 2, 3, etc... use when fee set to 'custom'
@@ -284,7 +284,7 @@ $transfer = Account::fromJson($json)->transfer('btc', $helper);
 
 #### Account History
 
-options - array. All params is optional
+options - array. All params are optional
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -299,7 +299,7 @@ $options = [
 $account_history = Account::fromJson($json)->history($options);
 ```
 
-Also you can use [HistoryHelper](src/Helpers/HistoryHelper.php) for manage options:
+Also you can use [HistoryHelper](src/Helpers/HistoryHelper.php) to manage options:
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -340,7 +340,7 @@ $history_item = Account::fromJson($json)->historyItem($item_id);
 #### Account Address History
 
 - address - string. Required.
-- options - array with 'limit', 'offset' or both. Optional
+- options - array with 'limit', 'offset', or both. Optional
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -355,7 +355,7 @@ $address_history = Account::fromJson($json)->addressHistory($address, $option);
 
 ```
 
-Also you can use [PagerHelper](src/Helpers/PagerHelper.php) for manage options:
+Also you can use [PagerHelper](src/Helpers/PagerHelper.php) to manage options:
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -374,8 +374,8 @@ $address_history = Account::fromJson($json)->addressHistory($address, $helper);
 
 #### Account Callback Info
 
-Authorization required.
-You can use ```Account::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
+Authorization is required.
+Either you can use ```Account::setTransferKey($transferKey)``` , if the transfer key is not set yet; or you can use JWT token ```Account::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
 
 - currency (btc, ltc, etc...)
 
@@ -388,8 +388,8 @@ Account::callbackInfo('btc');
 
 #### Address Callback Info
 
-Authorization required.
-You can use ```Account::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
+Authorization is required.
+Either you can use ```Account::setTransferKey($transferKey)``` , if the transfer key is not set yet; or you can use JWT token ```Account::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
 
 - currency (btc, ltc, etc...)
 
@@ -402,8 +402,8 @@ Account::addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
 
 #### Address Callback Log
 
-Authorization required.
-You can use ```Account::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
+Authorization is required.
+Either you can use ```Account::setTransferKey($transferKey)```, if the transfer key is not set yet; or you can use JWT token ```Account::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
 
 - address - string
 - options - array of 'offset' and 'limit' keys. Optional.
@@ -454,7 +454,7 @@ $saved_data = $account->settings('btc', $options);
 
 ### Invoices
 
-#### Create Invoice
+#### Create an invoice
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -480,7 +480,7 @@ $created_invoice = Account::invoiceCreate($invoice_json);
 
 ```
 
-Create new invoice with [InvoiceHelper](src/Helpers/InvoiceHelper.php)
+Create a new invoice with [InvoiceHelper](src/Helpers/InvoiceHelper.php)
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -508,7 +508,7 @@ $invoice_info = $account->invoiceInfo('amr94MKUQCYAzR6c'); //Invoice ID
 
 #### Private invoice info
 
-Authorization required.
+Authorization is required.
 
 ```php
 
@@ -523,7 +523,7 @@ $invoice_info = $account->invoiceInfo($invoice, $show_private_info);
 
 #### Account Invoices List
 
-Authorization required.
+Authorization is required.
 
 - invoice - string, InvoiceID. Required
 - options - array of ```offset``` and ```limit```. Optional
@@ -543,7 +543,7 @@ $invoice_info = $account->invoicesList($invoice, $options);
 
 ### Wallets
 
-#### Create new wallet
+#### Create a new wallet
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -552,14 +552,14 @@ $new_wallet_data = Wallet::create();
 ```
 
 
-#### Init existing wallet
+#### Init an existing wallet
 
 ```php
 use Apirone\API\Endpoints\Wallet;
 
 // Init with params;
 $wallet = "btc-a7c5105769724ed80d6eff70338dca08";
-$transferKey = "bN2N6rZcXHjHZGJATgTAGADRuUnxSm8C"; // Optional. Can set later
+$transferKey = "bN2N6rZcXHjHZGJATgTAGADRuUnxSm8C"; // Optional. Can be set later
 
 $my_wallet = Wallet::init($wallet, $transferKey);
 
@@ -576,7 +576,7 @@ $wallet_info = $my_wallet->info();
 
 #### Wallet balance
 
-- addresses (comma separated string)
+- addresses (comma-separated string)
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -594,7 +594,7 @@ $wallet_info_addresses = $my_wallet->balance($addresses);
 
 Optional
 
-- addrType - String (p2pkh, p2pkh(c), etc... ) Each currency have own supported types list
+- addrType - String (p2pkh, p2pkh(c), etc... ) Each currency has its own supported types list
 - callback - JSON
 
 ```php
@@ -707,16 +707,16 @@ $addresses = $my_wallet->addresses($helper);
 
 #### Estimation and Transfer
 
-Both methods have same params with difference for destinations.
+Both methods have the same params with differences for destinations.
 
 - options
 
 Options is an array with next params:
 
-- destinations (required) - Comma separated address and colon separated amount pairs.
+- destinations (required) - Comma-separated address and colon-separated amount pairs.
 - subtract-fee-from-amount - true/false
 - fee - normal | priority | custom
-- fee-rate - 1, 2, 3 etc... use when fee set to 'custom'
+- fee-rate - 1, 2, 3 etc... use when the fee is set as 'custom'
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -769,7 +769,7 @@ $transfer = $my_wallet->transfer($helper);
 
 #### Wallet History
 
-options - array. All params is optional
+options - array. All params are optional
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -783,7 +783,7 @@ $options = [
 $wallet_history = $my_wallet->history($options);
 ```
 
-Also you can use [HistoryHelper](src/Helpers/HistoryHelper.php) for manage options:
+Also you can use [HistoryHelper](src/Helpers/HistoryHelper.php) to manage options:
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -823,7 +823,7 @@ $history_item = $my_wallet->historyItem($item_id);
 #### Wallet Address History
 
 - address - string. Required.
-- options - array with 'limit', 'offset' or both. Optional
+- options - array with 'limit', 'offset', or both. Optional
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -838,7 +838,7 @@ $address_history = $my_wallet->addressHistory($address, $option);
 
 ```
 
-Also you can use [PagerHelper](src/Helpers/PagerHelper.php) for manage options:
+Also you can use [PagerHelper](src/Helpers/PagerHelper.php) to manage options:
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -857,8 +857,8 @@ $address_history = $my_wallet->addressHistory($address, $helper);
 
 #### Wallet Callback Info
 
-Authorization required.
-You can use ```Wallet::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
+Authorization is required.
+Either you can use ```Wallet::setTransferKey($transferKey)```, if the transfer key is not set yet; or you can use JWT token ```Wallet::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
 
 - currency (btc, ltc, etc...)
 
@@ -871,8 +871,8 @@ Account::callbackInfo('btc');
 
 #### Address Callback Info
 
-Authorization required.
-You can use ```Wallet::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
+Authorization is required.
+Either you can use ```Wallet::setTransferKey($transferKey)```, if the transfer key is not set yet; or you can use JWT token ```Wallet::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
 
 - currency (btc, ltc, etc...)
 
@@ -885,8 +885,8 @@ $address_callback_info = $my_wallet->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeA
 
 #### Address Callback Log
 
-Authorization required.
-You can use ```Wallet::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
+Authorization is required.
+Eeither you can use ```Wallet::setTransferKey($transferKey)```, if the transfer key is not set yet; or you can use JWT token ```Wallet::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
 
 - address - string
 - options - array of 'offset' and 'limit' keys. Optional.
@@ -923,7 +923,7 @@ $callback->setData(null); // No params required
 
 $options['callback'] = $callback;
 
-// Destinations not set yet
+// Destinations are not set yet
 $destinations = DestinationsHelper::create();
 $destinations->itemAdd('3N1nvw5pTR9wEZSq1GcJJjt7dXi2AUtp1Rn', "100%");
 
@@ -952,7 +952,7 @@ $JWT = Authorization::login($login, $password);
 
 #### Refresh
 
-After ```access-token``` expiration you got an exception ```UnauthorizedException``` and you need to refresh it.
+After ```access-token``` expiration you get an exception ```UnauthorizedException``` and you need to refresh it.
 
 ```php
 use Apirone\API\Endpoints\Authorization;
@@ -972,13 +972,13 @@ Authorization::refresh($JWT->{'access-token'}); // Response {}
 
 ## Error response logging and exceptions
 
-For response logging you can use callback function and process message as you want.
+For response logging you can use a callback function and process a message as you want.
 
 ```php
 
 // callback function
 $log_handler = static function($message) {
-    // process message
+    // process a message
 };
 
 // Set callback to Error Dispatcher
@@ -986,7 +986,7 @@ Apirone\API\Http\ErrorDispatcher::setCallback($log_handler);
 
 ```
 
-All request errors generate different exceptions and you need wrap all requests into ```try...catch```.
+All request errors generate different exceptions and you need to wrap all requests into ```try...catch```.
 
 ## Licensing
 
