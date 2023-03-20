@@ -19,10 +19,10 @@ composer require apirone/apirone-api-php
 use Apirone\API\Endpoints\Service;
 
 // General account|wallet info
-$accounts_info = Servise::account();
+$accounts_info = Service::account();
 $wallets_info = Service::wallet();
 
-// Get Network Fee for apirone supported crypto currencies
+// Get Network Fee for supported crypto currencies
 $fee_btc = Service::fee('btc');
 
 // Currency exchange rates
@@ -42,7 +42,7 @@ $new_account_data = Account::create();
 ```
 
 
-#### Init exisiting account
+#### Init existing account
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -62,6 +62,7 @@ $json = '
 }';
 
 $my_account = Account::fromJson($json);
+
 ```
 
 #### Account info
@@ -149,7 +150,7 @@ $callback = CallbackHelper::create($url, $method, $data);
 // Change/add url
 $callback->setUrl('https://example.com/other_callback_url')
     ->setMethod('GET')
-    ->dataItemAdd('another_key', 'another_value');
+    ->dataItemAdd('another_key', 'another_value')
     ->dataItemRemove('key');
 
 $new_address = $my_account->generateAddress('btc', null, $callback);
@@ -228,8 +229,8 @@ Both methods have same params with difference for destinations - string or objec
 Options is an array with next params:
 
 - destinations (required) - Comma separated address and colon separated amount pairs or objects array.
-- sutract-fee-from-amount - ```true``` or ```false```
-- fee - ```nomal``` | ```priority``` | ```custom```
+- subtract-fee-from-amount - ```true``` or ```false```
+- fee - ```normal``` | ```priority``` | ```custom```
 - fee-rate - 1, 2, 3, etc... use when fee set to 'custom'
 
 ```php
@@ -237,7 +238,7 @@ use Apirone\API\Endpoints\Account;
 
 $opt_estimations = [
     'destinations' => '3N2aXAebXqvV8TDXBabknmi9Gma7HxeMDdZ:10000,3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF:50%',
-    'subtract-fee-from-amoint' => false,
+    'subtract-fee-from-amount' => false,
     'fee' => 'custom',
     'fee-rate' => 2
 ];
@@ -256,7 +257,7 @@ $opt_transfer = [
 ];
 
 $estimation = Account::fromJson($json)->estimation('btc', $opt_estimations);
-$transfer = Account::fromJson($json)->transfer('btc', $opt_trasfer);
+$transfer = Account::fromJson($json)->transfer('btc', $opt_transfer);
 
 ```
 
@@ -373,36 +374,36 @@ $address_history = Account::fromJson($json)->addressHistory($address, $helper);
 
 #### Account Callback Info
 
-Authorization requred.
-You can use ```Account::setTranferKey($tranferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
+Authorization required.
+You can use ```Account::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
 
 - currency (btc, ltc, etc...)
 
 ```php
 use Apirone\API\Endpoints\Account;
 
-Account::callbakInfo('btc');
+Account::callbackInfo('btc');
 
 ```
 
 #### Address Callback Info
 
-Authorization requred.
-You can use ```Account::setTranferKey($tranferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
+Authorization required.
+You can use ```Account::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
 
 - currency (btc, ltc, etc...)
 
 ```php
 use Apirone\API\Endpoints\Account;
 
-Account::addressCallbakInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
+Account::addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
 
 ```
 
 #### Address Callback Log
 
-Authorization requred.
-You can use ```Account::setTranferKey($tranferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
+Authorization required.
+You can use ```Account::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Account::setToken($accessToken)```
 
 - address - string
 - options - array of 'offset' and 'limit' keys. Optional.
@@ -415,7 +416,7 @@ $options = [
     'limit' => 5,
 ];
 
-$address_callback_log = Account::addressCallbakInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF', $options);
+$address_callback_log = Account::addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF', $options);
 
 ```
 
@@ -437,7 +438,7 @@ $json_callback = $account->callbackInfo('btc')->callback;
 
 $callback = CallbackHelper::fromJson($json_callback);
 $callback->setUrl('https://another-host.com/callback_handler');
-$callback->setData(null); // No params requred
+$callback->setData(null); // Unset data
 
 $options['callback'] = $callback;
 
@@ -458,7 +459,7 @@ $saved_data = $account->settings('btc', $options);
 ```php
 use Apirone\API\Endpoints\Account;
 
-$invoce_json = '
+$invoice_json = '
 {
     "amount": 25000,
     "currency": "btc",
@@ -507,22 +508,22 @@ $invoice_info = $account->invoiceInfo('amr94MKUQCYAzR6c'); //Invoice ID
 
 #### Private invoice info
 
-Athorization required.
+Authorization required.
 
 ```php
 
 use Apirone\API\Endpoints\Account;
 
 $invoice = 'amr94MKUQCYAzR6c';
-$show_privat_info = true;
+$show_private_info = true;
 
-$invoice_info = $account->invoiceInfo($invice, $show_private_info);
+$invoice_info = $account->invoiceInfo($invoice, $show_private_info);
 
 ```
 
 #### Account Invoices List
 
-Athorization required.
+Authorization required.
 
 - invoice - string, InvoiceID. Required
 - options - array of ```offset``` and ```limit```. Optional
@@ -551,7 +552,7 @@ $new_wallet_data = Wallet::create();
 ```
 
 
-#### Init exisiting wallet
+#### Init existing wallet
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -713,8 +714,8 @@ Both methods have same params with difference for destinations.
 Options is an array with next params:
 
 - destinations (required) - Comma separated address and colon separated amount pairs.
-- sutract-fee-from-amount - true/false
-- fee - nomal | priority | custom
+- subtract-fee-from-amount - true/false
+- fee - normal | priority | custom
 - fee-rate - 1, 2, 3 etc... use when fee set to 'custom'
 
 ```php
@@ -722,7 +723,7 @@ use Apirone\API\Endpoints\Wallet;
 
 $opt_estimations = [
     'destinations' => '3N2aXAebXqvV8TDXBabknmi9Gma7HxeMDdZ:10000,3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF:50%',
-    'subtract-fee-from-amoint' => false,
+    'subtract-fee-from-amount' => false,
     'fee' => 'custom',
     'fee-rate' => 2
 ];
@@ -741,7 +742,7 @@ $opt_transfer = [
 ];
 
 $estimation = $my_wallet->estimation($opt_estimations);
-$transfer = $my_wallet->transfer($opt_trasfer);
+$transfer = $my_wallet->transfer($opt_transfer);
 
 ```
 
@@ -856,36 +857,36 @@ $address_history = $my_wallet->addressHistory($address, $helper);
 
 #### Wallet Callback Info
 
-Authorization requred.
-You can use ```Wallet::setTranferKey($tranferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
+Authorization required.
+You can use ```Wallet::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
 
 - currency (btc, ltc, etc...)
 
 ```php
 use Apirone\API\Endpoints\Account;
 
-Account::callbakInfo('btc');
+Account::callbackInfo('btc');
 
 ```
 
 #### Address Callback Info
 
-Authorization requred.
-You can use ```Wallet::setTranferKey($tranferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
+Authorization required.
+You can use ```Wallet::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
 
 - currency (btc, ltc, etc...)
 
 ```php
 use Apirone\API\Endpoints\Wallet;
 
-$address_callback_info = $my_wallet->addressCallbakInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
+$address_callback_info = $my_wallet->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
 
 ```
 
 #### Address Callback Log
 
-Authorization requred.
-You can use ```Wallet::setTranferKey($tranferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
+Authorization required.
+You can use ```Wallet::setTransferKey($transferKey)``` if transfer key not set yet or use JWT token ```Wallet::setToken($accessToken)```
 
 - address - string
 - options - array of 'offset' and 'limit' keys. Optional.
@@ -898,7 +899,7 @@ $options = [
     'limit' => 5,
 ];
 
-$address_callback_log = $my_wallet->addressCallbakInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF', $options);
+$address_callback_log = $my_wallet->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF', $options);
 
 ```
 
@@ -918,7 +919,7 @@ $json_callback = $wallet->callbackInfo()->callback;
 
 $callback = CallbackHelper::fromJson($json_callback);
 $callback->setUrl('https://another-host.com/callback_handler');
-$callback->setData(null); // No params requred
+$callback->setData(null); // No params required
 
 $options['callback'] = $callback;
 
@@ -939,17 +940,17 @@ $saved_data = $wallet->settings($options);
 ```php
 use Apirone\API\Endpoints\Authorization;
 
-// For login use accoun or wallet ID
+// For login use account or wallet ID
 $login = "apr-f9e1211f4b52a50bcf3c36819fdc4ad3";
 
-// Use acoount or wallet trasfer-key
+// Use account or wallet transfer-key
 $password = "4sSm9aeXQiqMBmeEs42NTjZidJuGrqm7";
 
 $JWT = Authorization::login($login, $password);
 
 ```
 
-#### Refesh
+#### Refresh
 
 After ```access-token``` expiration you got an exception ```UnauthorizedException``` and you need to refresh it.
 
@@ -965,7 +966,7 @@ $JWT_refreshed = Authorization::refresh($JWT->{'refresh-token'});
 ```php
 use Apirone\API\Endpoints\Authorization;
 
-Authorization::refresh($JWT->{'access-token'}); // Responce {}
+Authorization::refresh($JWT->{'access-token'}); // Response {}
 
 ```
 

@@ -70,7 +70,7 @@ class CallbackHelper
 
     public function setMethod(?string $method)
     {
-        $this->method = $medthod !== null ? strtoupper($method) : $medthod;
+        $this->method = $method !== null ? strtoupper($method) : $method;
 
         return $this;
     }
@@ -130,7 +130,7 @@ class CallbackHelper
     }
 
     /**
-     * Buid to array
+     * Build to array
      *
      * @return array 
      */

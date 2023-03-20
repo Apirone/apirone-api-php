@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Apirone\API\Exeptions;
+namespace Apirone\API\Exceptions;
 
-class NotFoundException extends RuntimeException
+class ErrorException extends \ErrorException implements ExceptionInterface
 {
 }

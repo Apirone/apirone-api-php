@@ -36,7 +36,7 @@ class Wallet
         ?object $callback = null,
         ?array  $destinations = null,
         ?string $fee = null,
-        ?int    $feeRate = null,
+        ?int    $feeRate = null
     ) {
 
         $options['currency'] = $currency;
@@ -140,7 +140,7 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addresses($options = [])
     {
@@ -159,7 +159,7 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#estimation
      *
-     * @param $options array|TransferOptionsBuider
+     * @param $options array|TransferOptionsBuilder
      *
      * @return object
      *
@@ -168,7 +168,7 @@ class Wallet
      * @throws UnauthorizedException
      * @throws ForbiddenException
      * @throws NotFoundException
-     * @throws MethodNotAllowedExeption
+     * @throws MethodNotAllowedException
      */
     public function estimation($options)
     {
@@ -198,7 +198,7 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#transfer
      *
-     * @param $options array|TransferOptionsBuider
+     * @param $options array|TransferOptionsBuilder
      *
      * @return stdClass
      * @throws GlobalRuntimeException 
@@ -207,7 +207,7 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function transfer ($options): \stdClass
     {
@@ -243,7 +243,7 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function history ($options = []): \stdClass
     {
@@ -272,7 +272,7 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function historyItem (string $HistoryItemID): \stdClass
     {
@@ -296,7 +296,7 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addressHistory (string $address, array $options = []): \stdClass
     {
@@ -320,7 +320,7 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function callbackInfo (): \stdClass
     {
@@ -349,7 +349,7 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addressCallbackInfo (string $address): \stdClass
     {
@@ -380,7 +380,7 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addressCallbackLog (string $address, $options = []) 
     {
@@ -414,11 +414,11 @@ class Wallet
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function settings(array $options): \stdClass
     {
-        $url = sprintf('v2/walletss/%s', $this->wallets);
+        $url = sprintf('v2/wallets/%s', $this->wallets);
 
         if (array_key_exists('callback', $options)) {
             $options['callback'] = $callback instanceof CallbackHelper ? $callback->toArray() : $callback;

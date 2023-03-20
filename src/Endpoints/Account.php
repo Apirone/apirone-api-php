@@ -13,12 +13,12 @@ declare(strict_types=1);
 namespace Apirone\API\Endpoints;
 
 use Apirone\API\Endpoints\EndpointAuthTrait;
-use Apirone\API\Exeptions\RuntimeException;
-use Apirone\API\Exeptions\ValidationFailedException;
-use Apirone\API\Exeptions\UnauthorizedException;
-use Apirone\API\Exeptions\ForbiddenException;
-use Apirone\API\Exeptions\NotFoundException;
-use Apirone\API\Exeptions\MethodNotAllowedExeption;
+use Apirone\API\Exceptions\RuntimeException;
+use Apirone\API\Exceptions\ValidationFailedException;
+use Apirone\API\Exceptions\UnauthorizedException;
+use Apirone\API\Exceptions\ForbiddenException;
+use Apirone\API\Exceptions\NotFoundException;
+use Apirone\API\Exceptions\MethodNotAllowedException;
 use Apirone\API\Helpers\AddressesHelper;
 use Apirone\API\Helpers\CallbackHelper;
 use Apirone\API\Helpers\DestinationsHelper;
@@ -70,7 +70,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public static function create()
     {
@@ -125,7 +125,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function info(?string $currency = null): \stdClass
     {
@@ -144,7 +144,7 @@ class Account
      *
      * @param string $account 
      * @param string|null $currency 
-     * @param string|array $addresses String or array of addreses
+     * @param string|array $addresses String or array of addresses
      *
      * @return stdClass
      * @throws RuntimeException 
@@ -152,7 +152,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function balance( string $currency  = null, $addresses = null): \stdClass
     {
@@ -193,7 +193,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function generateAddress(string $currency, ?string $addrType = null, ?object $callback = null): \stdClass
     {
@@ -232,7 +232,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addressInfo(string $address): \stdClass
     {
@@ -256,7 +256,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addressBalance(string $address): \stdClass
     {
@@ -280,7 +280,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addresses(string $currency, $options = []): \stdClass
     {
@@ -305,7 +305,7 @@ class Account
      * @see https://apirone.com/docs/account/#estimation
      *
      * @param string $currency 
-     * @param array|TransferOptionsBuider $options
+     * @param array|TransferOptionsBuilder $options
      *
      * @return stdClass
      * @throws RuntimeException
@@ -313,7 +313,7 @@ class Account
      * @throws UnauthorizedException
      * @throws ForbiddenException
      * @throws NotFoundException
-     * @throws MethodNotAllowedExeption
+     * @throws MethodNotAllowedException
      */
     public function estimation(string $currency, $options): \stdClass
     {
@@ -355,7 +355,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function transfer (string $currency, $options): \stdClass
     {
@@ -389,7 +389,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function history ($options = []): \stdClass
     {
@@ -420,7 +420,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function historyItem (string $HistoryItemID): \stdClass
     {
@@ -444,7 +444,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addressHistory (string $address, array $options = []): \stdClass
     {
@@ -470,7 +470,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function callbackInfo (string $currency): \stdClass
     {
@@ -500,7 +500,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addressCallbackInfo (string $address): \stdClass
     {
@@ -533,7 +533,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function addressCallbackLog (string $address, $options = []): \stdClass
     {
@@ -567,7 +567,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function settings(string $currency, array $options): \stdClass
     {
@@ -624,7 +624,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      * @throws GlobalRuntimeException 
      */
     public function invoiceInfo(string $invoice, $private = false): \stdClass
@@ -656,7 +656,7 @@ class Account
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public function invoicesList ($options = []): \stdClass
     {

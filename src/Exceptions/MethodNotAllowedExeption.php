@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Apirone\API\Exeptions;
+namespace Apirone\API\Exceptions;
 
-class ErrorExeption extends \ErrorException implements ExceptionInterface
+class MethodNotAllowedException extends RuntimeException
 {
 }

@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Apirone\API\Exeptions;
+namespace Apirone\API\Exceptions;
 
-interface ExceptionInterface extends \Throwable
+class ValidationFailedException extends ErrorException
 {
 }

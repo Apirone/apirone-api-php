@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Apirone\API\Helpers;
 
-use Apirone\API\Exeptions\RuntimeException;
+use Apirone\API\Exceptions\RuntimeException;
 
 class DestinationsHelper
 {
     /**
-     * Destinatioon array where addres as key, amount as value
+     * Destination array where address as key, amount as value
      *
      * @var null|array
      */
@@ -31,7 +31,7 @@ class DestinationsHelper
     }
 
     /**
-     * Create emty destinations object
+     * Create empty destinations object
      *
      * @return static 
      */
@@ -84,7 +84,7 @@ class DestinationsHelper
     }
 
     /**
-     * Remove destination by adrress
+     * Remove destination by address
      *
      * @param mixed $address 
      * @return DestinationsHelper 
@@ -127,7 +127,7 @@ class DestinationsHelper
     }
 
     /**
-     * Return destinationa as string
+     * Return destinations as string
      *
      * @return string 
      */

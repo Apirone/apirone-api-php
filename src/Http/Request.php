@@ -14,13 +14,13 @@ namespace Apirone\API\Http;
 
 use Apirone\API\Http\Error;
 use Apirone\API\Http\ErrorDispatcher;
-use Apirone\API\Exeptions\RuntimeException;
-use Apirone\API\Exeptions\ValidationFailedException;
-use Apirone\API\Exeptions\ForbiddenException;
-use Apirone\API\Exeptions\NotFoundException;
-use Apirone\API\Exeptions\MethodNotAllowedExeption;
-use Apirone\API\Exeptions\UnauthorizedException;
-use Apirone\API\Exeptions\InternalServerErrorExeption;
+use Apirone\API\Exceptions\RuntimeException;
+use Apirone\API\Exceptions\ValidationFailedException;
+use Apirone\API\Exceptions\ForbiddenException;
+use Apirone\API\Exceptions\NotFoundException;
+use Apirone\API\Exceptions\MethodNotAllowedException;
+use Apirone\API\Exceptions\UnauthorizedException;
+use Apirone\API\Exceptions\InternalServerErrorException;
 
 final class Request {
 
@@ -37,8 +37,8 @@ final class Request {
     public static function setUserAgent($value)
     {
         $class = new \ReflectionClass('\Apirone\API\Http\Request');
-        $baseUserArent = $class->getProperty('userAgent');
-        $class->setStaticPropertyValue('baseURI', $baseUserArent . ' ' . $value);
+        $baseUserAgent = $class->getProperty('userAgent');
+        $class->setStaticPropertyValue('baseURI', $baseUserAgent . ' ' . $value);
     }
 
     public static function get(string $url, array $options = [], array $headers = [])
@@ -144,15 +144,15 @@ final class Request {
                     case 400:
                         throw new ValidationFailedException($exception);
                     case 401:
-                        throw new UnauthorizedException($exeption);
+                        throw new UnauthorizedException($Exception);
                     case 403:
                         throw new ForbiddenException($exception);
                     case 404:
                         throw new NotFoundException($exception);
                     case 405:
-                        throw new MethodNotAllowedExeption($exception);
+                        throw new MethodNotAllowedException($exception);
                     case 500:
-                        throw new InternalServerErrorExeption($exeption);
+                        throw new InternalServerErrorException($Exception);
                     default:
                         throw new RuntimeException($exception);
                 }

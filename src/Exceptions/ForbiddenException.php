@@ -10,7 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Apirone\API\Exeptions;
-class RuntimeException extends \RuntimeException implements ExceptionInterface
+namespace Apirone\API\Exceptions;
+
+class ForbiddenException extends RuntimeException implements ExceptionInterface
 {
 }

@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Apirone\API\Endpoints;
 
-use Apirone\API\Exeptions\RuntimeException;
-use Apirone\API\Exeptions\ValidationFailedException;
-use Apirone\API\Exeptions\UnauthorizedException;
-use Apirone\API\Exeptions\ForbiddenException;
-use Apirone\API\Exeptions\NotFoundException;
-use Apirone\API\Exeptions\MethodNotAllowedExeption;
+use Apirone\API\Exceptions\RuntimeException;
+use Apirone\API\Exceptions\ValidationFailedException;
+use Apirone\API\Exceptions\UnauthorizedException;
+use Apirone\API\Exceptions\ForbiddenException;
+use Apirone\API\Exceptions\NotFoundException;
+use Apirone\API\Exceptions\MethodNotAllowedException;
 use Apirone\API\Http\Request;
 use stdClass;
 
@@ -43,7 +43,7 @@ class Service
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public static function account(): \stdClass {
         return Request::options('v2/accounts');
@@ -61,7 +61,7 @@ class Service
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public static function wallet(): \stdClass {
         return Request::options('v2/wallets');
@@ -81,7 +81,7 @@ class Service
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public static function fee(string $currency): array
     {
@@ -109,7 +109,7 @@ class Service
      * @throws UnauthorizedException 
      * @throws ForbiddenException 
      * @throws NotFoundException 
-     * @throws MethodNotAllowedExeption 
+     * @throws MethodNotAllowedException 
      */
     public static function ticker(string $currency): \stdClass
     {

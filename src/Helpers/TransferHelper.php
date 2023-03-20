@@ -29,7 +29,7 @@ class TransferHelper
     private function __construct(
         ?array  $destinations = null,
         ?array  $addresses = null,
-        ?bool   $subtarctFeeFromAmount = null,
+        ?bool   $subtractFeeFromAmount = null,
         ?string $feeType = null,
         ?int    $feeRate = null
     ) {
@@ -43,7 +43,7 @@ class TransferHelper
         
         
         $this->addresses = ($addresses !== null) ? implode(',', $addresses) : $addresses;
-        $this->subtraqctFeeFromAmount = $subtarctFeeFromAmount;
+        $this->subtractFeeFromAmount = $subtractFeeFromAmount;
         $this->feeType = $feeType;
         if ($feeType = 'custom') {
             $this->feeRate = $feeRate;
@@ -53,7 +53,7 @@ class TransferHelper
     public static function create(
         ?array $destinations = null,
         ?array $addresses = null,
-        ?bool $substarctFeeFromAmount = null,
+        ?bool $subtractFeeFromAmount = null,
         ?string $feeType = null,
         ?int $feeRate = null
     )
@@ -61,7 +61,7 @@ class TransferHelper
         $transfer = new static(
             $destinations,
             $addresses,
-            $substarctFeeFromAmount,
+            $subtractFeeFromAmount,
             $feeType,
             $feeRate
         );

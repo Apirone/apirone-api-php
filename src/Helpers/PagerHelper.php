@@ -14,9 +14,6 @@ namespace Apirone\API\Helpers;
 
 use stdClass;
 
-// use Apirone\API\Helpers\AbstractPagerOptions;
-
-// class AddressesOptionsBuilder extends AbstractPagerOptions
 class PagerHelper
 {
     private ?int $limit;

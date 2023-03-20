@@ -30,7 +30,7 @@ trait EndpointAuthTrait
         $this->transferKey = $transferKey;
     }
 
-    public function setTtoken($token)
+    public function setToken($token)
     {
         $this->token = $token;
     }
