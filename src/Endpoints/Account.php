@@ -195,7 +195,7 @@ class Account
      * @throws NotFoundException 
      * @throws MethodNotAllowedException 
      */
-    public function generateAddress(string $currency, ?string $addrType = null, ?object $callback = null): \stdClass
+    public function generateAddress(string $currency, ?string $addrType = null, $callback = null): \stdClass
     {
         $url    = sprintf('v2/accounts/%s/addresses', $this->account);
         $options = [];
@@ -210,7 +210,7 @@ class Account
                 $options['callback'] = $callback->toJson();
             }
             else {
-                $options['callback'] = $callback;
+                $options['callback'] = (gettype($callback) == 'string') ? json_decode($callback) : $callback;
             }
         }
 
@@ -600,7 +600,12 @@ class Account
     {
         $url = sprintf('v2/accounts/%s/invoices', $this->account);
 
-        $options = $options instanceof InvoiceHelper ? (array) $options->toJson() : $options;
+        if ($options instanceof InvoiceHelper) {
+            $options = $options->toArray();
+        }
+        else {
+            $options = gettype($options) == 'string' ? (array) json_decode($options) : (array) $options;
+        }
 
         return Request::post($url, $options);
     }
