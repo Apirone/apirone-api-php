@@ -116,7 +116,8 @@ class Service
         return Request::get('v2/ticker', ['currency' => $currency]);
     }
 
-    public static function fiat2crypto($value, $from='usd', $to = 'btc') {
+    public static function fiat2crypto($value, $from='usd', $to = 'btc'): float
+    {
         if ($from == 'btc') {
             return $value;
         }
@@ -126,7 +127,6 @@ class Service
         $options['value']    = $value;
 
         return (float) Request::get($url, $options);
-
     }
 }
 

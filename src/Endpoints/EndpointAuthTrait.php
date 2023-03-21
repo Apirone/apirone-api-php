@@ -20,25 +20,55 @@ trait EndpointAuthTrait
     
     private ?string $token = null;
 
+    /**
+     * Get account transfer key
+     *
+     * @return null|string 
+     */
     public function getTransferKey()
     {
         return $this->transferKey;
     }
 
-    public function setTransferKey($transferKey)
+    /**
+     * Set account transfer key
+     *
+     * @param string|null $transferKey 
+     * @return void 
+     */
+    public function setTransferKey(?string $transferKey = null): void
     {
         $this->transferKey = $transferKey;
     }
 
-    public function setToken($token)
-    {
-        $this->token = $token;
-    }
-    public function getToken()
+    /**
+     * Get account token
+     *
+     * @return null|string 
+     */
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
+    /**
+     * 
+     * @param null|string $token 
+     * @return void 
+     */
+    public function setToken(?string $token = null): void
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * Set auth into header or options for request
+     *
+     * @param array $options 
+     * @param array $headers 
+     * @return void 
+     * @throws RuntimeException 
+     */
     public function setRequestAuth(&$options, &$headers) {
         if ($this->token !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->token;

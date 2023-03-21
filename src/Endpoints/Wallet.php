@@ -15,7 +15,15 @@ namespace Apirone\API\Endpoints;
 use Apirone\API\Helpers\CallbackHelper;
 use Apirone\API\Helpers\DestinationsHelper;
 use Apirone\API\Endpoints\EndpointAuthTrait;
+use Apirone\API\Exceptions\RuntimeException;
+use Apirone\API\Exceptions\ValidationFailedException;
+use Apirone\API\Exceptions\UnauthorizedException;
+use Apirone\API\Exceptions\ForbiddenException;
+use Apirone\API\Exceptions\NotFoundException;
+use Apirone\API\Exceptions\MethodNotAllowedException;
+use Apirone\API\Exceptions\InternalServerErrorException;
 use Apirone\API\Http\Request;
+use stdClass;
 
 use function GuzzleHttp\describe_type;
 
@@ -31,13 +39,32 @@ class Wallet
         $this->transferKey = $transferKey;
     }
 
+    /**
+     * Create wallet
+     *
+     * @see https://apirone.com/docs/wallet/#create-wallet
+     *
+     * @param string $currency 
+     * @param null|object $callback 
+     * @param null|array $destinations 
+     * @param null|string $fee 
+     * @param null|int $feeRate 
+     * @return Wallet 
+     * @throws RuntimeException 
+     * @throws ValidationFailedException 
+     * @throws UnauthorizedException 
+     * @throws ForbiddenException 
+     * @throws NotFoundException 
+     * @throws MethodNotAllowedException 
+     * @throws InternalServerErrorException 
+     */
     public static function create(
         string  $currency,
         ?object $callback = null,
         ?array  $destinations = null,
         ?string $fee = null,
         ?int    $feeRate = null
-    ) {
+    ): Wallet {
 
         $options['currency'] = $currency;
 
@@ -69,23 +96,52 @@ class Wallet
      * @param null|string $transferKey 
      * @return Wallet
      */
-    public static function init(string $wallet, ?string $transferKey = null)
+    public static function init(string $wallet, ?string $transferKey = null): Wallet
     {
         $new = new static($wallet, $transferKey);
 
         return $new;
     }
 
-
-    public function info()
+    /**
+     * Wallet Info
+     *
+     * Gets information about the wallet.
+     *
+     * @see https://apirone.com/docs/wallet/#wallet-info
+     *
+     * @return stdClass 
+     * @throws RuntimeException 
+     * @throws ValidationFailedException 
+     * @throws UnauthorizedException 
+     * @throws ForbiddenException 
+     * @throws NotFoundException 
+     * @throws MethodNotAllowedException 
+     * @throws InternalServerErrorException 
+     */
+    public function info(): \stdClass
     {
         $url    = sprintf('v2/wallets/%s', $this->wallet);
 
         return Request::get($url);
-
     }
 
-    public function balance(?string $address = null)
+    /**
+     * Wallet Balance
+     *
+     * @see https://apirone.com/docs/wallet/#wallet-balance
+     *
+     * @param null|string $address 
+     * @return stdClass 
+     * @throws RuntimeException 
+     * @throws ValidationFailedException 
+     * @throws UnauthorizedException 
+     * @throws ForbiddenException 
+     * @throws NotFoundException 
+     * @throws MethodNotAllowedException 
+     * @throws InternalServerErrorException 
+     */
+    public function balance(?string $address = null): \stdClass
     {
         $url    = sprintf('v2/wallets/%s/balance', $this->wallet);
         $options = [];
@@ -97,28 +153,89 @@ class Wallet
         return Request::get($url, $options);
     }
 
-    public function generateAddress(string $addrType = null, object $callback = null)
+    /**
+     * Generate new wallet address
+     *
+     * This function generates unique crypto addresses to use.
+     * There are no expiration date and no transaction limit for addresses.
+     *
+     * @see https://apirone.com/docs/wallet/#generate-address
+     *
+     * @param string|null $addrType 
+     * @param mixed $callback 
+     * @return stdClass 
+     * @throws RuntimeException 
+     * @throws ValidationFailedException 
+     * @throws UnauthorizedException 
+     * @throws ForbiddenException 
+     * @throws NotFoundException 
+     * @throws MethodNotAllowedException 
+     * @throws InternalServerErrorException 
+     */
+    public function generateAddress(string $addrType = null, $callback = null): \stdClass
     {
         $url    = sprintf('v2/wallets/%s/addresses', $this->wallet);
         $options = [];
     
-        if (!empty($addrType))
+        if ($addrType !== null) {
             $options['addr-type'] = $addrType;
-        if (!empty($callback)) {
-            $options['callback'] = $callback instanceof CallbackHelper ? $callback->toJson() : $callback;
+        }
+
+        if ($callback !== null) {
+            if ($callback instanceof CallbackHelper) {
+                $options['callback'] = $callback->toJson();
+            }
+            else {
+                $options['callback'] = (gettype($callback) == 'string') ? json_decode($callback) : $callback;
+            }
+
         }
 
         return Request::post($url, $options);
     }
 
-    public function addressInfo(string $address)
+    /**
+     * Address info
+     *
+     * Some information can be requested about an address in a selected wallet: address type, creation date etc.
+     *
+     * @see https://apirone.com/docs/wallet/#address-info
+     *
+     * @param string $address 
+     * @return stdClass 
+     * @throws RuntimeException 
+     * @throws ValidationFailedException 
+     * @throws UnauthorizedException 
+     * @throws ForbiddenException 
+     * @throws NotFoundException 
+     * @throws MethodNotAllowedException 
+     * @throws InternalServerErrorException 
+     */
+    public function addressInfo(string $address): \stdClass
     {
         $url = sprintf('v2/wallets/%s/addresses/%s', $this->wallet, $address);
 
         return Request::get($url);
     }
 
-    public function addressBalance(string $address)
+    /**
+     * Address balance
+     *
+     * Gets the balance of a specified address from wallet.
+     *
+     * @see https://apirone.com/docs/wallet/#address-balance
+     *
+     * @param string $address 
+     * @return stdClass 
+     * @throws RuntimeException 
+     * @throws ValidationFailedException 
+     * @throws UnauthorizedException 
+     * @throws ForbiddenException 
+     * @throws NotFoundException 
+     * @throws MethodNotAllowedException 
+     * @throws InternalServerErrorException 
+     */
+    public function addressBalance(string $address): \stdClass
     {
         $url = sprintf('v2/wallets/%s/addresses/%s/balance', $this->wallet, $address);
 
@@ -129,12 +246,13 @@ class Wallet
      * Wallet Addresses
      *
      * Shows a list of all the wallet addresses, depending on the provided currency. Contains short information about each address.
-     * https://apirone.com/docs/wallet/#wallet-addresses
+     *
+     * @see https://apirone.com/docs/wallet/#wallet-addresses
      *
      * @param string $currency 
      * @param array  $options
      *
-     * @return string|void 
+     * @return \stdClass
      * @throws RuntimeException 
      * @throws ValidationFailedException 
      * @throws UnauthorizedException 
@@ -142,7 +260,7 @@ class Wallet
      * @throws NotFoundException 
      * @throws MethodNotAllowedException 
      */
-    public function addresses($options = [])
+    public function addresses($options = []): \stdClass
     {
         $url    = sprintf('v2/wallets/%s/addresses', $this->wallet);
 
@@ -170,7 +288,7 @@ class Wallet
      * @throws NotFoundException
      * @throws MethodNotAllowedException
      */
-    public function estimation($options)
+    public function estimation($options): \stdClass
     {
         $url = sprintf('v2/wallets/%s/transfer', $this->wallet);
 
@@ -382,7 +500,7 @@ class Wallet
      * @throws NotFoundException 
      * @throws MethodNotAllowedException 
      */
-    public function addressCallbackLog (string $address, $options = []) 
+    public function addressCallbackLog (string $address, $options = []): \stdClass
     {
         $url = sprintf('v2/wallets/%s/addresses/%s/callback-log', $this->wallet, $address);
 

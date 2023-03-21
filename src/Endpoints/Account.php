@@ -72,7 +72,7 @@ class Account
      * @throws NotFoundException 
      * @throws MethodNotAllowedException 
      */
-    public static function create()
+    public static function create(): Account
     {
         return Request::post('v2/accounts');
     }
@@ -84,7 +84,7 @@ class Account
      *
      * @return Account
      */
-    public static function fromJson($json)
+    public static function fromJson($json): Account
     {
         $data = gettype($json) == 'string' ? json_decode($json) : $json;
 
@@ -104,7 +104,7 @@ class Account
      *
      * @return Account
      */
-    public static function init(string $account, ?string $transferKey = null)
+    public static function init(string $account, ?string $transferKey = null): Account
     {
         $new = new static($account, $transferKey);
 
