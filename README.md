@@ -212,11 +212,11 @@ $helper = AddressesHelper::create();
 
 $helper->setOffset(10);
     ->setLimit(5);
-    ->setAddress('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
+    ->setAddress('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF')
     ->setEmpty(true);
 
-
 $addresses = Account::fromJson($json)->addresses('btc', $helper);
+
 ```
 
 #### Estimation and Transfer
@@ -382,7 +382,8 @@ Either you can use ```Account::setTransferKey($transferKey)``` , if the transfer
 ```php
 use Apirone\API\Endpoints\Account;
 
-Account::callbackInfo('btc');
+$account = Account::fromJson($json);
+$account->callbackInfo('btc');
 
 ```
 
@@ -396,7 +397,8 @@ Either you can use ```Account::setTransferKey($transferKey)``` , if the transfer
 ```php
 use Apirone\API\Endpoints\Account;
 
-Account::addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
+$account = Account::fromJson($json);
+$callback_info = $account->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
 
 ```
 
@@ -416,7 +418,8 @@ $options = [
     'limit' => 5,
 ];
 
-$address_callback_log = Account::addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF', $options);
+$account = Account::fromJson($json);
+$address_callback_log = $account->addressCallbackLog('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF', $options);
 
 ```
 
@@ -476,7 +479,7 @@ $invoice_json = '
     "linkback": "http://linkback.com"
 }';
 
-$created_invoice = Account::invoiceCreate($invoice_json);
+$created_invoice = Account::invoiceCreate(json_decode($invoice_json));
 
 ```
 
@@ -485,6 +488,8 @@ Create a new invoice with [InvoiceHelper](src/Helpers/InvoiceHelper.php)
 ```php
 use Apirone\API\Endpoints\Account;
 use Apirone\API\Helpers\InvoiceHelper;
+
+$account = Account::fromJson($json);
 
 $helper = InvoiceHelper::create('btc');
 $helper->setAmount(25000)
@@ -502,6 +507,8 @@ $created_invoice = Account::invoiceCreate($helper);
 ```php
 use Apirone\API\Endpoints\Account;
 
+$account = Account::fromJson($json);
+
 $invoice_info = $account->invoiceInfo('amr94MKUQCYAzR6c'); //Invoice ID
 
 ```
@@ -513,6 +520,8 @@ Authorization is required.
 ```php
 
 use Apirone\API\Endpoints\Account;
+
+$account = Account::fromJson($json);
 
 $invoice = 'amr94MKUQCYAzR6c';
 $show_private_info = true;
@@ -529,8 +538,9 @@ Authorization is required.
 - options - array of ```offset``` and ```limit```. Optional
 
 ```php
-
 use Apirone\API\Endpoints\Account;
+
+$account = Account::fromJson($json);
 
 $invoice = 'amr94MKUQCYAzR6c';
 
