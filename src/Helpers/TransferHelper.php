@@ -139,6 +139,6 @@ class TransferHelper
 
     public function toArray()
     {
-        return json_decode(json_encode($this->toJson()), true);
+        return (array) $this->toJson();
     }
 }
