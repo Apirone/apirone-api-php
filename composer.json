@@ -1,6 +1,7 @@
 {
     "name": "apirone/apirone-api-php",
     "description": "Apirone API Client",
+    "keywords": ["Apirone", "API", "crypto", "cryptocurrency","bitcoin","btc","ltc","doge","bch"],
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -16,6 +17,10 @@
     ],
     "require": {
         "php": ">7.3",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+    "config": {
+        "preferred-install": "dist"
     }
 }
