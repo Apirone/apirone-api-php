@@ -107,28 +107,7 @@ $address_full_params = $my_account->generateAddress($currency, $type, $callback)
 
 ```
 
-Also you can use [CallbackHelper](src/Helpers/CallbackHelper.php) for data generation:
-
-```php
-use Apirone\API\Endpoints\Account;
-use Apirone\API\Helpers\CallbackHelper;
-
-$url = 'https://example.com/callback_url';
-$method = 'POST'; // Optional
-$data = ["key" => "key_value", "other" => "other_value"]; //Optional
-
-// Init with params (optional)
-$callback = CallbackHelper::create($url, $method, $data);
-
-// Change/add url
-$callback->setUrl('https://example.com/other_callback_url')
-    ->setMethod('GET')
-    ->dataItemAdd('another_key', 'another_value')
-    ->dataItemRemove('key');
-
-$new_address = $my_account->generateAddress('btc', null, $callback);
-
-```
+Also you can use [CallbackHelper](src/Helpers/CallbackHelper.php).
 
 ## Address info
 
@@ -166,33 +145,11 @@ $options = [
 $addresses = Account::fromJson($json)->addresses('btc', $options)
 ```
 
-Also you can use [AddressesHelper](src/Helpers/AddressesHelper.php) for data generation:
-
-```php
-use Apirone\API\Endpoints\Account;
-use Apirone\API\Helpers\AddressesHelper;
-
-// Set all params in constructor
-$offset = 10;
-$limit  = 5;
-$address = '3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF';
-$empty = false;
-
-$helper = AddressesHelper::create($offset, $limit, $address, $empty);
-
-// Or use set methods
-$helper = AddressesHelper::create();
-
-$helper->setOffset(10);
-    ->setLimit(5);
-    ->setAddress('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF')
-    ->setEmpty(true);
-
-$addresses = Account::fromJson($json)->addresses('btc', $helper);
-
-```
+Also you can use [AddressesHelper](Helpers.md#addresses-helper) for data generation.
 
 ## Estimation and Transfer
+
+[Authorization](Authorization.md#authorization) is required for transfer.
 
 Both methods have the same params with differences for destinations - string or objects array.
 
@@ -234,26 +191,7 @@ $transfer = Account::fromJson($json)->transfer('btc', $opt_transfer);
 
 ```
 
-Also you can use one [TransferHelper](src/Helpers/TransferHelper.php) for both methods:
-
-```php
-use Apirone\API\Endpoints\Account;
-use Apirone\API\Helpers\TransferHelper;
-
-$helper = TransferHelper::create();
-
-$helper->addDestination('3N2aXAebXqvV8TDXBabknmi9Gma7HxeMDdZ', 10000)
-    ->addDestination('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF', '50%')
-    ->subtractFeeFromAmount(true);
-
-// $helper->setFeeNormal();
-// $helper->setFeePriority();
-$helper->setFeeCustom(3);
-
-$estimation = Account::fromJson($json)->estimation('btc', $helper);
-$transfer = Account::fromJson($json)->transfer('btc', $helper);
-
-```
+Also you can use one [TransferHelper](Helpers.md#transfer-helper) for both methods:
 
 ## Account History
 
@@ -272,31 +210,7 @@ $options = [
 $account_history = Account::fromJson($json)->history($options);
 ```
 
-Also you can use [HistoryHelper](src/Helpers/HistoryHelper.php) to manage options:
-
-```php
-use Apirone\API\Endpoints\Account;
-use Apirone\API\Helpers\HistoryHelper;
-
-$helper = HistoryHelper::create();
-
-$helper->setOffset(2)
-    ->setLimit(25)
-    ->setCurrency('btc');
-
-// Set 'q' parameters
-$helper->address('35Gnk75DbehHXkshBX1QzpKdq4AJDW6KKv')
-    ->setDateFrom('2021-02-01T00:00:01+01:00')
-    ->setDateTo('2021-12-01T23:59:59+01:00');
-
-
-$helper->itemTypePayment(); // Set item type to 'payment'
-$helper->itemTypeReceipt(); // Set item type to 'receipt'
-$helper->itemType(); // Clear item type or you can set as string value: 'payment' or 'receipt'
-
-$account_history = Account::fromJson($json)->history($helper);
-
-```
+Also you can use [HistoryHelper](Helpers.md#history-helper) to manage options.
 
 ## Account History Item
 
@@ -328,27 +242,11 @@ $address_history = Account::fromJson($json)->addressHistory($address, $option);
 
 ```
 
-Also you can use [PagerHelper](src/Helpers/PagerHelper.php) to manage options:
-
-```php
-use Apirone\API\Endpoints\Account;
-use Apirone\API\Helpers\PagerHelper;
-
-$address = '3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF';
-$helper = PagerHelper::create(10, 5); // offset & limit in constructor
-
-// Change values
-$helper->setLimit(25)
-    ->setOffset(0);
-
-$address_history = Account::fromJson($json)->addressHistory($address, $helper);
-
-```
+Also you can use [PagerHelper](Helpers.md#pager-helper) to manage options.
 
 ## Account Callback Info
 
-Authorization is required.
-Either you can use ```Account::setTransferKey($transferKey)``` , if the transfer key is not set yet; or you can use JWT token ```Account::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
+[Authorization](Authorization.md#authorization) is required.
 
 - currency (btc, ltc, etc...)
 
@@ -362,8 +260,7 @@ $account->callbackInfo('btc');
 
 ## Address Callback Info
 
-Authorization is required.
-Either you can use ```Account::setTransferKey($transferKey)``` , if the transfer key is not set yet; or you can use JWT token ```Account::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
+[Authorization](Authorization.md#authorization) is required.
 
 - currency (btc, ltc, etc...)
 
@@ -377,8 +274,7 @@ $callback_info = $account->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbk
 
 ## Address Callback Log
 
-Authorization is required.
-Either you can use ```Account::setTransferKey($transferKey)```, if the transfer key is not set yet; or you can use JWT token ```Account::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
+[Authorization](Authorization.md#authorization) is required.
 
 - address - string
 - options - array of 'offset' and 'limit' keys. Optional.
@@ -396,7 +292,11 @@ $address_callback_log = $account->addressCallbackLog('3BntRGKDUxxSjnFjfzDNeAziAg
 
 ```
 
+Also you can use [PagerHelper](Helpers.md#pager-helper) to manage options.
+
 ## Account settings
+
+[Authorization](Authorization.md#authorization) is required.
 
 currency - (btc, ltc, etc...) Required.
 
@@ -427,3 +327,5 @@ $options['destinations'] = $destinations;
 $saved_data = $account->settings('btc', $options);
 
 ```
+
+[CallbackHelper](Helpers.md#callback-helper) and [DestinationsHelper](Helpers.md#destinations-helper) documentation.

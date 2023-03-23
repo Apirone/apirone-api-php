@@ -80,28 +80,7 @@ $address_full_params = $my_wallet->generateAddress($type, $callback);
 
 ```
 
-Also you can use [CallbackHelper](src/Helpers/CallbackHelper.php) for data generation:
-
-```php
-use Apirone\API\Endpoints\Wallet;
-use Apirone\API\Helpers\CallbackHelper;
-
-$url = 'https://example.com/callback_url';
-$method = 'POST'; // Optional
-$data = ["key" => "key_value", "other" => "other_value"]; //Optional
-
-// Init with params (optional)
-$callback = CallbackHelper::create($url, $method, $data);
-
-// Change/add url
-$callback->setUrl('https://example.com/other_callback_url')
-    ->setMethod('GET')
-    ->dataItemAdd('another_key', 'another_value');
-    ->dataItemRemove('key');
-
-$new_address = $my_wallet->generateAddress(null, $callback);
-
-```
+Also you can use [CallbackHelper](Helpers.md#callback-helper) for data generation.
 
 ## Address info
 
@@ -139,34 +118,11 @@ $addresses = $my_wallet->addresses($options);
 
 ```
 
-Also you can use [AddressesHelper](src/Helpers/AddressesHelper.php) for data generation:
-
-```php
-use Apirone\API\Endpoints\Wallet;
-use Apirone\API\Helpers\AddressesHelper;
-
-// Set all params in constructor
-$offset = 10;
-$limit  = 5;
-$address = '3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF';
-$empty = false;
-
-$helper = AddressesHelper::create($offset, $limit, $address, $empty);
-
-// Or use set methods
-$helper = AddressesHelper::create();
-
-$helper->setOffset(10);
-    ->setLimit(5);
-    ->setAddress('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF');
-    ->setEmpty(true);
-
-
-$addresses = $my_wallet->addresses($helper);
-
-```
+Also you can use [AddressesHelper](Helpers.md#addresses-helper) for data generation.
 
 ## Estimation and Transfer
+
+[Authorization](Authorization.md#authorization) is required for transfer.
 
 Both methods have the same params with differences for destinations.
 
@@ -318,8 +274,7 @@ $address_history = $my_wallet->addressHistory($address, $helper);
 
 ## Wallet Callback Info
 
-Authorization is required.
-Either you can use ```Wallet::setTransferKey($transferKey)```, if the transfer key is not set yet; or you can use JWT token ```Wallet::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
+[Authorization](Authorization.md#authorization) is required.
 
 - currency (btc, ltc, etc...)
 
@@ -332,8 +287,7 @@ Account::callbackInfo('btc');
 
 ## Address Callback Info
 
-Authorization is required.
-Either you can use ```Wallet::setTransferKey($transferKey)```, if the transfer key is not set yet; or you can use JWT token ```Wallet::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
+[Authorization](Authorization.md#authorization) is required.
 
 - currency (btc, ltc, etc...)
 
@@ -346,8 +300,7 @@ $address_callback_info = $my_wallet->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeA
 
 ## Address Callback Log
 
-Authorization is required.
-Eeither you can use ```Wallet::setTransferKey($transferKey)```, if the transfer key is not set yet; or you can use JWT token ```Wallet::setToken($accessToken)```. If both are set, then JWT token is chosen automatically.
+[Authorization](Authorization.md#authorization) is required.
 
 - address - string
 - options - array of 'offset' and 'limit' keys. Optional.

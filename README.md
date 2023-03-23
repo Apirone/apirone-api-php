@@ -18,36 +18,22 @@ composer require apirone/apirone-api-php
 
 ## Library usage
 
-### Account
+- [Account methods](./docs/Account.md) | [Account API docs](https://apirone.com/docs/account)
 
-[Account methods](./docs/Account.md) | [Account api docs](https://apirone.com/docs/account)
+- [Invoice methods](./docs/Invoices.md) | [Invoices API docs](https://apirone.com/docs/invoices)
 
-### Invoices
+- [Wallet methods](./docs/Wallet.md) | [Wallet API docs](https://apirone.com/docs/wallet)
 
-[Invoice methods](./docs/Invoices.md) | [Invoices api docs](https://apirone.com/docs/invoices)
+- [Authorization methods](./docs/Authorization.md) | [Authorization API docs](https://apirone.com/docs/authorization)
 
-### Wallet
+- [Services methods](./docs/Services.md) |
+ [Service Info API docs](https://apirone.com/docs/service),
+ [Network Fee API docs](https://apirone.com/docs/fee),
+ [Exchange Rate API docs](https://apirone.com/docs/rate)
 
-[Wallet methods](./docs/Wallet.md) | [Wallet api docs](https://apirone.com/docs/wallet)
+- [Error Handling](./docs/ErrorHandling.md)
 
-### Authorization
-
-[Authorization methods](./docs/Authorization.md) | [Authorization api docs](https://apirone.com/docs/authorization)
-
-### Services
-
-[Services methods](./docs/Services.md) |
- [Service Info api docs](https://apirone.com/docs/service),
- [Network Fee api docs](https://apirone.com/docs/fee),
- [Exchange Rate api docs](https://apirone.com/docs/rate)
-
-### Error Handling
-
-[Error Handling](./docs/ErrorHandling.md)
-
-### Helper classes
-
-[Helpers](./docs/Helpers.md)
+- [Helpers](./docs/Helpers.md)
 
 ## Support
 
