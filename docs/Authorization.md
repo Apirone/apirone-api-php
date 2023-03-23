@@ -1,6 +1,6 @@
 # Authorization
 
-Some endpoints require Authorization.
+Some endpoints require authorization.
 Our service provides two authorization options: either JWT token or transfer key.
 You can use one of them to request some protected endpoints: process callbacks log,
 make transfers, check private invoice information, change account/wallet settings, etc.
@@ -9,7 +9,7 @@ If both are set, then JWT token is chosen automatically.
 
 ## Transfer key*
 
-To use this method just set you transfer key to account or wallet object.
+To use this method just set the transfer key for your account or wallet object.
 
 ```php
 // for account
@@ -19,26 +19,26 @@ $my_account->setTransferKey('place_account_transfer_key_here');
 $my_wallet->setTransferKey('place_wallet_transfer_key_here');
 ```
 
-\* You get transfer-key when you create new [account](Account.md#create-a-new-account) or [wallet](Wallet.md#create-a-new-wallet)
+\* You get a transfer-key when you create a new [account](Account.md#create-a-new-account) or [wallet](Wallet.md#create-a-new-wallet)
 
 ## JWT token
 
 ```text
-IMPORTANT: This library just provide api requests methods.
-Implementations of token storage and refreshing you need to do by yourself.
+IMPORTANT: This library just provides the API requests methods.
+You need to do implementations of token storage and refreshing by yourself.
 ```
 
 ### Login
 
-Obtaining new JWT token
+Obtaining a new JWT token
 
 ```php
 use Apirone\API\Endpoints\Authorization;
 
-// For login use account or wallet ID
+// For login use the account or wallet ID
 $login = "apr-f9e1211f4b52a50bcf3c36819fdc4ad3";
 
-// Use account or wallet transfer-key
+// Use the account or wallet transfer-key
 $password = "4sSm9aeXQiqMBmeEs42NTjZidJuGrqm7";
 
 $JWT = Authorization::login($login, $password);
@@ -67,7 +67,7 @@ Authorization::refresh($JWT->{'access-token'}); // Response {}
 
 ## Set JWT token
 
-To use this method just get new token and set it to account or wallet object.
+To use this method just get a new token and set it to the account or wallet object.
 
 ```php
 $my_token = __my_token_storage__get_token(...);
