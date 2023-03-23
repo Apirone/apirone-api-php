@@ -1,16 +1,16 @@
 # Helper classes
 
-Helpers is a special library classes for easy methods parameters manipulation.
+Helpers are special library classes for easier manipulation of methods' parameters.
 
 ## Addresses Helper
 
-Account or Wallet Addresses endpoints
-shows a list of all the account/wallet addresses, depending on the provided currency. Contains short information about each address.
+Account or wallet addresses endpoints
+show a list of all the account/wallet addresses depending on the provided currency which contains short information about each address.
 
 Options parameter is an array with named keys
 
-- limit - The maximum number of items on page. If not set - default value: 10
-- offset - The sequence number of the item from which the counting starts. If not/ If not set - default value: 0
+- limit - The maximum number of items on the page. If not set, the default value: 10
+- offset - The sequence number of the item from which the counting starts. If not set, the default value: 0
 - q - Filter items by specific criteria
 
 ```php
@@ -21,18 +21,18 @@ $options = [
 ]
 ```
 
-The filter ```q``` is assembled into a string by bare listing of the variables in the string, separated by commas. A colon is used as a separator between the parameter name and the value.
+The filter ```q``` is assembled into a string by bare listing of the variables in the comma-separated string. A colon is used as a separator between the parameter name and the value.
 
 Example of ```q```:
 
 **address**:3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF,**empty**:false
 
-Using this helper you can do it much easier
+Using this helper, you can do it much easier
 
 ```php
 use Apirone\API\Helpers\AddressesHelper;
 
-// Set all params in constructor
+// Set all params in the constructor
 $offset = 10;
 $limit  = 5;
 $address = '3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF';
@@ -50,13 +50,13 @@ $helper->setOffset(10);
 
 ```
 
-You can use this helper for [account](Account.md#account-addresses) / [wallet](Wallet.md#wallet-addresses) addressed requests
+You can use this helper for [account](Account.md#account-addresses) / [wallet](Wallet.md#wallet-addresses) addresses requests
 
 ## Callback Helper
 
-Once the account, wallet or address is created, an optional callback parameter can be applied to control certain operations, e.g. confirmation of transactions, receipt of funds, and so on. It is an object of a specified URL page and user's data parameters.
+Once an account, wallet, or address is created, an optional callback parameter can be applied to control certain operations, e.g. confirmation of transactions, receipt of funds, and so on. It is an object of a specified URL page and user's data parameters.
 
-Callback parameter looks like this
+The callback parameter looks like this
 
 ```json
 ...
@@ -70,7 +70,7 @@ Callback parameter looks like this
 ...
 ```
 
-New callback parameter creation
+A new callback parameter creation
 
 ```php
 use Apirone\API\Helpers\CallbackHelper';
@@ -85,7 +85,7 @@ $new_callback_json = $new_callback->toJson();
 
 ```
 
-Existing callback parameter manage
+Managing the existing callback parameter
 
 ```php
 use Apirone\API\Helpers\CallbackHelper';
@@ -110,7 +110,7 @@ $existing_callback_json = $existing_callback->toJson();
 
 ```
 
-You can use this helper for  new [account](Account.md#generate-address) / [wallet](Wallet.md#generate-address) addresses generation
+You can use this helper for a new [account](Account.md#generate-address) / [wallet](Wallet.md#generate-address) addresses generation
 and [account](Account.md#account-settings) / [wallet](Wallet.md#wallet-settings) settings
 
 ## Destinations Helper
@@ -118,7 +118,7 @@ and [account](Account.md#account-settings) / [wallet](Wallet.md#wallet-settings)
 Destinations is parameter of settings used for forwarding incoming funds to specified addresses; it contains addresses and amounts.
 Destination addresses shall either have values specified in percentage or be empty to be forwarded 100%
 
-As string it looks like:
+As a string it looks like:
 
 ```php
 ...
@@ -145,7 +145,7 @@ In JSON it looks like:
 
 This class can help you make destinations manipulation easily.
 
-Create new destinations instance and add some address:
+Create a new object of destinations and add some address:
 
 ```php
 use Apirone\API\Helpers\DestinationsHelper;
@@ -164,8 +164,8 @@ You can use this class for [account](Account.md#account-settings) / [wallet](Wal
 
 Allows viewing transaction history, including the opportunity to filter by transfer type, address, and transfer date.
 
-- limit - The maximum number of items on page. If not set - default value: 10
-- offset - The sequence number of the item from which the counting starts. If not/ If not set - default value: 0
+- limit - The maximum number of items on page. If not set, the default value: 10
+- offset - The sequence number of the item from which the counting starts. If not set, the default value: 0
 - q - Contains a list of filter variables: address, transfer type, calendar period
 
 ```php
@@ -175,7 +175,7 @@ $helper = HistoryHelper::create();
 
 $helper->setOffset(2)
     ->setLimit(25)
-    ->setCurrency('btc') // Have a sense for account only
+    ->setCurrency('btc') // matters for accounts only
 
 // Set 'q' parameters
 $helper->address('35Gnk75DbehHXkshBX1QzpKdq4AJDW6KKv') // address
@@ -184,7 +184,7 @@ $helper->address('35Gnk75DbehHXkshBX1QzpKdq4AJDW6KKv') // address
 
 $helper->itemTypePayment(); // Set transfer type to 'payment'
 $helper->itemTypeReceipt(); // Set transfer type to 'receipt'
-$helper->itemType(); // Clear transfer type or you can set as string value: 'payment' or 'receipt'
+$helper->itemType(); // Clear the transfer type or you can set as a string value: 'payment' or 'receipt'
 
 $account_history = $my_account->history($helper);
 $wallet_history = $my_wallet->history($helper);
@@ -212,11 +212,11 @@ Use InvoiceHelper for an account [create invoice](Invoices.md#create-an-invoice)
 
 ## Pager Helper
 
-Simple class to manipulate pager options.
-Pager options looks like an array with two optional keys:
+A simple class to manipulate pager options.
+Pager options look like an array with two optional keys:
 
-- limit - The maximum number of items on page. If not set - default value: 10
-- offset - The sequence number of the item from which the counting starts. If not/ If not set - default value: 0
+- limit - The maximum number of items on the page. If not set, the default value: 10
+- offset - The sequence number of the item from which the counting starts. If not set, the default value: 0
 
 ```php
 $offset = [
@@ -230,7 +230,7 @@ use Apirone\API\Endpoints\Account;
 use Apirone\API\Helpers\PagerHelper;
 
 $address = '3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF';
-$helper = PagerHelper::create(10, 5); // offset & limit in constructor
+$helper = PagerHelper::create(10, 5); // offset & limit in the constructor
 
 // Clear values
 $helper->setLimit() // 10
@@ -256,13 +256,13 @@ use Apirone\API\Helpers\TransferHelper;
 
 $helper = TransferHelper::create();
 
-// Add destination
+// Add a destination
 $helper->addDestination('3N2aXAebXqvV8TDXBabknmi9Gma7HxeMDdZ', 10000);
 
-// Add destination with percent value
+// Add a destination with percent value
 $helper->addDestination('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbkcF', '50%')
 
-// Subtract fee from amount. Default - false
+// Subtract the fee from the amount. Default - false
 $helper->subtractFeeFromAmount(true);
 
 // Normal fee
@@ -271,7 +271,7 @@ $helper->setFeeNormal();
 // Priority fee
 $helper->setFeePriority();
 
-// Custom with fee value (integer)
+// Value of custom fee (integer)
 $helper->setFeeCustom(3);
 
 // Usage with estimation and transfer
