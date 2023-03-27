@@ -6,6 +6,12 @@
 
 This library provides the methods of [Apirone API](https://apirone.com/docs) with PHP. 
 
+## Requirements
+
+- PHP 7.4 or higher. Tested up to 8.2.
+- cURL extension
+- JSON extension
+
 ## Getting starting
 
 ### Installation
