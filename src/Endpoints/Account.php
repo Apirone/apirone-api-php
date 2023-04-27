@@ -72,7 +72,7 @@ class Account
      * @throws NotFoundException 
      * @throws MethodNotAllowedException 
      */
-    public static function create(): Account
+    public static function create(): \stdClass
     {
         return Request::post('v2/accounts');
     }
@@ -130,7 +130,7 @@ class Account
     public function info(?string $currency = null): \stdClass
     {
         $url    = sprintf('v2/accounts/%s', $this->account);
-        $options = $currency !== null ? [] : ['currency' => $currency];
+        $options = $currency !== null ? ['currency' => $currency] : [];
 
         return Request::get($url, $options);
     }
@@ -578,9 +578,11 @@ class Account
         $this->setRequestAuth($options, $headers);
 
         if (array_key_exists('callback', $options)) {
+            $callback = $options['callback'];
             $options['callback'] = $callback instanceof CallbackHelper ? $callback->toArray() : $callback;
         }
         if (array_key_exists('destinations', $options)) {
+            $destinations = $options['destinations'];
             $options['destinations'] = $destinations instanceof DestinationsHelper ? $destinations->toArray() : $destinations;
         }
 

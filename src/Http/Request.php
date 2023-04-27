@@ -138,7 +138,9 @@ final class Request {
                 $error($body, json_encode($info));
                 ErrorDispatcher::dispatch($error->get());
 
-                $exception = $info['http_code'] .': ' . $body;
+                $exception = json_decode($body);
+                $exception->http_code = $info['http_code'];
+                $exception = json_encode($exception);
 
                 switch($info['http_code']) {
                     case 400:
