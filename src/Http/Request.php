@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Apirone\API\Http;
 
 use Apirone\API\Http\Error;
-use Apirone\API\Http\ErrorDispatcher;
+use Apirone\API\Log\LoggerWrapper;
 use Apirone\API\Exceptions\RuntimeException;
 use Apirone\API\Exceptions\ValidationFailedException;
 use Apirone\API\Exceptions\ForbiddenException;
@@ -122,7 +122,7 @@ final class Request {
 
             if (curl_errno($ch)) {
                 $error('CURL ERROR: ' .  curl_strerror(curl_errno($ch)), json_encode($info));
-                ErrorDispatcher::dispatch($error->get());
+                LoggerWrapper::error($error->__toString());
 
                 throw new RuntimeException('CURL ERROR: ' . curl_strerror(curl_errno($ch)));
             }
@@ -136,7 +136,7 @@ final class Request {
             }
             if ($info['http_code'] >= 400) {
                 $error($body, json_encode($info));
-                ErrorDispatcher::dispatch($error->get());
+                LoggerWrapper::error($error->__toString());
 
                 $exception = json_decode($body);
                 $exception->http_code = $info['http_code'];
