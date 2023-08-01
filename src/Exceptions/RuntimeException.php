@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Apirone SDK library.
+ * This file is part of the Apirone API library.
  *
  * (c) Alex Zaytseff <alex.zaytseff@gmail.com>
  *
