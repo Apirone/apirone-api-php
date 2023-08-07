@@ -37,7 +37,7 @@ composer require apirone/apirone-api-php
  [Network Fee API docs](https://apirone.com/docs/fee),
  [Exchange Rate API docs](https://apirone.com/docs/rate)
 
-- [Error Handling](./docs/ErrorHandling.md)
+- [Log Handling](./docs/LogHandling.md)
 
 - [Helpers](./docs/Helpers.md)
 
