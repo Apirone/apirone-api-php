@@ -160,7 +160,7 @@ final class Request {
                 }
 
             }
-            LoggerWrapper::debug('CURL INFO: '. json_encode($info));
+            LoggerWrapper::debug('CURL INFO: '. json_encode(['body' => $body, 'details' => $info]));
 
             return $body;
         }
