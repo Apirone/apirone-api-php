@@ -1,16 +1,28 @@
-# Log and errors handling
+# Log handling
 
-For response logging you can use a callback function and process a message as you want.
+For logging you can use a callback function or logger implementation Psr/Log/LoggerInterface
+
+Log callback example:
 
 ```php
-
-// callback function
-$log_handler = static function($message) {
-    // process a message
+$logger = static function($level, $message,  $context) {
+    // process log message example
+    print_r([$level, $message, $context]);
 };
+```
 
-// Set callback to Error Dispatcher
-Apirone\API\Http\ErrorDispatcher::setCallback($log_handler);
+Psr/Log example:
+
+```php
+$logger = new /Psr/Log/LoggerInterface();
 
 ```
 
+Set logger to the library:
+
+```php
+use Apirone\API\Log\LogWrapper;
+
+LogWrapper::setLogger($logger);
+
+```

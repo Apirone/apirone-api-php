@@ -26,7 +26,7 @@ final class Request {
 
     private static string $baseURI = 'https://apirone.com/api/';
 
-    private static string $userAgent = 'apirone-sdk-php/1.0';
+    private static string $userAgent = 'apirone-api-php/1.0';
 
     public static function setBaseUri($uri)
     {
@@ -135,7 +135,7 @@ final class Request {
                 $body = (($parts[0] == 'HTTP/1.1 100 Continue') && isset($parts[2])) ? $parts[2] : $parts[1];
             }
             if ($info['http_code'] >= 400) {
-                $error($body, json_encode($info));
+                $error($body, $info);
                 LoggerWrapper::error($error->__toString());
 
                 $exception = json_decode($body);
@@ -160,11 +160,11 @@ final class Request {
                 }
 
             }
+            LoggerWrapper::debug('CURL INFO: '. json_encode($info));
 
             return $body;
         }
     }
-
 
     public static function prepare($options, $json ) 
     {
@@ -177,9 +177,5 @@ final class Request {
         else {
             return http_build_query($options);
         }
-    }
-
-    public static function processError() {
-    
     }
 }
