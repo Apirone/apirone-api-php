@@ -3,7 +3,8 @@ services:
   apirone-php:
     image: php:7.4-apache
     volumes:
-      - ./src:/var/www/html/
+      - ./src:/var/www/src/
       - ./vendor:/var/www/vendor/
+      - ./examples:/var/www/html/
     ports:
       - 8080:80
