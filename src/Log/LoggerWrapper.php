@@ -20,13 +20,17 @@ class LoggerWrapper
     
     static $loggerInstance;
 
+    static bool $handler = false;
+
     public static function setLogger($logger)
     {
         if (is_object($logger) && method_exists($logger, 'log')) {
             self::$loggerInstance = $logger;
+            self::$handler = true;
         } 
         elseif (is_callable($logger)) {
             self::$loggerCallback = $logger;
+            self::$handler = true;
         } 
         else {
             throw new \InvalidArgumentException('Invalid logger');
