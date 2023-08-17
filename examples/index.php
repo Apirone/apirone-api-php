@@ -4,4 +4,10 @@ require_once ('common.php');
 
 use Apirone\API\Endpoints\Service;
 
-$info = Service::account();
+try {
+    $accountsInfo = Service::account();
+    pa($accountsInfo);
+}
+catch (Exception $e) {
+    pa($e);
+}

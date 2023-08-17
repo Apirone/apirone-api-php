@@ -14,17 +14,31 @@ namespace Apirone\API\Helpers;
 
 use stdClass;
 
-// use Apirone\API\Helpers\AbstractPagerOptions;
-
-// class AddressesOptionsBuilder extends AbstractPagerOptions
 class AddressesHelper
 {
+    /**
+     * Limit
+     * @var null|int
+     */
     private ?int $limit;
 
+    /**
+     * Offset
+     * @var null|int
+     */
     private ?int $offset;
 
+    /**
+     * Address
+     * @var null|string
+     */
     private ?string $address;
 
+    /**
+     * Show empty 
+     *
+     * @var null|bool
+     */
     private ?bool $empty;
 
     private function __construct($offset, $limit, $address, $empty)
@@ -36,6 +50,8 @@ class AddressesHelper
     }
 
     /**
+     * Create addresses helper
+     * 
      * @param null|int $offset 
      * @param null|int $limit 
      * @param null|string $address 

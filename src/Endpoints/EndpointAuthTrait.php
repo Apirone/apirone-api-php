@@ -16,8 +16,18 @@ use RuntimeException;
 
 trait EndpointAuthTrait
 {
+    /**
+     * Account|Wallet transfer key
+     *
+     * @var null|string
+     */
     private ?string $transferKey = null;
     
+    /**
+     * Account|Wallet Bearer token
+     *
+     * @var null|string
+     */
     private ?string $token = null;
 
     /**

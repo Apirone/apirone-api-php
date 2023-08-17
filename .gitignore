@@ -2,4 +2,6 @@
 vendor
 composer.lock
 src/*.php
-examples/log.txt
+examples/*
+!examples/index.php
+!examples/common.php

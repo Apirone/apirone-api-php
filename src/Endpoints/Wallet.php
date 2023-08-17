@@ -25,8 +25,6 @@ use Apirone\API\Exceptions\InternalServerErrorException;
 use Apirone\API\Http\Request;
 use stdClass;
 
-use function GuzzleHttp\describe_type;
-
 class Wallet
 {
     use EndpointAuthTrait;

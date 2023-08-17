@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Apirone\API\Helpers;
 
+use Apirone\API\Exceptions\RuntimeException;
 use Apirone\API\Helpers\DestinationsHelper;
+use stdClass;
 
 class TransferHelper
 {
@@ -50,6 +52,16 @@ class TransferHelper
         }
     }
     
+    /**
+     * Create transfer helper
+     *
+     * @param null|array $destinations 
+     * @param null|array $addresses 
+     * @param null|bool $subtractFeeFromAmount 
+     * @param null|string $feeType 
+     * @param null|int $feeRate 
+     * @return static 
+     */
     public static function create(
         ?array $destinations = null,
         ?array $addresses = null,
@@ -69,6 +81,14 @@ class TransferHelper
         return $transfer;
     }
 
+    /**
+     * Add destination
+     *
+     * @param string $address 
+     * @param mixed $amount 
+     * @return $this 
+     * @throws RuntimeException 
+     */
     public function addDestination(string $address, $amount)
     {   
         $item = new \stdClass;
@@ -80,6 +100,12 @@ class TransferHelper
         return $this;
     }
 
+    /**
+     * Add transfer address
+     *
+     * @param string $address 
+     * @return $this 
+     */
     public function addAddress(string $address)
     {
         $this->addresses[] = $address;
@@ -87,18 +113,34 @@ class TransferHelper
         return $this;
     }
 
+    /**
+     * Set fee to 'normal'
+     *
+     * @return $this 
+     */
     public function setFeeNormal() {
         $this->feeType = 'normal';
 
         return $this;
     }
 
+    /**
+     * Set fee to 'priority'
+     *
+     * @return $this 
+     */
     public function setFeePriority() {
         $this->feeType = 'priority';
 
         return $this;
     }
 
+    /**
+     * Set custom fee
+     *
+     * @param int $rate 
+     * @return $this 
+     */
     public function setFeeCustom(int $rate) {
         $this->feeType = 'custom';
         $this->feeRate = $rate;
@@ -106,12 +148,23 @@ class TransferHelper
         return $this;
     }
 
+    /**
+     * Subtract fee from amount
+     *
+     * @param bool $subtractFeeFromAmount 
+     * @return $this 
+     */
     public function subtractFeeFromAmount(bool $subtractFeeFromAmount) {
         $this->subtractFeeFromAmount = $subtractFeeFromAmount;
 
         return $this;
     }
 
+    /**
+     * Build to JSON
+     *
+     * @return stdClass 
+     */
     public function toJson()
     {
         $transfer = new \stdClass();
@@ -137,6 +190,11 @@ class TransferHelper
         return $transfer;
     }
 
+    /**
+     * Build to array
+     *
+     * @return array 
+     */
     public function toArray()
     {
         return (array) $this->toJson();

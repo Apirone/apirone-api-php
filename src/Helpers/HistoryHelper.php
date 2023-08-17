@@ -16,20 +16,60 @@ use stdClass;
 
 class HistoryHelper
 {
+    /**
+     * Limit
+     * @var null|int
+     */
     private ?int $limit;
 
+    /**
+     * Offset
+     * @var null|int
+     */
     private ?int $offset;
 
+    /**
+     * Currency
+     * @var null|string
+     */
     private ?string $currency;
 
+    /**
+     * Address
+     * @var null|string
+     */
     private ?string $address;
 
+    /**
+     * Date From
+     * @var null|string
+     */
     private ?string $dateFrom;
     
+    /**
+     * Date to
+     * @var null|string
+     */
     private ?string $dateTo;
 
+    /**
+     * Item to
+     * @var null|string
+     */
     private ?string $itemType;
 
+    /**
+     * Class constructor
+     *
+     * @param mixed $offset 
+     * @param mixed $limit 
+     * @param mixed $currency 
+     * @param mixed $address 
+     * @param mixed $dateFrom 
+     * @param mixed $dateTo 
+     * @param mixed $itemType 
+     * @return void 
+     */
     private function __construct($offset, $limit, $currency, $address, $dateFrom, $dateTo, $itemType)
     {
         $this->offset   = $offset;
@@ -41,6 +81,18 @@ class HistoryHelper
         $this->itemType = $itemType;
     }
 
+    /**
+     * Create history helper
+     *
+     * @param null|int $offset Sequential number of the element from which the counting starts. Default value: 0
+     * @param null|int $limit The maximum number of transactions displayed on the page. Default value: 10
+     * @param null|string $currency Currency type
+     * @param null|string $address The whole or the part of a crypto address
+     * @param null|string $dateFrom The start date of the calendar period in which the transfer occurred.
+     * @param null|string $dateTo The end date of the calendar period. It is the full date in ISO-8601
+     * @param null|string $itemType Item type: payment or receipt	
+     * @return static 
+     */
     public static function create(
         ?int $offset = null,
         ?int $limit = null,
@@ -72,6 +124,12 @@ class HistoryHelper
         return $this;
     }
 
+    /**
+     * Set limit
+     *
+     * @param null|int $limit 
+     * @return $this 
+     */
     public function setLimit (?int $limit)
     {
         $this->limit = $limit;
@@ -79,6 +137,12 @@ class HistoryHelper
         return $this;
     }
 
+    /**
+     * Set currency
+     *
+     * @param null|string $currency 
+     * @return $this 
+     */
     public function setCurrency (?string $currency)
     {
         $this->currency = $currency;
@@ -86,6 +150,12 @@ class HistoryHelper
         return $this;
     }
 
+    /**
+     * Set address
+     *
+     * @param null|string $address 
+     * @return $this 
+     */
     public function setAddress (?string $address)
     {
         $this->address = $address;
@@ -93,6 +163,12 @@ class HistoryHelper
         return $this;
     }
 
+    /**
+     * Set dateFrom
+     *
+     * @param null|string $dateFrom 
+     * @return $this 
+     */
     public function setDateFrom (?string $dateFrom)
     {
         $this->dateFrom = $dateFrom;
@@ -100,6 +176,12 @@ class HistoryHelper
         return $this;
     }
 
+    /**
+     * Set dateTo
+     *
+     * @param null|string $dateTo 
+     * @return $this 
+     */
     public function setDateTo (?string $dateTo)
     {
         $this->dateTo = $dateTo;
@@ -107,6 +189,11 @@ class HistoryHelper
         return $this;
     }
 
+    /**
+     * Set itemType to 'payment'
+     *
+     * @return $this 
+     */
     public function itemTypePayment ()
     {
         $this->itemType = 'payment';
@@ -114,6 +201,10 @@ class HistoryHelper
         return $this;
     }
 
+    /**
+     * Set itemType to 'receipt'
+     * @return $this 
+     */
     public function itemTypeReceipt ()
     {
         $this->itemType = 'receipt';
@@ -121,6 +212,12 @@ class HistoryHelper
         return $this;
     }
 
+    /**
+     * Set/unset item type manually
+     *
+     * @param null|string $itemType 
+     * @return $this 
+     */
     public function itemType (?string $itemType = null)
     {
         $this->itemType = $itemType;
