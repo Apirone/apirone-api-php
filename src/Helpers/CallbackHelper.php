@@ -40,27 +40,27 @@ class CallbackHelper
     /**
      * Callback class constructor
      *
-     * @param null|string $url 
-     * @param null|string $method 
-     * @param null|array $data 
-     * @return void 
+     * @param null|string $url
+     * @param null|string $method
+     * @param null|array $data
+     * @return void
      */
     private function __construct(?string $url = null, ?string $method = null, ?array $data = null)
     {
         $this->url = $url;
 
         $this->method = $method;
-        
+
         $this->setData($data);
     }
 
     /**
      * Create callback helper
      *
-     * @param null|string $url 
-     * @param null|string $method 
-     * @param null|array $data 
-     * @return static 
+     * @param null|string $url
+     * @param null|string $method
+     * @param null|array $data
+     * @return static
      */
     public static function create(?string $url = null, ?string $method = null, ?array $data = null)
     {
@@ -72,10 +72,11 @@ class CallbackHelper
     /**
      * Create callback from JSON
      *
-     * @param mixed $json 
-     * @return static 
+     * @param mixed $json
+     * @return static
      */
-    public static function fromJson($json) {
+    public static function fromJson($json)
+    {
         $json = gettype($json) == 'string' ? json_decode($json) : $json;
 
         $url = (property_exists($json, 'url')) ? $json->url : null;
@@ -89,10 +90,11 @@ class CallbackHelper
     }
 
     /**
-     * @param string $name 
-     * @return mixed 
+     * @param string $name
+     * @return mixed
      */
-    public function __get(string $name) {
+    public function __get(string $name)
+    {
         if (property_exists($this, $name)) {
             return $this->$name;
         }
@@ -101,8 +103,8 @@ class CallbackHelper
     /**
      * Set callback url
      *
-     * @param null|string $url 
-     * @return $this 
+     * @param null|string $url
+     * @return $this
      */
     public function setUrl(?string $url)
     {
@@ -114,8 +116,8 @@ class CallbackHelper
     /**
      * Set callback method
      *
-     * @param null|string $method 
-     * @return $this 
+     * @param null|string $method
+     * @return $this
      */
     public function setMethod(?string $method)
     {
@@ -127,8 +129,8 @@ class CallbackHelper
     /**
      * Set callback data
      *
-     * @param null|array $data 
-     * @return CallbackHelper 
+     * @param null|array $data
+     * @return CallbackHelper
      */
     public function setData(?array $data): self
     {
@@ -148,13 +150,13 @@ class CallbackHelper
     /**
      * Add callback data item
      *
-     * @param mixed $key 
-     * @param mixed $value 
-     * @return CallbackHelper 
+     * @param mixed $key
+     * @param mixed $value
+     * @return CallbackHelper
      */
     public function dataItemAdd($key, $value): self
     {
-        $item = new \stdClass;
+        $item = new \stdClass();
         $item->{$key} = $value;
         $this->data[] = $item;
 
@@ -164,8 +166,8 @@ class CallbackHelper
     /**
      * Remove data item by item key
      *
-     * @param mixed $key 
-     * @return CallbackHelper 
+     * @param mixed $key
+     * @return CallbackHelper
      */
     public function dataItemRemove($key): self
     {
@@ -177,7 +179,7 @@ class CallbackHelper
     /**
      * Build to JSON
      *
-     * @return stdClass|null 
+     * @return stdClass|null
      */
     public function toJson()
     {
@@ -191,7 +193,7 @@ class CallbackHelper
             $callback->method = $this->method;
         }
 
-        if (!empty ($this->data)) {
+        if (!empty($this->data)) {
             $callback->data = json_decode(json_encode($this->data));
         }
 
@@ -201,9 +203,10 @@ class CallbackHelper
     /**
      * Build to array
      *
-     * @return array 
+     * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return (array)$this->toJson();
     }
 }

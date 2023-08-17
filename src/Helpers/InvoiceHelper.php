@@ -36,15 +36,15 @@ class InvoiceHelper
     private ?int $lifetime = null;
 
     private ?string $expire = null;
-    
+
     private ?string $callbackUrl = null;
 
     private ?string $linkback = null;
-    
+
     private ?string $merchant = null;
 
     private ?string $url = null;
-    
+
     private ?object $price = null;
 
     private function __construct(string $currency, ?int $amount = null)
@@ -60,7 +60,7 @@ class InvoiceHelper
      * @param null|int $amount   - Amount for the checkout in the selected currency of the invoice object.
      *                             Also you may create invoices without fixed amount.
      *                             The amount is indicated in minor units
-     * @return void 
+     * @return void
      */
     public static function create(string $currency, ?int $amount = null)
     {
@@ -70,10 +70,11 @@ class InvoiceHelper
     }
 
     /**
-     * @param string $name 
-     * @return mixed 
+     * @param string $name
+     * @return mixed
      */
-    public function __get(string $name) {
+    public function __get(string $name)
+    {
         if (property_exists($this, $name)) {
             return $this->$name;
         }
@@ -82,8 +83,8 @@ class InvoiceHelper
     /**
      * Change currency.
      *
-     * @param string $currency 
-     * @return $this 
+     * @param string $currency
+     * @return $this
      */
     public function setCurrency(string $currency)
     {
@@ -95,8 +96,8 @@ class InvoiceHelper
     /**
      * Change amount
      *
-     * @param null|int $amount 
-     * @return $this 
+     * @param null|int $amount
+     * @return $this
      */
     public function setAmount(?int $amount = null)
     {
@@ -104,14 +105,14 @@ class InvoiceHelper
 
         return $this;
     }
-    
+
     /**
      * Set lifetime
      *
      * Duration of invoice validity (indicated in seconds)
      *
-     * @param null|int $lifetime 
-     * @return $this 
+     * @param null|int $lifetime
+     * @return $this
      */
     public function setLifetime(?int $lifetime = null)
     {
@@ -122,13 +123,13 @@ class InvoiceHelper
 
     /**
      * Set expire
-     * 
+     *
      * Invoice expiration time in ISO-8601 format, for example, 2022-02-22T09:00:30.
      * If both parameters are specified: lifetime and expire, then the parameter
      * expire will take precedence
      *
-     * @param null|string $expire 
-     * @return $this 
+     * @param null|string $expire
+     * @return $this
      */
     public function setExpire(?string $expire = null)
     {
@@ -140,8 +141,8 @@ class InvoiceHelper
     /**
      * Callback URL
      *
-     * Callback URL used for invoice status updates notifications. 
-     * More information about invoice callback 
+     * Callback URL used for invoice status updates notifications.
+     * More information about invoice callback
      * @see https://apirone.com/docs/receiving-callbacks/#invoices
      *
      */
@@ -154,11 +155,11 @@ class InvoiceHelper
 
     /**
      * Linkback
-     * 
+     *
      * The customer will be redirected to this URL after the payment is completed
-     * 
-     * @param null|string $linkback 
-     * @return $this 
+     *
+     * @param null|string $linkback
+     * @return $this
      */
     public function setLinkback(?string $linkback = null)
     {
@@ -170,8 +171,8 @@ class InvoiceHelper
     /**
      * Merchant url
      *
-     * @param null|string $userDataUrl 
-     * @return $this 
+     * @param null|string $userDataUrl
+     * @return $this
      */
     public function setUrl(?string $userDataUrl = null)
     {
@@ -181,11 +182,11 @@ class InvoiceHelper
     }
     /**
      * Merchant name. Used as the invoice title
-     * 
-     * @param null|string $userDataMerchant 
-     * @return $this 
+     *
+     * @param null|string $userDataMerchant
+     * @return $this
      */
-    public function setMerchant (?string $userDataMerchant = null)
+    public function setMerchant(?string $userDataMerchant = null)
     {
         $this->merchant = $userDataMerchant;
 
@@ -195,17 +196,16 @@ class InvoiceHelper
     /**
      * Used in the invoice to display currency and amount in fiat
      *
-     * @param null|string $currency 
-     * @param null|int $amount 
-     * @return $this 
+     * @param null|string $currency
+     * @param null|int $amount
+     * @return $this
      */
-    public function setDataPrice (?string $currency = null, ?float $amount = null)
+    public function setDataPrice(?string $currency = null, ?float $amount = null)
     {
         if ($currency == null || $amount == null) {
             $this->price = null;
-        }
-        else {
-            $price = new \stdClass;
+        } else {
+            $price = new \stdClass();
             $price->currency = $currency;
             $price->amount   = $amount;
 
@@ -218,12 +218,12 @@ class InvoiceHelper
     /**
      * Return invoice data as JSON
      *
-     * @return stdClass 
+     * @return stdClass
      */
     public function toJson()
     {
-        $invoice = new \stdClass;
-        
+        $invoice = new \stdClass();
+
         if($this->amount !== null) {
             $invoice->amount = $this->amount;
         }
@@ -249,7 +249,7 @@ class InvoiceHelper
         }
 
         if($this->merchant !== null || $this->url !== null || $this->price !== null) {
-            $userData = new \stdClass;
+            $userData = new \stdClass();
 
             if($this->merchant !== null) {
                 $userData->merchant = $this->merchant;
@@ -274,9 +274,10 @@ class InvoiceHelper
     /**
      * Return invoice data as ARRAY
      *
-     * @return stdClass 
+     * @return stdClass
      */
-    public function toArray() {
+    public function toArray()
+    {
         return (array) $this->toJson();
     }
 }

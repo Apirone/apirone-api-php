@@ -63,14 +63,14 @@ class Account
      *
      * @see https://apirone.com/docs/account/#create-account
      *
-     * @return object 
+     * @return object
      *
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public static function create(): \stdClass
     {
@@ -99,7 +99,7 @@ class Account
     /**
      * Init existing account by params
      *
-     * @param string $account 
+     * @param string $account
      * @param null|string $transferKey
      *
      * @return Account
@@ -119,13 +119,13 @@ class Account
      *
      * @param null|string $currency
      *
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function info(?string $currency = null): \stdClass
     {
@@ -142,19 +142,19 @@ class Account
      *
      * @see https://apirone.com/docs/account/#account-balance
      *
-     * @param string $account 
-     * @param string|null $currency 
+     * @param string $account
+     * @param string|null $currency
      * @param string|array $addresses String or array of addresses
      *
      * @return stdClass
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function balance( string $currency  = null, $addresses = null): \stdClass
+    public function balance(string $currency  = null, $addresses = null): \stdClass
     {
         $url    = sprintf('v2/accounts/%s/balance', $this->account);
         $options = [];
@@ -180,20 +180,20 @@ class Account
      *
      * Creates unique crypto addresses in the account using provided currency.
      *
-     * @see https://apirone.com/docs/account/#generate-address 
+     * @see https://apirone.com/docs/account/#generate-address
      *
-     * @param string $account 
-     * @param string $currency 
-     * @param string|null $addrType 
+     * @param string $account
+     * @param string $currency
+     * @param string|null $addrType
      * @param object|null $callback
      *
      * @return stdClass
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function generateAddress(string $currency, ?string $addrType = null, $callback = null): \stdClass
     {
@@ -208,8 +208,7 @@ class Account
         if ($callback !== null) {
             if ($callback instanceof CallbackHelper) {
                 $options['callback'] = $callback->toJson();
-            }
-            else {
+            } else {
                 $options['callback'] = (gettype($callback) == 'string') ? json_decode($callback) : $callback;
             }
         }
@@ -227,12 +226,12 @@ class Account
      * @param string $address
      *
      * @return stdClass
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function addressInfo(string $address): \stdClass
     {
@@ -251,12 +250,12 @@ class Account
      * @param string $address
      *
      * @return stdClass
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function addressBalance(string $address): \stdClass
     {
@@ -271,16 +270,16 @@ class Account
      * Shows a list of all the account addresses, depending on the provided currency. Contains short information about each address.
      * https://apirone.com/docs/account/#account-addresses
      *
-     * @param string $currency 
+     * @param string $currency
      * @param array  $options
      *
      * @return stdClass
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function addresses(string $currency, $options = []): \stdClass
     {
@@ -298,13 +297,13 @@ class Account
 
     /**
      * Estimation
-     * 
+     *
      * Estimates a transaction before sending. It allows finding out the amounts of network
      * and processing fees and checks the destinations of transfer in advance.
      *
      * @see https://apirone.com/docs/account/#estimation
      *
-     * @param string $currency 
+     * @param string $currency
      * @param array|TransferOptionsBuilder $options
      *
      * @return stdClass
@@ -321,17 +320,17 @@ class Account
 
         if ($options instanceof TransferHelper) {
             $options = (array)$options->toJson();
-            /** 
+            /**
             * Destinations to string format
             * @see https://apirone.com/docs/account/#estimation
-            */            
+            */
             $items = [];
             foreach($options['destinations'] as $item) {
                 $items[] = $item->address . ':' . $item->amount;
             }
             $options['destinations'] = implode(',', $items);
         }
-        
+
         $options['currency'] = $currency;
 
         return Request::get($url, $options);
@@ -345,19 +344,19 @@ class Account
      *
      * @see https://apirone.com/docs/account/#transfer
      *
-     * @param string $currency 
+     * @param string $currency
      * @param mixed $options
      *
      * @return stdClass
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function transfer (string $currency, $options): \stdClass
+    public function transfer(string $currency, $options): \stdClass
     {
         $url = sprintf('v2/accounts/%s/transfer', $this->account);
 
@@ -376,22 +375,22 @@ class Account
     /**
      * Account History
      *
-     * Allows viewing the account's transaction history, including the opportunity to filter by 
+     * Allows viewing the account's transaction history, including the opportunity to filter by
      * transfer type, address, and transfer date.
      *
      * @see https://apirone.com/docs/account/#account-history
      *
-     * @param array|HistoryHelper $options 
+     * @param array|HistoryHelper $options
      *
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function history ($options = []): \stdClass
+    public function history($options = []): \stdClass
     {
         $url = sprintf('v2/accounts/%s/history', $this->account);
 
@@ -405,24 +404,24 @@ class Account
     /**
      * Account History Item
      *
-     * The detailed information on the history item contains a list of transactions, fees, 
-     * and a list of incoming/outgoing addresses. There are two kinds of history items: 
-     * payments and receipts. 
+     * The detailed information on the history item contains a list of transactions, fees,
+     * and a list of incoming/outgoing addresses. There are two kinds of history items:
+     * payments and receipts.
      * Payment is outgoing transaction.Receipt is incoming transaction.
-     * 
+     *
      * @see https://apirone.com/docs/account/#account-history-item
-     * 
+     *
      * @param string $HistoryItemID
      *
      * @return stdClass
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function historyItem (string $HistoryItemID): \stdClass
+    public function historyItem(string $HistoryItemID): \stdClass
     {
         $url = sprintf('v2/accounts/%s/history/%s', $this->account, $HistoryItemID);
 
@@ -436,17 +435,17 @@ class Account
      *
      * @see https://apirone.com/docs/account/#account-address-history
      *
-     * @param string $address 
-     * @param array $options 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @param string $address
+     * @param array $options
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function addressHistory (string $address, array $options = []): \stdClass
+    public function addressHistory(string $address, array $options = []): \stdClass
     {
         $url = sprintf('v2/accounts/%s/addresses/%s/history', $this->account, $address);
 
@@ -462,27 +461,27 @@ class Account
      * @see https://apirone.com/docs/account/#account-callback-info
      *
      * @param string $currency
-     * 
+     *
      * @return stdClass
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function callbackInfo (string $currency): \stdClass
+    public function callbackInfo(string $currency): \stdClass
     {
         $url = sprintf('v2/accounts/%s/callback', $this->account);
-        
+
         $headers = [];
         $options['currency'] = $currency;
         $this->setRequestAuth($options, $headers);
-        
+
         return Request::get($url, $options, $headers);
     }
-    
+
     /**
      * Address Callback Info
      *
@@ -491,18 +490,18 @@ class Account
      *
      * @see https://apirone.com/docs/account/#address-callback-info
      *
-     * @param string $address 
+     * @param string $address
      *
      * @return stdClass
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function addressCallbackInfo (string $address): \stdClass
+    public function addressCallbackInfo(string $address): \stdClass
     {
         $url = sprintf('v2/accounts/%s/addresses/%s/callback', $this->account, $address);
 
@@ -515,27 +514,27 @@ class Account
 
     /**
      * Address Callback Log
-     * 
-     * Information on the Callback log in the account: 
-     * which requests the service sent to you and which responses you, as a client, gave to them. 
+     *
+     * Information on the Callback log in the account:
+     * which requests the service sent to you and which responses you, as a client, gave to them.
      * This is a basic tool for debugging.
      * Authorization is required.
      *
      * @see https://apirone.com/docs/account/#address-callback-log
      *
-     * @param string $address 
-     * @param array $options 
+     * @param string $address
+     * @param array $options
      *
      * @return stdClass
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function addressCallbackLog (string $address, $options = []): \stdClass
+    public function addressCallbackLog(string $address, $options = []): \stdClass
     {
         $url = sprintf('v2/accounts/%s/addresses/%s/callback-log', $this->account, $address);
 
@@ -554,20 +553,20 @@ class Account
      *
      * Allow adding or changing the callback data of accounts and setting destinations for forwarding.
      * Authorization is required.
-     * 
+     *
      * @see https://apirone.com/docs/settings/#settings
      *
-     * @param string $currency 
-     * @param array $options 
+     * @param string $currency
+     * @param array $options
      *
      * @return stdClass
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function settings(string $currency, array $options): \stdClass
     {
@@ -595,8 +594,8 @@ class Account
      * Generates an invoice. You should have the Apirone account to create invoice.
      * @see https://apirone.com/docs/invoices/#create-invoice
      *
-     * @param array|InvoiceHelper $options 
-     * @return stdClass 
+     * @param array|InvoiceHelper $options
+     * @return stdClass
      */
     public function invoiceCreate($options): \stdClass
     {
@@ -604,8 +603,7 @@ class Account
 
         if ($options instanceof InvoiceHelper) {
             $options = $options->toArray();
-        }
-        else {
+        } else {
             $options = gettype($options) == 'string' ? (array) json_decode($options) : (array) $options;
         }
 
@@ -625,14 +623,14 @@ class Account
      * @param string $invoice - Invoice ID
      * @param bool $private
      *
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws GlobalRuntimeException 
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws GlobalRuntimeException
      */
     public function invoiceInfo(string $invoice, $private = false): \stdClass
     {
@@ -656,16 +654,16 @@ class Account
      *
      * @see https://apirone.com/docs/invoices/#invoices-list
      *
-     * @return stdClass 
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @return stdClass
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function invoicesList ($options = []): \stdClass
+    public function invoicesList($options = []): \stdClass
     {
         $url = sprintf('v2/accounts/%s/invoices', $this->account);
 

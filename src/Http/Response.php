@@ -20,7 +20,7 @@ class Response
 
     /**
      * HTTP response body
-     * 
+     *
      * @var mixed
      */
     protected $body;
@@ -36,7 +36,7 @@ class Response
      * Get HTTP response headers
      *
      * @return  mixed
-     */ 
+     */
     public function getHeaders()
     {
         return $this->headers;
@@ -46,7 +46,7 @@ class Response
      * Get HTTP response code
      *
      * @return  mixed
-     */ 
+     */
     public function getCode()
     {
         return $this->code;
@@ -56,12 +56,16 @@ class Response
      * Get HTTP response body
      *
      * @return  mixed
-     */ 
+     */
     public function getBody()
     {
         return $this->body;
     }
 
+    /**
+     * Is response has error
+     * @return bool
+     */
     public function hasError()
     {
         return ($this->code !== null && (int) $this->code >= 400) ? true : false;

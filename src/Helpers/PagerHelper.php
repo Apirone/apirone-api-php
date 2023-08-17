@@ -26,6 +26,13 @@ class PagerHelper
         $this->limit    = $limit;
     }
 
+    /**
+     * Create Pager Helper
+     *
+     * @param null|int $offset
+     * @param null|int $limit
+     * @return static
+     */
     public static function create(
         ?int $offset = null,
         ?int $limit = null
@@ -36,10 +43,11 @@ class PagerHelper
     }
 
     /**
-     * @param string $name 
-     * @return mixed 
+     * @param string $name
+     * @return mixed
      */
-    public function __get(string $name) {
+    public function __get(string $name)
+    {
         if (property_exists($this, $name)) {
             return $this->$name;
         }
@@ -47,10 +55,11 @@ class PagerHelper
 
     /**
      * Set result offset
-     * @param null|int $offset 
-     * @return $this 
+     *
+     * @param null|int $offset
+     * @return $this
      */
-    public function setOffset (?int $offset = null)
+    public function setOffset(?int $offset = null)
     {
         $this->offset = $offset;
 
@@ -60,10 +69,10 @@ class PagerHelper
     /**
      * Set result limit
      *
-     * @param null|int $limit 
-     * @return $this 
+     * @param null|int $limit
+     * @return $this
      */
-    public function setLimit (?int $limit = null)
+    public function setLimit(?int $limit = null)
     {
         $this->limit = $limit;
 
@@ -73,7 +82,7 @@ class PagerHelper
     /**
      * Build to JSON
      *
-     * @return stdClass 
+     * @return stdClass
      */
     public function toJson()
     {
@@ -93,9 +102,10 @@ class PagerHelper
     /**
      * Build to array
      *
-     * @return array 
+     * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return (array) $this->toJson();
     }
 }

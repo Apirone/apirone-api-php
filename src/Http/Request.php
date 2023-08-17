@@ -22,13 +22,14 @@ use Apirone\API\Exceptions\NotFoundException;
 use Apirone\API\Exceptions\MethodNotAllowedException;
 use Apirone\API\Exceptions\UnauthorizedException;
 use Apirone\API\Exceptions\InternalServerErrorException;
+use ReflectionException;
 
-final class Request {
-
+final class Request
+{
     private static string $baseURI = 'https://apirone.com/api/';
 
     private static string $userAgent = 'apirone-api-php/1.0';
-    
+
     private static ?string $proxy = null;
 
     public static function setBaseUri($uri)
@@ -37,6 +38,13 @@ final class Request {
         $class->setStaticPropertyValue('baseURI', $uri);
     }
 
+    /**
+     * Set additional UserAgent info
+     *
+     * @param mixed $value
+     * @return void
+     * @throws ReflectionException
+     */
     public static function setUserAgent($value)
     {
         $class = new \ReflectionClass('\Apirone\API\Http\Request');
@@ -44,12 +52,34 @@ final class Request {
         $class->setStaticPropertyValue('baseURI', $baseUserAgent . ' ' . $value);
     }
 
+    /**
+     * Set cUPL proxy option
+     *
+     * @param mixed $proxy
+     * @return void
+     */
     public static function setProxy($proxy)
     {
         $class = new \ReflectionClass('\Apirone\API\Http\Request');
         $class->setStaticPropertyValue('proxy', $proxy);
     }
 
+    /**
+     * GET Request
+     *
+     * @param string $path
+     * @param array $options
+     * @param array $headers
+     * @return mixed
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
+     * @throws JsonException
+     */
     public static function get(string $path, array $options = [], array $headers = [])
     {
         $result = static::execute('get', $path, $options, $headers);
@@ -57,6 +87,22 @@ final class Request {
         return static::decodeData($result);
     }
 
+    /**
+     * POST Request
+     *
+     * @param string $path
+     * @param array $options
+     * @param array $headers
+     * @return mixed
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
+     * @throws JsonException
+     */
     public static function post(string $path, array $options = [], array $headers = [])
     {
         $result = static::execute('post', $path, $options, $headers);
@@ -64,6 +110,22 @@ final class Request {
         return static::decodeData($result);
     }
 
+    /**
+     * PATCH Request
+     *
+     * @param string $path
+     * @param array $options
+     * @param array $headers
+     * @return mixed
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
+     * @throws JsonException
+     */
     public static function patch(string $path, array $options = [], array $headers = [])
     {
         $result = static::execute('patch', $path, $options, $headers);
@@ -71,6 +133,22 @@ final class Request {
         return static::decodeData($result);
     }
 
+    /**
+     * OPTIONS Request
+     *
+     * @param string $path
+     * @param array $options
+     * @param array $headers
+     * @return mixed
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
+     * @throws JsonException
+     */
     public static function options(string $path, array $options = [], array $headers = [])
     {
         $result = static::execute('options', $path, $options, $headers);
@@ -78,6 +156,22 @@ final class Request {
         return static::decodeData($result);
     }
 
+    /**
+     * Execute Request
+     *
+     * @param string $method
+     * @param string $path
+     * @param array $options
+     * @param array $headers
+     * @return Response
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
+     */
     public static function execute(string $method, string $path, array $options = [], array $headers = [])
     {
         $curlHandle = curl_init();
@@ -86,7 +180,7 @@ final class Request {
 
         static::logRequest($method, $path, $options, $curlOpt);
 
-        $result       = curl_exec($curlHandle);        
+        $result       = curl_exec($curlHandle);
         $httpHeaderSize = curl_getinfo($curlHandle, CURLINFO_HEADER_SIZE);
         $httpHeaders    = static::parseResponseHeaders(substr((string)$result, 0, $httpHeaderSize));
         $httpBody       = substr((string)$result, $httpHeaderSize);
@@ -98,7 +192,7 @@ final class Request {
         if ($result === false) {
             static::handleCurlError($curlError, $curlErrno);
         }
-        
+
         $response = new Response(array(
             'code'    => $responseInfo['http_code'],
             'headers' => $httpHeaders,
@@ -113,6 +207,15 @@ final class Request {
         return $response;
     }
 
+    /**
+     * cURL options prepare
+     *
+     * @param string $method
+     * @param string $path
+     * @param array $options
+     * @param array $headers
+     * @return array
+     */
     protected static function prepareCurlOptions(string $method, string $path, array $options = [], array $headers = []): array
     {
         // Set options
@@ -120,7 +223,7 @@ final class Request {
             CURLOPT_URL => static::$baseURI . $path,
             CURLOPT_HEADER => true,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_INFILESIZE => Null,
+            CURLOPT_INFILESIZE => null,
             CURLOPT_HTTPHEADER => array(),
             CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_TIMEOUT => 10,
@@ -160,7 +263,7 @@ final class Request {
                 $curlopt[CURLOPT_POSTFIELDS] = static::preparePost($options, true);
                 $curlopt[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
                 break;
-                
+
             default:
                 $curlopt[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
         }
@@ -168,19 +271,34 @@ final class Request {
         return $curlopt;
     }
 
-    protected static function preparePost($options, $json ) 
+    /**
+     * Prepare POST data
+     *
+     * @param mixed $options
+     * @param mixed $json
+     * @return string|false
+     */
+    protected static function preparePost($options, $json)
     {
         if (is_string($options)) {
             return $options;
         }
         if ($json) {
             return json_encode($options);
-        }
-        else {
+        } else {
             return http_build_query($options);
         }
     }
 
+    /**
+     * Log request params
+     *
+     * @param string $method
+     * @param mixed $path
+     * @param mixed $options
+     * @param mixed $curlOpt
+     * @return void
+     */
     public static function logRequest(string $method, $path, $options, $curlOpt)
     {
         if (LoggerWrapper::$handler !== null) {
@@ -200,6 +318,12 @@ final class Request {
         }
     }
 
+    /**
+     * Log Response data
+     *
+     * @param Response $response
+     * @return void
+     */
     public static function logResponse(Response $response)
     {
         if (LoggerWrapper::$handler !== null) {
@@ -221,6 +345,14 @@ final class Request {
         }
     }
 
+    /**
+     * Handle cURL error
+     *
+     * @param mixed $error
+     * @param mixed $errno
+     * @return never
+     * @throws RuntimeException
+     */
     protected static function handleCurlError($error, $errno)
     {
         switch ($errno) {
@@ -241,42 +373,61 @@ final class Request {
         throw new RuntimeException($message);
     }
 
+    /**
+     * Response error handler
+     *
+     * @param Response $response
+     * @return never
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
+     * @throws RuntimeException
+     */
     protected static function handleResponseError(Response $response)
     {
-            $code = $response->getCode();
-            $httpBody = $response->getBody();
+        $code = $response->getCode();
+        $httpBody = $response->getBody();
 
-            $message = json_decode($httpBody);
-            if (JSON_ERROR_NONE !== json_last_error()) {
-                $message = $httpBody;
-            }
-            if (is_object($message)) {
-                $message = $message->message;
-            }
-            switch($code) {
-                case 400:
-                    throw new ValidationFailedException($message, $code);
-                    break;
-                case 401:
-                    throw new UnauthorizedException($message, $code);
-                    break;
-                case 403:
-                    throw new ForbiddenException($message, $code);
-                    break;
-                case 404:
-                    throw new NotFoundException($message, $code);
-                    break;
-                case 405:
-                    throw new MethodNotAllowedException($message, $code);
-                    break;
-                case 500:
-                    throw new InternalServerErrorException($message, $code);
-                    break;
-                default:
-                    throw new RuntimeException($message, $code);
-            }
+        $message = json_decode($httpBody);
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            $message = $httpBody;
+        }
+        if (is_object($message)) {
+            $message = $message->message;
+        }
+        switch($code) {
+            case 400:
+                throw new ValidationFailedException($message, $code);
+                break;
+            case 401:
+                throw new UnauthorizedException($message, $code);
+                break;
+            case 403:
+                throw new ForbiddenException($message, $code);
+                break;
+            case 404:
+                throw new NotFoundException($message, $code);
+                break;
+            case 405:
+                throw new MethodNotAllowedException($message, $code);
+                break;
+            case 500:
+                throw new InternalServerErrorException($message, $code);
+                break;
+            default:
+                throw new RuntimeException($message, $code);
+        }
     }
 
+    /**
+     * Parse response headers to array
+     *
+     * @param mixed $rawHeaders
+     * @return array
+     */
     protected static function parseResponseHeaders($rawHeaders)
     {
         $headers = array();
@@ -310,6 +461,13 @@ final class Request {
         return $headers;
     }
 
+    /**
+     * Decode response body to JSON
+     *
+     * @param Response $response
+     * @return mixed
+     * @throws JsonException
+     */
     protected static function decodeData(Response $response)
     {
         $result = json_decode($response->getBody());

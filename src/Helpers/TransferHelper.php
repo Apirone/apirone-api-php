@@ -39,11 +39,11 @@ class TransferHelper
             foreach ($destinations as $item) {
                 $this->addDestination($item->address, $item->amount);
             }
-        }
-        else
+        } else {
             $this->destinations = null;
-        
-        
+        }
+
+
         $this->addresses = ($addresses !== null) ? implode(',', $addresses) : $addresses;
         $this->subtractFeeFromAmount = $subtractFeeFromAmount;
         $this->feeType = $feeType;
@@ -51,16 +51,16 @@ class TransferHelper
             $this->feeRate = $feeRate;
         }
     }
-    
+
     /**
      * Create transfer helper
      *
-     * @param null|array $destinations 
-     * @param null|array $addresses 
-     * @param null|bool $subtractFeeFromAmount 
-     * @param null|string $feeType 
-     * @param null|int $feeRate 
-     * @return static 
+     * @param null|array $destinations
+     * @param null|array $addresses
+     * @param null|bool $subtractFeeFromAmount
+     * @param null|string $feeType
+     * @param null|int $feeRate
+     * @return static
      */
     public static function create(
         ?array $destinations = null,
@@ -68,8 +68,7 @@ class TransferHelper
         ?bool $subtractFeeFromAmount = null,
         ?string $feeType = null,
         ?int $feeRate = null
-    )
-    {
+    ) {
         $transfer = new static(
             $destinations,
             $addresses,
@@ -84,14 +83,14 @@ class TransferHelper
     /**
      * Add destination
      *
-     * @param string $address 
-     * @param mixed $amount 
-     * @return $this 
-     * @throws RuntimeException 
+     * @param string $address
+     * @param mixed $amount
+     * @return $this
+     * @throws RuntimeException
      */
     public function addDestination(string $address, $amount)
-    {   
-        $item = new \stdClass;
+    {
+        $item = new \stdClass();
         $item->address = $address;
         $item->amount = DestinationsHelper::parseAmount($amount);
 
@@ -103,8 +102,8 @@ class TransferHelper
     /**
      * Add transfer address
      *
-     * @param string $address 
-     * @return $this 
+     * @param string $address
+     * @return $this
      */
     public function addAddress(string $address)
     {
@@ -116,9 +115,10 @@ class TransferHelper
     /**
      * Set fee to 'normal'
      *
-     * @return $this 
+     * @return $this
      */
-    public function setFeeNormal() {
+    public function setFeeNormal()
+    {
         $this->feeType = 'normal';
 
         return $this;
@@ -127,9 +127,10 @@ class TransferHelper
     /**
      * Set fee to 'priority'
      *
-     * @return $this 
+     * @return $this
      */
-    public function setFeePriority() {
+    public function setFeePriority()
+    {
         $this->feeType = 'priority';
 
         return $this;
@@ -138,10 +139,11 @@ class TransferHelper
     /**
      * Set custom fee
      *
-     * @param int $rate 
-     * @return $this 
+     * @param int $rate
+     * @return $this
      */
-    public function setFeeCustom(int $rate) {
+    public function setFeeCustom(int $rate)
+    {
         $this->feeType = 'custom';
         $this->feeRate = $rate;
 
@@ -151,10 +153,11 @@ class TransferHelper
     /**
      * Subtract fee from amount
      *
-     * @param bool $subtractFeeFromAmount 
-     * @return $this 
+     * @param bool $subtractFeeFromAmount
+     * @return $this
      */
-    public function subtractFeeFromAmount(bool $subtractFeeFromAmount) {
+    public function subtractFeeFromAmount(bool $subtractFeeFromAmount)
+    {
         $this->subtractFeeFromAmount = $subtractFeeFromAmount;
 
         return $this;
@@ -163,7 +166,7 @@ class TransferHelper
     /**
      * Build to JSON
      *
-     * @return stdClass 
+     * @return stdClass
      */
     public function toJson()
     {
@@ -193,7 +196,7 @@ class TransferHelper
     /**
      * Build to array
      *
-     * @return array 
+     * @return array
      */
     public function toArray()
     {

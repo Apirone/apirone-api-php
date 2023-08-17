@@ -35,7 +35,7 @@ class AddressesHelper
     private ?string $address;
 
     /**
-     * Show empty 
+     * Show empty
      *
      * @var null|bool
      */
@@ -51,12 +51,12 @@ class AddressesHelper
 
     /**
      * Create addresses helper
-     * 
-     * @param null|int $offset 
-     * @param null|int $limit 
-     * @param null|string $address 
-     * @param null|bool $empty 
-     * @return static 
+     *
+     * @param null|int $offset
+     * @param null|int $limit
+     * @param null|string $address
+     * @param null|bool $empty
+     * @return static
      */
     public static function create(
         ?int $offset = null,
@@ -70,10 +70,11 @@ class AddressesHelper
     }
 
     /**
-     * @param string $name 
-     * @return mixed 
+     * @param string $name
+     * @return mixed
      */
-    public function __get(string $name) {
+    public function __get(string $name)
+    {
         if (property_exists($this, $name)) {
             return $this->$name;
         }
@@ -82,10 +83,10 @@ class AddressesHelper
     /**
      * Set limit
      *
-     * @param int $limit 
-     * @return $this 
+     * @param int $limit
+     * @return $this
      */
-    public function setLimit (int $limit)
+    public function setLimit(int $limit)
     {
         $this->limit = $limit;
 
@@ -95,10 +96,10 @@ class AddressesHelper
     /**
      * Set offset
      *
-     * @param int $offset 
-     * @return $this 
+     * @param int $offset
+     * @return $this
      */
-    public function setOffset (int $offset)
+    public function setOffset(int $offset)
     {
         $this->offset = $offset;
 
@@ -108,10 +109,10 @@ class AddressesHelper
     /**
      * Set address
      *
-     * @param string $address 
-     * @return $this 
+     * @param string $address
+     * @return $this
      */
-    public function setAddress (string $address)
+    public function setAddress(string $address)
     {
         $this->address = $address;
 
@@ -121,10 +122,10 @@ class AddressesHelper
     /**
      * Show empty
      *
-     * @param mixed $empty 
-     * @return $this 
+     * @param mixed $empty
+     * @return $this
      */
-    public function setEmpty ($empty)
+    public function setEmpty($empty)
     {
         $this->empty = (bool) $empty;
 
@@ -134,7 +135,7 @@ class AddressesHelper
     /**
      * Build to JSON
      *
-     * @return stdClass 
+     * @return stdClass
      */
     public function toJson()
     {
@@ -167,9 +168,10 @@ class AddressesHelper
     /**
      * Build to array
      *
-     * @return array 
+     * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return (array) $this->toJson();
     }
 }

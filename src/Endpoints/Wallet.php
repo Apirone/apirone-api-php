@@ -42,19 +42,19 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#create-wallet
      *
-     * @param string $currency 
-     * @param null|object $callback 
-     * @param null|array $destinations 
-     * @param null|string $fee 
-     * @param null|int $feeRate 
-     * @return Wallet 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @param string $currency
+     * @param null|object $callback
+     * @param null|array $destinations
+     * @param null|string $fee
+     * @param null|int $feeRate
+     * @return Wallet
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public static function create(
         string  $currency,
@@ -84,14 +84,14 @@ class Wallet
 
         $wallet = Request::post('v2/wallets', $options);
 
-        return $wallet;    
+        return $wallet;
     }
 
     /**
      * Init existing wallet by params
      *
-     * @param string $wallet 
-     * @param null|string $transferKey 
+     * @param string $wallet
+     * @param null|string $transferKey
      * @return Wallet
      */
     public static function init(string $wallet, ?string $transferKey = null): Wallet
@@ -108,14 +108,14 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#wallet-info
      *
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public function info(): \stdClass
     {
@@ -129,15 +129,15 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#wallet-balance
      *
-     * @param null|string $address 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @param null|string $address
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public function balance(?string $address = null): \stdClass
     {
@@ -159,22 +159,22 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#generate-address
      *
-     * @param string|null $addrType 
-     * @param mixed $callback 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @param string|null $addrType
+     * @param mixed $callback
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public function generateAddress(string $addrType = null, $callback = null): \stdClass
     {
         $url    = sprintf('v2/wallets/%s/addresses', $this->wallet);
         $options = [];
-    
+
         if ($addrType !== null) {
             $options['addr-type'] = $addrType;
         }
@@ -182,8 +182,7 @@ class Wallet
         if ($callback !== null) {
             if ($callback instanceof CallbackHelper) {
                 $options['callback'] = $callback->toJson();
-            }
-            else {
+            } else {
                 $options['callback'] = (gettype($callback) == 'string') ? json_decode($callback) : $callback;
             }
 
@@ -199,15 +198,15 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#address-info
      *
-     * @param string $address 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @param string $address
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public function addressInfo(string $address): \stdClass
     {
@@ -223,15 +222,15 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#address-balance
      *
-     * @param string $address 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @param string $address
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public function addressBalance(string $address): \stdClass
     {
@@ -247,16 +246,16 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#wallet-addresses
      *
-     * @param string $currency 
+     * @param string $currency
      * @param array  $options
      *
      * @return \stdClass
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function addresses($options = []): \stdClass
     {
@@ -269,7 +268,7 @@ class Wallet
 
     /**
      * Estimation
-     * 
+     *
      * Estimates a transaction before sending. It allows finding out the amounts of network
      * and processing fees and checks the destinations of transfer in advance.
      *
@@ -292,17 +291,17 @@ class Wallet
 
         if ($options instanceof TransferOptionsBuilder) {
             $options = (array)$options->toJson();
-            /** 
+            /**
             * Destinations to string format
             * @see https://apirone.com/docs/wallet/#estimation
-            */            
+            */
             $items = [];
             foreach($options['destinations'] as $item) {
                 $items[] = $item->address . ':' . $item->amount;
             }
             $options['destinations'] = implode(',', $items);
         }
-        
+
         return Request::get($url, $options);
     }
 
@@ -317,15 +316,15 @@ class Wallet
      * @param $options array|TransferOptionsBuilder
      *
      * @return stdClass
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function transfer ($options): \stdClass
+    public function transfer($options): \stdClass
     {
         $url = sprintf('v2/wallets/%s/transfer', $this->wallet);
 
@@ -351,17 +350,17 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#wallet-history
      *
-     * @param array|HistoryOptionsBuilder $options 
+     * @param array|HistoryOptionsBuilder $options
      *
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function history ($options = []): \stdClass
+    public function history($options = []): \stdClass
     {
         $url = sprintf('v2/wallets/%s/history', $this->wallet);
 
@@ -377,20 +376,20 @@ class Wallet
      *
      * The detailed information of the wallet history item contains the list of
      * addresses, the fees, and the list of incoming/outgoing transactions.
-     * 
+     *
      * @see https://apirone.com/docs/wallet/#wallet-history-item
-     * 
+     *
      * @param string $HistoryItemID
      *
      * @return stdClass
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function historyItem (string $HistoryItemID): \stdClass
+    public function historyItem(string $HistoryItemID): \stdClass
     {
         $url = sprintf('v2/wallets/%s/history/%s', $this->wallet, $HistoryItemID);
 
@@ -404,17 +403,17 @@ class Wallet
      *
      * @see https://apirone.com/docs/wallet/#address-history
      *
-     * @param string $address 
-     * @param array $options 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @param string $address
+     * @param array $options
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function addressHistory (string $address, array $options = []): \stdClass
+    public function addressHistory(string $address, array $options = []): \stdClass
     {
         $url = sprintf('v2/wallets/%s/addresses/%s/history', $this->wallet, $address);
 
@@ -430,22 +429,22 @@ class Wallet
      * @see https://apirone.com/docs/wallet/#wallet-callback-info
      *
      * @return stdClass
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function callbackInfo (): \stdClass
+    public function callbackInfo(): \stdClass
     {
         $url = sprintf('v2/wallets/%s/callback', $this->wallet);
-        
+
         $options = [];
         $headers = [];
         $this->setRequestAuth($options, $headers);
-        
+
         return Request::get($url, $options, $headers);
     }
     /**
@@ -459,15 +458,15 @@ class Wallet
      * @param string $address
      *
      * @return stdClass
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function addressCallbackInfo (string $address): \stdClass
+    public function addressCallbackInfo(string $address): \stdClass
     {
         $url = sprintf('v2/wallets/%s/addresses/%s/callback', $this->wallet, $address);
 
@@ -480,25 +479,25 @@ class Wallet
 
     /**
      * Address Callback Log
-     * 
-     * Information on the Callback log in the wallet: 
-     * which requests the service sent to you and which responses you, as a client, gave to them. 
+     *
+     * Information on the Callback log in the wallet:
+     * which requests the service sent to you and which responses you, as a client, gave to them.
      * This is a basic tool for debugging. Authorization is required.
      *
      * @see https://apirone.com/docs/wallets/#address-callback-log
      *
-     * @param string $address 
-     * @param array $options 
-     * @return mixed 
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @param string $address
+     * @param array $options
+     * @return mixed
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public function addressCallbackLog (string $address, $options = []): \stdClass
+    public function addressCallbackLog(string $address, $options = []): \stdClass
     {
         $url = sprintf('v2/wallets/%s/addresses/%s/callback-log', $this->wallet, $address);
 
@@ -520,17 +519,17 @@ class Wallet
      *
      * @see https://apirone.com/docs/settings/#settings
      *
-     * @param string $currency 
-     * @param null|object $destinations 
-     * @param null|object $callback 
-     * @return mixed 
-     * @throws GlobalRuntimeException 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @param string $currency
+     * @param null|object $destinations
+     * @param null|object $callback
+     * @return mixed
+     * @throws GlobalRuntimeException
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function settings(array $options): \stdClass
     {

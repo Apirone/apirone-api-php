@@ -45,7 +45,7 @@ class HistoryHelper
      * @var null|string
      */
     private ?string $dateFrom;
-    
+
     /**
      * Date to
      * @var null|string
@@ -61,14 +61,14 @@ class HistoryHelper
     /**
      * Class constructor
      *
-     * @param mixed $offset 
-     * @param mixed $limit 
-     * @param mixed $currency 
-     * @param mixed $address 
-     * @param mixed $dateFrom 
-     * @param mixed $dateTo 
-     * @param mixed $itemType 
-     * @return void 
+     * @param mixed $offset
+     * @param mixed $limit
+     * @param mixed $currency
+     * @param mixed $address
+     * @param mixed $dateFrom
+     * @param mixed $dateTo
+     * @param mixed $itemType
+     * @return void
      */
     private function __construct($offset, $limit, $currency, $address, $dateFrom, $dateTo, $itemType)
     {
@@ -90,8 +90,8 @@ class HistoryHelper
      * @param null|string $address The whole or the part of a crypto address
      * @param null|string $dateFrom The start date of the calendar period in which the transfer occurred.
      * @param null|string $dateTo The end date of the calendar period. It is the full date in ISO-8601
-     * @param null|string $itemType Item type: payment or receipt	
-     * @return static 
+     * @param null|string $itemType Item type: payment or receipt
+     * @return static
      */
     public static function create(
         ?int $offset = null,
@@ -108,16 +108,17 @@ class HistoryHelper
     }
 
     /**
-     * @param string $name 
-     * @return mixed 
+     * @param string $name
+     * @return mixed
      */
-    public function __get(string $name) {
+    public function __get(string $name)
+    {
         if (property_exists($this, $name)) {
             return $this->$name;
         }
     }
 
-    public function setOffset (?int $offset)
+    public function setOffset(?int $offset)
     {
         $this->offset = $offset;
 
@@ -127,10 +128,10 @@ class HistoryHelper
     /**
      * Set limit
      *
-     * @param null|int $limit 
-     * @return $this 
+     * @param null|int $limit
+     * @return $this
      */
-    public function setLimit (?int $limit)
+    public function setLimit(?int $limit)
     {
         $this->limit = $limit;
 
@@ -140,10 +141,10 @@ class HistoryHelper
     /**
      * Set currency
      *
-     * @param null|string $currency 
-     * @return $this 
+     * @param null|string $currency
+     * @return $this
      */
-    public function setCurrency (?string $currency)
+    public function setCurrency(?string $currency)
     {
         $this->currency = $currency;
 
@@ -153,10 +154,10 @@ class HistoryHelper
     /**
      * Set address
      *
-     * @param null|string $address 
-     * @return $this 
+     * @param null|string $address
+     * @return $this
      */
-    public function setAddress (?string $address)
+    public function setAddress(?string $address)
     {
         $this->address = $address;
 
@@ -166,10 +167,10 @@ class HistoryHelper
     /**
      * Set dateFrom
      *
-     * @param null|string $dateFrom 
-     * @return $this 
+     * @param null|string $dateFrom
+     * @return $this
      */
-    public function setDateFrom (?string $dateFrom)
+    public function setDateFrom(?string $dateFrom)
     {
         $this->dateFrom = $dateFrom;
 
@@ -179,10 +180,10 @@ class HistoryHelper
     /**
      * Set dateTo
      *
-     * @param null|string $dateTo 
-     * @return $this 
+     * @param null|string $dateTo
+     * @return $this
      */
-    public function setDateTo (?string $dateTo)
+    public function setDateTo(?string $dateTo)
     {
         $this->dateTo = $dateTo;
 
@@ -192,9 +193,9 @@ class HistoryHelper
     /**
      * Set itemType to 'payment'
      *
-     * @return $this 
+     * @return $this
      */
-    public function itemTypePayment ()
+    public function itemTypePayment()
     {
         $this->itemType = 'payment';
 
@@ -203,9 +204,9 @@ class HistoryHelper
 
     /**
      * Set itemType to 'receipt'
-     * @return $this 
+     * @return $this
      */
-    public function itemTypeReceipt ()
+    public function itemTypeReceipt()
     {
         $this->itemType = 'receipt';
 
@@ -215,10 +216,10 @@ class HistoryHelper
     /**
      * Set/unset item type manually
      *
-     * @param null|string $itemType 
-     * @return $this 
+     * @param null|string $itemType
+     * @return $this
      */
-    public function itemType (?string $itemType = null)
+    public function itemType(?string $itemType = null)
     {
         $this->itemType = $itemType;
 
@@ -228,7 +229,7 @@ class HistoryHelper
     /**
      * Build to JSON
      *
-     * @return stdClass 
+     * @return stdClass
      */
     public function toJson()
     {
@@ -273,9 +274,10 @@ class HistoryHelper
     /**
      * Build to array
      *
-     * @return array 
+     * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return (array)$this->toJson();
     }
 }

@@ -22,7 +22,7 @@ trait EndpointAuthTrait
      * @var null|string
      */
     private ?string $transferKey = null;
-    
+
     /**
      * Account|Wallet Bearer token
      *
@@ -33,7 +33,7 @@ trait EndpointAuthTrait
     /**
      * Get account transfer key
      *
-     * @return null|string 
+     * @return null|string
      */
     public function getTransferKey()
     {
@@ -43,8 +43,8 @@ trait EndpointAuthTrait
     /**
      * Set account transfer key
      *
-     * @param string|null $transferKey 
-     * @return void 
+     * @param string|null $transferKey
+     * @return void
      */
     public function setTransferKey(?string $transferKey = null): void
     {
@@ -54,7 +54,7 @@ trait EndpointAuthTrait
     /**
      * Get account token
      *
-     * @return null|string 
+     * @return null|string
      */
     public function getToken(): ?string
     {
@@ -62,9 +62,9 @@ trait EndpointAuthTrait
     }
 
     /**
-     * 
-     * @param null|string $token 
-     * @return void 
+     *
+     * @param null|string $token
+     * @return void
      */
     public function setToken(?string $token = null): void
     {
@@ -74,12 +74,13 @@ trait EndpointAuthTrait
     /**
      * Set auth into header or options for request
      *
-     * @param array $options 
-     * @param array $headers 
-     * @return void 
-     * @throws RuntimeException 
+     * @param array $options
+     * @param array $headers
+     * @return void
+     * @throws RuntimeException
      */
-    public function setRequestAuth(&$options, &$headers) {
+    public function setRequestAuth(&$options, &$headers)
+    {
         if ($this->token !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->token;
             return;

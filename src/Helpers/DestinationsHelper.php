@@ -33,7 +33,7 @@ class DestinationsHelper
     /**
      * Create empty destinations object
      *
-     * @return static 
+     * @return static
      */
     public static function create()
     {
@@ -46,7 +46,7 @@ class DestinationsHelper
      * Create destinations object from destinations array
      * @see https://apirone.com/docs/account/#destinations-array
      *
-     * @return static 
+     * @return static
      */
     public static function fromArray(array $destinations = [])
     {
@@ -59,9 +59,10 @@ class DestinationsHelper
      * Create destinations object from destinations array
      * @see https://apirone.com/docs/account/#estimation
      *
-     * @return static 
+     * @return static
      */
-    public static function fromString(string $destinations = '') {
+    public static function fromString(string $destinations = '')
+    {
 
         $class = new static(self::parseString($destinations));
 
@@ -71,10 +72,10 @@ class DestinationsHelper
     /**
      * Add destination into object
      *
-     * @param string $address 
-     * @param int|string $amount 
-     * @return DestinationsHelper 
-     * @throws RuntimeException 
+     * @param string $address
+     * @param int|string $amount
+     * @return DestinationsHelper
+     * @throws RuntimeException
      */
     public function itemAdd(string $address, $amount): self
     {
@@ -86,8 +87,8 @@ class DestinationsHelper
     /**
      * Remove destination by address
      *
-     * @param mixed $address 
-     * @return DestinationsHelper 
+     * @param mixed $address
+     * @return DestinationsHelper
      */
     public function itemRemove(string $address): self
     {
@@ -99,8 +100,8 @@ class DestinationsHelper
     /**
      * Check is destination exist
      *
-     * @param string $address 
-     * @return bool 
+     * @param string $address
+     * @return bool
      */
     public function itemExist(string $address): bool
     {
@@ -110,13 +111,14 @@ class DestinationsHelper
     /**
      * Return destinations as array
      *
-     * @return array 
+     * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         $destinations = [];
 
         foreach ($this->destinations as $address => $amount) {
-            $item = new \stdClass;
+            $item = new \stdClass();
             $item->address = $address;
             $item->amount = $amount;
 
@@ -129,9 +131,10 @@ class DestinationsHelper
     /**
      * Return destinations as string
      *
-     * @return string 
+     * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         $destinations = [];
         foreach ($this->destinations as $key => $value) {
             $destinations[] = $key . ':' . $value;
@@ -143,14 +146,15 @@ class DestinationsHelper
     /**
      * Convert string of destinations to objects array
      *
-     * @param array $destinations 
+     * @param array $destinations
      * @return array
      */
-    public static function parseString ($destinations) {
+    public static function parseString($destinations)
+    {
         $rawItems = explode(',', $destinations);
         foreach ($rawItems as $value) {
             $parts = explode(':', $value);
-            $item = new \stdClass;
+            $item = new \stdClass();
             $item->address = $parts[0];
             $item->amount = $parts[1];
 
@@ -162,9 +166,9 @@ class DestinationsHelper
     /**
      * Parse amount to integer or percent value
      *
-     * @param mixed $amount 
-     * @return string 
-     * @throws RuntimeException 
+     * @param mixed $amount
+     * @return string
+     * @throws RuntimeException
      */
     public static function parseAmount($amount)
     {
@@ -174,6 +178,6 @@ class DestinationsHelper
             throw new RuntimeException('Incorrect amount value: ' . $amount);
         }
 
-        return $_amount[0];    
+        return $_amount[0];
     }
 }

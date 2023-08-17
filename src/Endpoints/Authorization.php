@@ -26,7 +26,7 @@ use stdClass;
  * Authorization
  *
  * Some endpoints require Authorization. Our service provides two authorization options:
- * either JWT token or transfer key. 
+ * either JWT token or transfer key.
  * You can use one of them to request some protected endpoints:
  * - process callbacks log,
  * - make transfers,
@@ -40,16 +40,16 @@ class Authorization
     /**
      * Get token
      *
-     * @param string $login 
-     * @param string $password 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @param string $login
+     * @param string $password
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public static function login(string $login, string $password): \stdClass
     {
@@ -64,15 +64,15 @@ class Authorization
     /**
      * Refresh token
      *
-     * @param string $refreshToken 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @param string $refreshToken
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public static function refresh(string $refreshToken): \stdClass
     {
@@ -86,15 +86,15 @@ class Authorization
     /**
      * Destroy token
      *
-     * @param string $accessToken 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
-     * @throws InternalServerErrorException 
+     * @param string $accessToken
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     * @throws InternalServerErrorException
      */
     public static function logout(string $accessToken): \stdClass
     {
@@ -105,6 +105,3 @@ class Authorization
         return Request::post('v2/auth/logout', [], $headers);
     }
 }
-
-
-

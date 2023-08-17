@@ -37,15 +37,16 @@ class Service
      * Get general information about account
      * @see https://apirone.com/docs/service/#service-info
      *
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public static function account(): \stdClass {
+    public static function account(): \stdClass
+    {
         return Request::options('v2/accounts');
     }
 
@@ -55,33 +56,34 @@ class Service
      * Get general information about wallet
      * @see https://apirone.com/docs/service/#service-info
      *
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public static function wallet(): \stdClass {
+    public static function wallet(): \stdClass
+    {
         return Request::options('v2/wallets');
     }
 
     /**
      * Network Fee
-     * 
-     * A network fee is included in a transaction in order to have 
+     *
+     * A network fee is included in a transaction in order to have
      * the transaction processed by a miner and confirmed by the network.
      * @see https://apirone.com/docs/fee/#network-fee
      *
-     * @param string $currency 
+     * @param string $currency
      * @return array
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public static function fee(string $currency): array
     {
@@ -98,25 +100,26 @@ class Service
      * - Coinpaprika <https://coinpaprika.com/>
      * - Coingecko <https://www.coingecko.com/>
      *
-     * Ticker 
+     * Ticker
      * contains current Market Prices and exchanges rate API.
      * @see https://apirone.com/docs/rate/#exchange-rate
      *
-     * @param string $currency 
-     * @return stdClass 
-     * @throws RuntimeException 
-     * @throws ValidationFailedException 
-     * @throws UnauthorizedException 
-     * @throws ForbiddenException 
-     * @throws NotFoundException 
-     * @throws MethodNotAllowedException 
+     * @param string $currency
+     * @return stdClass
+     * @throws RuntimeException
+     * @throws ValidationFailedException
+     * @throws UnauthorizedException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
-    public static function ticker(string $currency): \stdClass
+    public static function ticker(?string $currency = null): \stdClass
     {
-        return Request::get('v2/ticker', ['currency' => $currency]);
+        $options = $currency !== null ? ['currency' => $currency] : [];
+        return Request::get('v2/ticker', $options);
     }
 
-    public static function fiat2crypto($value, $from='usd', $to = 'btc'): float
+    public static function fiat2crypto($value, $from = 'usd', $to = 'btc'): float
     {
         if ($from == 'btc') {
             return $value;
@@ -129,4 +132,3 @@ class Service
         return (float) Request::get($url, $options);
     }
 }
-
