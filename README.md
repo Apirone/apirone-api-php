@@ -1,10 +1,18 @@
 <img src="https://apirone.com/docs/logo.svg" width="200">
 
-# Apirone API PHP
+# Apirone API PHP <!-- omit in toc -->
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](https://raw.githubusercontent.com/Apirone/apirone-api-php/main/LICENSE)
 
 This library provides the methods of [Apirone API](https://apirone.com/docs) with PHP. 
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Library usage](#library-usage)
+- [Support](#support)
+- [License](#license)
+- [Changelog](#changelog)
+    - [Version 1.0.0 | 18/08/2023](#version-100--18082023)
 
 ## Requirements
 
@@ -12,9 +20,7 @@ This library provides the methods of [Apirone API](https://apirone.com/docs) wit
 - cURL extension
 - JSON extension
 
-## Getting starting
-
-### Installation
+## Installation
 
 Use [composer](https://getcomposer.org/) for library installation.
 
@@ -43,8 +49,8 @@ composer require apirone/apirone-api-php
 
 ## Support
 
-* https://github.com/Apirone/apirone-api-php/issues  
-* support@apirone.com
+- https://github.com/Apirone/apirone-api-php/issues  
+- support@apirone.com
 
 ## License
 
@@ -69,3 +75,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Changelog
+
+### Version 1.0.0 | 18/08/2023
+
+- First version of library is released.
