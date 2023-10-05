@@ -1,8 +1,19 @@
 {
     "name": "apirone/apirone-api-php",
-    "description": "Apirone API Client",
-    "keywords": ["Apirone", "API", "crypto", "cryptocurrency","bitcoin","btc","ltc","doge","bch"],
     "type": "library",
+    "description": "Apirone API Client",
+    "keywords": [
+        "Apirone",
+        "API",
+        "crypto",
+        "cryptocurrency",
+        "bitcoin",
+        "btc",
+        "ltc",
+        "doge",
+        "bch"
+    ],
+    "homepage": "https://github.com/Apirone/apirone-api-php",
     "license": "MIT",
     "autoload": {
         "psr-4": {
