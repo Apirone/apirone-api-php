@@ -2,6 +2,7 @@
     "name": "apirone/apirone-api-php",
     "type": "library",
     "description": "Apirone API Client",
+    "version": "v1.0.1",
     "keywords": [
         "Apirone",
         "API",
