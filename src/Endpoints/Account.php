@@ -235,9 +235,9 @@ class Account
      */
     public function addressInfo(string $address): \stdClass
     {
-        $url = sprintf('v2/accounts/%s/address/%s', [$this->account, $address]);
+        $url = sprintf('v2/accounts/%s/address/%s', $this->account, $address);
 
-        return Request::get($url, $options);
+        return Request::get($url);
     }
 
     /**
@@ -259,9 +259,9 @@ class Account
      */
     public function addressBalance(string $address): \stdClass
     {
-        $url = sprintf('v2/accounts/%s/address/%s/balance', [$this->account, $address]);
+        $url = sprintf('v2/accounts/%s/address/%s/balance', $this->account, $address);
 
-        return Request::get($url, $options);
+        return Request::get($url);
     }
 
     /**
