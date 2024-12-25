@@ -3,27 +3,31 @@
 layout: home
 
 hero:
-  name: "Apirone API PHP"
-  text: "Library for working with the Apirone API"
-  tagline: My great project tagline
-  actions:
-    - theme: brand
-      text: Account methods
-      link: /Account
-    - theme: alt
-      text: API Examples
-      link: /api-examples
+    name: "Apirone API-PHP"
+    text: "Library for working with the Apirone API"
+    tagline: My great project tagline
+    actions:
+        - theme: brand
+          text: Account methods
+          link: /Account
+        - theme: alt
+          text: API Examples
+          link: /api-examples
 
 features:
-  - icon: <svg width="151" height="109" viewBox="0 0 151 109" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M105.044 0.876953L65.5812 50.7301H0L39.4631 0.876953H105.044ZM85.7893 10.4091H44.1338L19.0643 41.8652H60.7198L85.7893 10.4091Z" fill="#5D8AB9"/> <path d="M65.5812 58.0684L105.044 108.017H39.4631L0 58.0684H65.5812ZM60.7198 67.6005H19.0643L44.1338 99.0566H85.7893L60.7198 67.6005Z" fill="#5D8AB9"/><path d="M113.715 8.50195L150.319 54.0656L113.81 99.8199L107.233 91.4316L133.256 59.0223H81.1152L77.207 54.0656L81.1152 49.3949H134.305L106.947 17.0809L113.715 8.50195Z" fill="#5D8AB9"/></svg>
-    title: Easy to use
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    - title: Easy to use
+      details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    - title: Feature B
+      details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    - title: Feature C
+      details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
 
 ---
 # Install
 
+| Tables        |      Are      |  Cool |
+| ------------- | :-----------: | ----: |
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      |   centered    |   $12 |
+| zebra stripes |   are neat    |    $1 |
