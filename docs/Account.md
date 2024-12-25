@@ -107,7 +107,7 @@ $address_full_params = $my_account->generateAddress($currency, $type, $callback)
 
 ```
 
-Also you can use [CallbackHelper](src/Helpers/CallbackHelper.php).
+Also you can use [CallbackHelper](Helpers.md#callback-helper).
 
 ## Address info
 
