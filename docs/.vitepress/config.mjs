@@ -4,27 +4,53 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Apirone API PHP",
   description: "PHP library for working with the Apirone API",
+  base: '/apirone-api-php/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo:[
-      '/assets/logo-primarySmall.svg'
+    outline: 'deep',
+    logo: '/logo-primarySmall.svg',
+    nav: nav(),
+
+    sidebar: sidebar(),
+
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/Apirone/apirone-api-php' }
     ],
-    nav: [
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Since 2017 Apirone OÜ. All Rights Reserved.'
+    },
+    lastUpdated: {
+      text: 'Updated at',
+      formatOptions: {
+        dateStyle: 'short',
+        timeStyle: 'medium'
+      }
+    }
+  }
+})
+
+function nav() {
+  return  [
       { text: 'Home', link: '/' },
-      { text: 'Apirone API', link: 'https://apirone.com/docs' },
+      { text: 'API Docs', link: 'https://apirone.com/docs' },
       {
-        text: 'Dropdown Menu',
+        text: 'Ecosystem',
         items: [
-          { text: 'Item A', link: '/item-1' },
-          { text: 'Item B', link: '/item-2' },
-          { text: 'Item C', link: '/item-3' }
+          { text: 'FAQ', link: 'https://apirone.com/faq' },
+          { text: 'Blog', link: 'https://apirone.com/blog' },
+          { text: 'How to', link: 'https://apirone.com/how-to' },
+          { text: 'Testing Bench', link: 'https://examples.apirone.com' },
         ]
       }
-    ],
+    ]
+}
 
-    sidebar: [
+function sidebar() {
+  return  [
       {
         text: 'API Methods',
+        collapsed: false,
         items: [
           { text: 'Authorization', link: '/Authorization' },
           { text: 'Wallet', link: '/Wallet' },
@@ -35,18 +61,5 @@ export default defineConfig({
           { text: 'Log handling', link: '/LogHandling' },
         ]
       },
-    ],
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/Apirone/apirone-api-php' }
-    ],
-    outline: 'deep',
-    lastUpdated: {
-      text: 'Updated at',
-      formatOptions: {
-        dateStyle: 'short',
-        timeStyle: 'medium'
-      }
-    }
-  }
-})
+    ]
+}
