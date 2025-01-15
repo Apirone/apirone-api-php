@@ -18,7 +18,7 @@ export default defineConfig({
     ],
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Since 2017 Apirone OÜ. All Rights Reserved.'
+      copyright: 'Copyright © 2017-'+ getYear() + ' Apirone OÜ. All Rights Reserved.'
     },
     lastUpdated: {
       text: 'Updated at',
@@ -62,4 +62,8 @@ function sidebar() {
         ]
       },
     ]
+}
+
+function getYear() {
+  return new Date().getFullYear()
 }
