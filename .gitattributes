@@ -6,4 +6,7 @@
 /.github/              export-ignore
 /docs/                 export-ignore
 /examples/             export-ignore
+/vendor/               export-ignore
 docker-compose.yml     export-ignore
+package-lock.json      export-ignore
+package.json           export-ignore

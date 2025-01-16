@@ -1,6 +1,10 @@
 .vscode
 vendor
+node_modules
+docs/.vitepress/cache
+docs/.vitepress/dist
 composer.lock
+package-lock.json
 src/*.php
 examples/*
 !examples/index.php

@@ -1,6 +1,6 @@
 # Helper classes
 
-Helpers are special library classes for easier manipulation of methods' parameters.
+Helpers are special library classes for easier manipulation of methods parameters.
 
 ## Addresses Helper
 

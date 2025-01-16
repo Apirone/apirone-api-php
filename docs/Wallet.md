@@ -163,7 +163,7 @@ $transfer = $my_wallet->transfer($opt_transfer);
 
 ```
 
-Also you can use one [TransferHelper](src/Helpers/TransferHelper.php) for both methods:
+Also you can use one [TransferHelper](Helpers.md#transfer-helper) for both methods:
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -200,7 +200,7 @@ $options = [
 $wallet_history = $my_wallet->history($options);
 ```
 
-Also you can use [HistoryHelper](src/Helpers/HistoryHelper.php) to manage options:
+Also you can use [HistoryHelper](Helpers.md#history-helper) to manage options:
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -255,7 +255,7 @@ $address_history = $my_wallet->addressHistory($address, $option);
 
 ```
 
-Also you can use [PagerHelper](src/Helpers/PagerHelper.php) to manage options:
+Also you can use [PagerHelper](Helpers.md#pager-helper) to manage options:
 
 ```php
 use Apirone\API\Endpoints\Wallet;

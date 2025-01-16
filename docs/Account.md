@@ -7,7 +7,9 @@ An Apirone account is a powerful multi-currency tool designed to:
 - generate invoices for your clients,
 - estimate network fees.
 
-## Create a new account
+## Account methods
+
+### Create a new account
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -15,7 +17,7 @@ use Apirone\API\Endpoints\Account;
 $new_account_data = Account::create();
 ```
 
-## Init an existing account
+### Init an existing account
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -38,7 +40,7 @@ $my_account = Account::fromJson($json);
 
 ```
 
-## Account info
+### Account info
 
 You can use optional parameter currency (btc, ltc, etc...)
 
@@ -52,7 +54,7 @@ $account_info = Account::fromJson($json)->info();
 $account_info_btc = $my_account->info('btc');
 ```
 
-## Account balance
+### Account balance
 
 You can use optional parameters:
 
@@ -75,7 +77,9 @@ $account_info_addresses = $my_account->balance($currency, $addresses);
 
 ```
 
-## Generate address
+## Address
+
+### Generate address
 
 - currency (btc, ltc, etc...)
 
@@ -107,9 +111,9 @@ $address_full_params = $my_account->generateAddress($currency, $type, $callback)
 
 ```
 
-Also you can use [CallbackHelper](src/Helpers/CallbackHelper.php).
+Also you can use [CallbackHelper](Helpers.md#callback-helper).
 
-## Address info
+### Address info
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -119,7 +123,7 @@ $addressInfo = Account::fromJson($json)->addressInfo($address);
 
 ```
 
-## Address balance
+### Address balance
 
 ```php
 use Apirone\API\Endpoints\Account;
@@ -193,7 +197,9 @@ $transfer = Account::fromJson($json)->transfer('btc', $opt_transfer);
 
 Also you can use one [TransferHelper](Helpers.md#transfer-helper) for both methods:
 
-## Account History
+## History
+
+### Account History
 
 options - array. All params are optional
 
@@ -212,7 +218,7 @@ $account_history = Account::fromJson($json)->history($options);
 
 Also you can use [HistoryHelper](Helpers.md#history-helper) to manage options.
 
-## Account History Item
+### Account History Item
 
 HistoryItemID - You can obtain from Account History
 
@@ -224,7 +230,7 @@ $history_item = Account::fromJson($json)->historyItem($item_id);
 
 ```
 
-## Account Address History
+### Account Address History
 
 - address - string. Required.
 - options - array with 'limit', 'offset', or both. Optional
@@ -244,7 +250,9 @@ $address_history = Account::fromJson($json)->addressHistory($address, $option);
 
 Also you can use [PagerHelper](Helpers.md#pager-helper) to manage options.
 
-## Account Callback Info
+## Callbacks
+
+### Account Callback Info
 
 [Authorization](Authorization.md#authorization) is required.
 
@@ -258,7 +266,7 @@ $account->callbackInfo('btc');
 
 ```
 
-## Address Callback Info
+### Address Callback Info
 
 [Authorization](Authorization.md#authorization) is required.
 
@@ -272,7 +280,7 @@ $callback_info = $account->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAziAgUtGhbk
 
 ```
 
-## Address Callback Log
+### Address Callback Log
 
 [Authorization](Authorization.md#authorization) is required.
 
@@ -294,7 +302,7 @@ $address_callback_log = $account->addressCallbackLog('3BntRGKDUxxSjnFjfzDNeAziAg
 
 Also you can use [PagerHelper](Helpers.md#pager-helper) to manage options.
 
-## Account settings
+## Settings
 
 [Authorization](Authorization.md#authorization) is required.
 
@@ -328,4 +336,4 @@ $saved_data = $account->settings('btc', $options);
 
 ```
 
-[CallbackHelper](Helpers.md#callback-helper) and [DestinationsHelper](Helpers.md#destinations-helper) documentation.
+See more about [CallbackHelper](Helpers.md#callback-helper) and [DestinationsHelper](Helpers.md#destinations-helper) classes usage.
