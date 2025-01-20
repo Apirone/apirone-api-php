@@ -35,7 +35,7 @@ function nav() {
       { text: 'Home', link: '/' },
       { text: 'API Docs', link: 'https://apirone.com/docs' },
       {
-        text: 'Ecosystem',
+        text: 'Helpful',
         items: [
           { text: 'FAQ', link: 'https://apirone.com/faq' },
           { text: 'Blog', link: 'https://apirone.com/blog' },
@@ -49,14 +49,13 @@ function nav() {
 function sidebar() {
   return  [
       {
-        text: 'API Methods',
-        collapsed: false,
         items: [
-          { text: 'Authorization', link: '/Authorization' },
-          { text: 'Wallet', link: '/Wallet' },
+          { text: 'Intro', link: '/Intro' },
           { text: 'Account', link: '/Account' },
+          { text: 'Wallet', link: '/Wallet' },
           { text: 'Invoices', link: '/Invoices' },
           { text: 'Services', link: '/Services' },
+          { text: 'Authorization', link: '/Authorization' },
           { text: 'Helpers', link: '/Helpers' },
           { text: 'Log handling', link: '/LogHandling' },
         ]
