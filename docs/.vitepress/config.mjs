@@ -13,6 +13,10 @@ export default defineConfig({
 
     sidebar: sidebar(),
 
+    search: {
+      provider: 'local'
+    },
+
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Apirone/apirone-api-php' }
     ],
