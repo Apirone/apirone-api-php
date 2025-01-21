@@ -5,6 +5,7 @@ export default defineConfig({
   title: "Apirone API PHP",
   description: "PHP library for working with the Apirone API",
   base: '/apirone-api-php/',
+  head: [['link', { rel: 'icon', href: '/apirone-api-php/favicon.ico' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     outline: 'deep',
@@ -36,7 +37,6 @@ export default defineConfig({
 
 function nav() {
   return  [
-      { text: 'Home', link: '/' },
       { text: 'API Docs', link: 'https://apirone.com/docs' },
       {
         text: 'Helpful',

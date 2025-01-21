@@ -7,6 +7,8 @@ make transfers, check private invoice information, change account/wallet setting
 
 If both are set, then JWT token is chosen automatically.
 
+[Authorization API docs](https://apirone.com/docs/authorization)
+
 ## Transfer key*
 
 To use this method just set the transfer key for your account or wallet object.

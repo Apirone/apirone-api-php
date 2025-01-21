@@ -4,6 +4,8 @@ The Apirone wallet is an essential tool for operating with a certain cryptocurre
 Basically it is a container of addresses, which are generated as many as need.
 Apirone API can create wallets, send and receive payments, estimate transaction fees, use callback function, and far more.
 
+[Wallet API docs](https://apirone.com/docs/wallet)
+
 ## Wallet methods
 
 ### Create a new wallet
@@ -90,7 +92,7 @@ Also you can use [CallbackHelper](Helpers.md#callback-helper) for data generatio
 ```php
 use Apirone\API\Endpoints\Wallet;
 
-$addresses = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
+$address = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
 $addressInfo = $my_wallet->addressInfo($address);
 
 ```
@@ -100,7 +102,7 @@ $addressInfo = $my_wallet->addressInfo($address);
 ```php
 use Apirone\API\Endpoints\Wallet;
 
-$addresses = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
+$address = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
 $addressInfo = $my_wallet->addressBalance($address);
 
 ```
