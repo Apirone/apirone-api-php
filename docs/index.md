@@ -14,8 +14,9 @@ hero:
           text: GitHub
           link: https://github.com/Apirone/apirone-api-php
     image:
-        # src: /logo-primarySmall.svg
-        src: /resources.webp
+        # src: /api-3d-icon_800x800.png
+        # src: /api-3d-icon_1024x1024.png
+        src: /api-3d-icon.png
         alt: Apirone Api PHP
 features:
     - title: Install via composer
