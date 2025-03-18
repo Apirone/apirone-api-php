@@ -1,15 +1,13 @@
 import { defineConfig } from 'vitepress'
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Apirone API PHP",
+  title: "API PHP",
   description: "PHP library for working with the Apirone API",
   base: '/apirone-api-php/',
   head: [['link', { rel: 'icon', href: '/apirone-api-php/favicon.ico' }]],
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    outline: 'deep',
-    logo: '/logo-primarySmall.svg',
+    outline: [2,3],
+    logo: '/logo.svg',
     nav: nav(),
 
     sidebar: sidebar(),

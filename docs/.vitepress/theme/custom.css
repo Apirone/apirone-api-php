@@ -8,3 +8,8 @@
 html {
     overflow-y: scroll;
 }
+
+.title span {
+    padding-bottom: 8px;
+    font-weight: 500;
+}
