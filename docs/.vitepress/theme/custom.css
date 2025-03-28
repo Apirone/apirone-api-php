@@ -1,0 +1,15 @@
+/* .vitepress/theme/custom.css */
+:root {
+  --vp-c-brand-1: #5d8ab9;
+  --vp-c-brand-2: #9eb9d5;
+  --vp-c-brand-3: #5d8ab9;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+.title span {
+    padding-bottom: 8px;
+    font-weight: 500;
+}

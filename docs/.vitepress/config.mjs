@@ -1,17 +1,20 @@
 import { defineConfig } from 'vitepress'
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Apirone API PHP",
+  title: "API PHP",
   description: "PHP library for working with the Apirone API",
   base: '/apirone-api-php/',
+  head: [['link', { rel: 'icon', href: '/apirone-api-php/favicon.ico' }]],
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    outline: 'deep',
-    logo: '/logo-primarySmall.svg',
+    outline: [2,3],
+    logo: '/logo.svg',
     nav: nav(),
 
     sidebar: sidebar(),
+
+    search: {
+      provider: 'local'
+    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Apirone/apirone-api-php' }
@@ -32,10 +35,9 @@ export default defineConfig({
 
 function nav() {
   return  [
-      { text: 'Home', link: '/' },
       { text: 'API Docs', link: 'https://apirone.com/docs' },
       {
-        text: 'Ecosystem',
+        text: 'Helpful',
         items: [
           { text: 'FAQ', link: 'https://apirone.com/faq' },
           { text: 'Blog', link: 'https://apirone.com/blog' },
@@ -49,14 +51,13 @@ function nav() {
 function sidebar() {
   return  [
       {
-        text: 'API Methods',
-        collapsed: false,
         items: [
-          { text: 'Authorization', link: '/Authorization' },
-          { text: 'Wallet', link: '/Wallet' },
+          { text: 'Intro', link: '/Intro' },
           { text: 'Account', link: '/Account' },
+          { text: 'Wallet', link: '/Wallet' },
           { text: 'Invoices', link: '/Invoices' },
           { text: 'Services', link: '/Services' },
+          { text: 'Authorization', link: '/Authorization' },
           { text: 'Helpers', link: '/Helpers' },
           { text: 'Log handling', link: '/LogHandling' },
         ]

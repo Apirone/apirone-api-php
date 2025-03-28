@@ -2,7 +2,7 @@
 
 ## Service info
 
-This API method is used to get information about our general services such as a wallet and an account.
+[This API method](https://apirone.com/docs/service) is used to get information about our general services such as a wallet and an account.
 
 ```php
 use Apirone\API\Endpoints\Service;
@@ -17,7 +17,7 @@ $wallets_info = Service::wallet();
 
 ## Network Fee
 
-A network fee is included in a transaction in order to have the transaction processed by a miner and confirmed by the network.
+A [network fee](https://apirone.com/docs/fee) is included in a transaction in order to have the transaction processed by a miner and confirmed by the network.
 
 ```php
 use Apirone\API\Endpoints\Service;
@@ -29,7 +29,7 @@ $fee_btc = Service::fee('btc');
 
 ## Exchange rate
 
-Exchange rates are taken from several sources such as:
+[Exchange rates](https://apirone.com/docs/rate) are taken from several sources such as:
 
 - [Coinmarketcap](https://coinmarketcap.com/)
 - [Coinpaprika](https://coinpaprika.com/)

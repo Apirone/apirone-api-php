@@ -7,6 +7,8 @@ An Apirone account is a powerful multi-currency tool designed to:
 - generate invoices for your clients,
 - estimate network fees.
 
+[Account API docs](https://apirone.com/docs/account)
+
 ## Account methods
 
 ### Create a new account
@@ -118,7 +120,7 @@ Also you can use [CallbackHelper](Helpers.md#callback-helper).
 ```php
 use Apirone\API\Endpoints\Account;
 
-$addresses = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
+$address = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
 $addressInfo = Account::fromJson($json)->addressInfo($address);
 
 ```
@@ -128,7 +130,7 @@ $addressInfo = Account::fromJson($json)->addressInfo($address);
 ```php
 use Apirone\API\Endpoints\Account;
 
-$addresses = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
+$address = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
 $addressInfo = Account::fromJson($json)->addressBalance($address);
 
 ```

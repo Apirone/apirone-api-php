@@ -1,10 +1,14 @@
-# Wallets
+# Wallet
 
 The Apirone wallet is an essential tool for operating with a certain cryptocurrency.
 Basically it is a container of addresses, which are generated as many as need.
 Apirone API can create wallets, send and receive payments, estimate transaction fees, use callback function, and far more.
 
-## Create a new wallet
+[Wallet API docs](https://apirone.com/docs/wallet)
+
+## Wallet methods
+
+### Create a new wallet
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -12,8 +16,7 @@ use Apirone\API\Endpoints\Wallet;
 $new_wallet_data = Wallet::create();
 ```
 
-
-## Init an existing wallet
+### Init an existing wallet
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -26,7 +29,7 @@ $my_wallet = Wallet::init($wallet, $transferKey);
 
 ```
 
-## Wallet info
+### Wallet info
 
 ```php
 use Apirone\API\Endpoints\Wallet;
@@ -35,7 +38,7 @@ $wallet_info = $my_wallet->info();
 
 ```
 
-## Wallet balance
+### Wallet balance
 
 - addresses (comma-separated string)
 
@@ -51,7 +54,9 @@ $wallet_info_addresses = $my_wallet->balance($addresses);
 
 ```
 
-## Generate address
+## Address
+
+### Generate address
 
 Optional
 
@@ -82,27 +87,27 @@ $address_full_params = $my_wallet->generateAddress($type, $callback);
 
 Also you can use [CallbackHelper](Helpers.md#callback-helper) for data generation.
 
-## Address info
+### Address info
 
 ```php
 use Apirone\API\Endpoints\Wallet;
 
-$addresses = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
+$address = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
 $addressInfo = $my_wallet->addressInfo($address);
 
 ```
 
-## Address balance
+### Address balance
 
 ```php
 use Apirone\API\Endpoints\Wallet;
 
-$addresses = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
+$address = '3JH4GWtXNz7us8qw1zAtRr4zuq2nDFXTgu';
 $addressInfo = $my_wallet->addressBalance($address);
 
 ```
 
-## Wallet Addresses
+### Wallet Addresses
 
 - options array (Optional)
 
@@ -184,7 +189,9 @@ $transfer = $my_wallet->transfer($helper);
 
 ```
 
-## Wallet History
+## History
+
+### Wallet History
 
 options - array. All params are optional
 
@@ -225,7 +232,7 @@ $wallet_history = $my_wallet->history($helper);
 
 ```
 
-## Wallet History Item
+### Wallet History Item
 
 HistoryItemID - You can obtain from Wallet History
 
@@ -237,7 +244,7 @@ $history_item = $my_wallet->historyItem($item_id);
 
 ```
 
-## Wallet Address History
+### Wallet Address History
 
 - address - string. Required.
 - options - array with 'limit', 'offset', or both. Optional
@@ -272,7 +279,9 @@ $address_history = $my_wallet->addressHistory($address, $helper);
 
 ```
 
-## Wallet Callback Info
+## Callbacks
+
+### Wallet Callback Info
 
 [Authorization](Authorization.md#authorization) is required.
 
@@ -285,7 +294,7 @@ Account::callbackInfo('btc');
 
 ```
 
-## Address Callback Info
+### Address Callback Info
 
 [Authorization](Authorization.md#authorization) is required.
 
@@ -298,7 +307,7 @@ $address_callback_info = $my_wallet->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeA
 
 ```
 
-## Address Callback Log
+### Address Callback Log
 
 [Authorization](Authorization.md#authorization) is required.
 
@@ -317,7 +326,7 @@ $address_callback_log = $my_wallet->addressCallbackInfo('3BntRGKDUxxSjnFjfzDNeAz
 
 ```
 
-## Wallet settings
+## Settings
 
 options - array
 
