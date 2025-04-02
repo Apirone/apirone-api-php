@@ -178,34 +178,57 @@ final class Request
         $curlOpt = static::prepareCurlOptions($method, $path, $options, $headers);
         curl_setopt_array($curlHandle, $curlOpt);
 
-        static::logRequest($method, $path, $options, $curlOpt);
+        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, 0);
 
-        $result       = curl_exec($curlHandle);
-        $httpHeaderSize = curl_getinfo($curlHandle, CURLINFO_HEADER_SIZE);
-        $httpHeaders    = static::parseResponseHeaders(substr((string)$result, 0, $httpHeaderSize));
-        $httpBody       = substr((string)$result, $httpHeaderSize);
-        $responseInfo   = curl_getinfo($curlHandle);
-        $curlError      = curl_error($curlHandle);
-        $curlErrno      = curl_errno($curlHandle);
+        $result     = curl_exec($curlHandle);
+        $headerSize = curl_getinfo($curlHandle, CURLINFO_HEADER_SIZE);
+        $headers    = static::parseResponseHeaders(substr((string)$result, 0, $headerSize));
+        $body       = substr((string)$result, $headerSize);
+        $info       = curl_getinfo($curlHandle);
         curl_close($curlHandle);
 
         if ($result === false) {
-            static::handleCurlError($curlError, $curlErrno);
+            static::handleCurlError(curl_error($curlHandle), curl_errno($curlHandle), $info);
         }
 
-        $response = new Response(array(
-            'code'    => $responseInfo['http_code'],
-            'headers' => $httpHeaders,
-            'body'    => $httpBody
-        ));
+        $response = new Response($info['http_code'], $headers, $body);
+
+        static::log($info, $method, $options, $curlOpt, $response);
 
         if ($response->hasError()) {
             static::handleResponseError($response);
         }
-        static::logResponse($response);
 
         return $response;
     }
+
+    public static function log($info, $method, $options, $curlOpt, $response)
+    {
+        if (LoggerWrapper::$handler !== null) {
+            $context = array();
+
+            if (isset($curlOpt[CURLOPT_HTTPHEADER])) {
+                $context['REQUEST']['headers'] = $curlOpt[CURLOPT_HTTPHEADER];
+            }
+            if (!empty($options)) {
+                $context['REQUEST']['params'] = self::maskCredentials($options);
+            }
+            if (isset($curlOpt[CURLOPT_POSTFIELDS])) {
+                $context['REQUEST']['body'] = self::maskCredentials($curlOpt[CURLOPT_POSTFIELDS]);
+            }
+            $context['RESPONSE']['code'] = $response->code;
+            $context['RESPONSE']['body'] = self::maskCredentials($response->body);
+            $errorText = ($response->hasError()) ? $response->error . ' ' : '';
+
+            $message = strtoupper($method) . ' ' . $response->code . ' ' . $errorText . $info['url'];
+
+            $level = $response->hasError() ? 'error' : 'info';
+
+            LoggerWrapper::log($level, $message, $context);
+        }
+    }
+
 
     /**
      * cURL options prepare
@@ -227,6 +250,7 @@ final class Request
             CURLOPT_HTTPHEADER => array(),
             CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_TIMEOUT => 10,
+            CURLOPT_FOLLOWLOCATION => true,
         );
 
         if (static::$proxy) {
@@ -284,64 +308,9 @@ final class Request
             return $options;
         }
         if ($json) {
-            return json_encode($options);
+            return empty($options) ? '' : json_encode($options);
         } else {
             return http_build_query($options);
-        }
-    }
-
-    /**
-     * Log request params
-     *
-     * @param string $method
-     * @param mixed $path
-     * @param mixed $options
-     * @param mixed $curlOpt
-     * @return void
-     */
-    public static function logRequest(string $method, $path, $options, $curlOpt)
-    {
-        if (LoggerWrapper::$handler !== null) {
-            $message = 'Send request: ' . $method . ' ' . $path;
-            $context = array();
-            if (!empty($options)) {
-                $context['_params'] = $options;
-            }
-            if (isset($curlOpt[CURLOPT_POSTFIELDS])) {
-                $context['_body'] = $curlOpt[CURLOPT_POSTFIELDS];
-            }
-            if (isset($curlOpt[CURLOPT_HTTPHEADER])) {
-                $context['_headers'] = $curlOpt[CURLOPT_HTTPHEADER];
-            }
-
-            LoggerWrapper::info($message, $context);
-        }
-    }
-
-    /**
-     * Log Response data
-     *
-     * @param Response $response
-     * @return void
-     */
-    public static function logResponse(Response $response)
-    {
-        if (LoggerWrapper::$handler !== null) {
-            $message = 'Response with code ' . $response->getCode() . ' received.';
-            $context = array();
-            $httpBody = $response->getBody();
-            if (!empty($httpBody)) {
-                $data = json_decode($httpBody, true);
-                if (JSON_ERROR_NONE !== json_last_error()) {
-                    $data = $httpBody;
-                }
-                $context['_body'] = $data;
-            }
-            $httpHeaders = $response->getHeaders();
-            if (!empty($httpHeaders)) {
-                $context['_headers'] = $httpHeaders;
-            }
-            LoggerWrapper::info($message, $context);
         }
     }
 
@@ -353,13 +322,13 @@ final class Request
      * @return never
      * @throws RuntimeException
      */
-    protected static function handleCurlError($error, $errno)
+    protected static function handleCurlError($error, $errno, $info)
     {
         switch ($errno) {
             case CURLE_COULDNT_CONNECT:
             case CURLE_COULDNT_RESOLVE_HOST:
             case CURLE_OPERATION_TIMEOUTED:
-                $message = 'Could not connect to Apirone API. Please check your internet connection and try again.';
+                $message = 'Could not connect to Apirone API.';
                 break;
             case CURLE_SSL_CACERT:
             case CURLE_SSL_PEER_CERTIFICATE:
@@ -368,7 +337,11 @@ final class Request
             default:
                 $message = 'Unexpected error communicating.';
         }
-        $message .= "\n\n(Network error [errno $errno]: $error)";
+        $message .= sprintf(' Network error(%s): %s. Request to %s', $errno, $error, $info['url']);
+
+        if (LoggerWrapper::$handler !== null) {
+            LoggerWrapper::error($message);
+        }
 
         throw new RuntimeException($message);
     }
@@ -388,16 +361,9 @@ final class Request
      */
     protected static function handleResponseError(Response $response)
     {
-        $code = $response->getCode();
-        $httpBody = $response->getBody();
+        $code = $response->code;
+        $message = $response->error;
 
-        $message = json_decode($httpBody);
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            $message = $httpBody;
-        }
-        if (is_object($message)) {
-            $message = $message->message;
-        }
         switch($code) {
             case 400:
                 throw new ValidationFailedException($message, $code);
@@ -476,5 +442,28 @@ final class Request
         }
 
         return $result;
+    }
+
+    protected static function maskCredentials($data)
+    {
+        $key = 'transfer-key';
+        $mask = '****';
+        $type = gettype($data);
+
+        switch (gettype($data)) {
+            case 'array':
+                if (array_key_exists($key, $data)) {
+                    $data[$key] = $mask;
+                }
+                $data = json_decode(json_encode($data));
+                break;
+            case 'string':
+                $data = json_decode($data);
+                if (json_last_error() === JSON_ERROR_NONE && !empty($data) && property_exists($data, $key)) {
+                    $data->{$key} = $mask;
+                }
+                break;
+        }
+        return $data;
     }
 }
