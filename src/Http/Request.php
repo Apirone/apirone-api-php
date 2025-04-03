@@ -32,6 +32,8 @@ final class Request
 
     private static ?string $proxy = null;
 
+    private static bool $verifySSL = true;
+
     public static function setBaseUri($uri)
     {
         $class = new \ReflectionClass('\Apirone\API\Http\Request');
@@ -49,7 +51,7 @@ final class Request
     {
         $class = new \ReflectionClass('\Apirone\API\Http\Request');
         $baseUserAgent = $class->getProperty('userAgent');
-        $class->setStaticPropertyValue('baseURI', $baseUserAgent . ' ' . $value);
+        $class->setStaticPropertyValue('userAgent', $baseUserAgent . ' ' . $value);
     }
 
     /**
@@ -62,6 +64,17 @@ final class Request
     {
         $class = new \ReflectionClass('\Apirone\API\Http\Request');
         $class->setStaticPropertyValue('proxy', $proxy);
+    }
+
+    /**
+     * Set SSL Verify cURL options
+     *
+     * @param bool $verify 
+     */
+    public static function setVerifySSL($verify = true)
+    {
+        $class = new \ReflectionClass('\Apirone\API\Http\Request');
+        $class->setStaticPropertyValue('verifySSL', $verify);
     }
 
     /**
@@ -178,9 +191,6 @@ final class Request
         $curlOpt = static::prepareCurlOptions($method, $path, $options, $headers);
         curl_setopt_array($curlHandle, $curlOpt);
 
-        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, 0);
-
         $result     = curl_exec($curlHandle);
         $headerSize = curl_getinfo($curlHandle, CURLINFO_HEADER_SIZE);
         $headers    = static::parseResponseHeaders(substr((string)$result, 0, $headerSize));
@@ -203,7 +213,7 @@ final class Request
         return $response;
     }
 
-    public static function log($info, $method, $options, $curlOpt, $response)
+    protected static function log($info, $method, $options, $curlOpt, $response)
     {
         if (LoggerWrapper::$handler !== null) {
             $context = array();
@@ -256,6 +266,11 @@ final class Request
         if (static::$proxy) {
             $curlopt[CURLOPT_PROXY] = static::$proxy;
             $curlopt[CURLOPT_HTTPPROXYTUNNEL] = true;
+        }
+
+        if (static::$verifySSL == false) {
+            $curlopt[CURLOPT_SSL_VERIFYHOST] = 0;
+            $curlopt[CURLOPT_SSL_VERIFYPEER] = 0;
         }
 
         $curlopt[CURLOPT_HTTPHEADER][] = 'User-Agent: ' . static::$userAgent;
