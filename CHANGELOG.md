@@ -2,6 +2,9 @@
 
 # [1.1.0](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.0) (2025-04-03)
 
+- Logger logic improved
+- Мask credentials info
+- Addded verifySSL property. FixedsetUserUgent()
 
 ## [1.0.2](https://github.com/Apirone/apirone-api-php/releases/tag/1.0.2) (2024-02-15)
 
