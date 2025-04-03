@@ -22,6 +22,12 @@ class LoggerWrapper
 
     static bool $handler = false;
 
+    /**
+     * Set Logger
+     *
+     * @param mixed $logger 
+     * @throws \InvalidArgumentException 
+     */
     public static function setLogger($logger)
     {
         if (is_object($logger) && method_exists($logger, 'log')) {
