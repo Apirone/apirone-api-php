@@ -9,10 +9,10 @@ This library provides the methods of [Apirone API](https://apirone.com/docs) wit
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Library usage](#library-usage)
+- [Documentation](#documentation)
 - [Support](#support)
-- [License](#license)
 - [Changelog](#changelog)
-    - [Version 1.0.0 | 18/08/2023](#version-100--18082023)
+- [License](#license)
 
 ## Requirements
 
@@ -29,6 +29,8 @@ composer require apirone/apirone-api-php
 ```
 
 ## Library usage
+
+To check out docs, visit [apirone.github.io/apirone-sdk-php](https://apirone.github.io/apirone-sdk-php).
 
 - [Account methods](./docs/Account.md) | [Account API docs](https://apirone.com/docs/account)
 
@@ -47,37 +49,21 @@ composer require apirone/apirone-api-php
 
 - [Helpers](./docs/Helpers.md)
 
+## Documentation
+
+To check out docs, visit [apirone.github.io/apirone-api-php](https://apirone.github.io/apirone-api-php).
+
 ## Support
 
 - https://github.com/Apirone/apirone-api-php/issues  
 - support@apirone.com
 
-## License
-
-MIT License
-
-Copyright (c) © 2017-2023. Apirone. All rights reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
 ## Changelog
 
-### Version 1.0.0 | 18/08/2023
+Detailed changes for each release are documented in the [CHANGELOG](https://github.com/Apirone/apirone-api-php/blob/main/CHANGELOG.md).
 
-- First version of library is released.
+## License
+
+[MIT](https://github.com/Apirone/apirone-api-php/blob/main/LICENSE)
+
+Copyright (c)  2017-present. Apirone. All rights reserved
