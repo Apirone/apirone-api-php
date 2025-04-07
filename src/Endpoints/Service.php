@@ -113,22 +113,71 @@ class Service
      * @throws NotFoundException
      * @throws MethodNotAllowedException
      */
-    public static function ticker(?string $currency = null): \stdClass
+    public static function ticker(?string $currency = null, ?string $fiat = null): \stdClass
     {
-        $options = $currency !== null ? ['currency' => $currency] : [];
+        $options = [];
+        if($currency) {
+            $options['currency'] = $currency;
+        }
+        if($fiat) {
+            $options['fiat'] = $fiat;
+        }
+
         return Request::get('v2/ticker', $options);
     }
 
+    /**
+     * Convert fiat value to currency
+     * @param mixed $value 
+     * @param string $from 
+     * @param string $to 
+     * @return float 
+     * @throws \Apirone\API\Exceptions\RuntimeException 
+     * @throws \Apirone\API\Exceptions\ValidationFailedException 
+     * @throws \Apirone\API\Exceptions\UnauthorizedException 
+     * @throws \Apirone\API\Exceptions\ForbiddenException 
+     * @throws \Apirone\API\Exceptions\NotFoundException 
+     * @throws \Apirone\API\Exceptions\MethodNotAllowedException 
+     * @throws \Apirone\API\Exceptions\InternalServerErrorException 
+     * @throws \Apirone\API\Exceptions\JsonException 
+     */
     public static function fiat2crypto($value, $from = 'usd', $to = 'btc'): float
     {
-        if ($from == 'btc') {
+        if ($from == $to) {
             return $value;
         }
-        $url = sprintf('v1/to%s', $to);
-        $options = [];
-        $options['currency'] = $from;
-        $options['value']    = $value;
 
-        return (float) Request::get($url, $options);
+        $rate = static::ticker($to, $from);
+        $result =  $value / (float) $rate->$from;
+        $currency = static::currency($to);
+
+        $decimals = strlen((string)((1 / $currency->{'units-factor'}) - 1));
+        $format = '%.' . $decimals . 'f';
+
+        return  floatval(sprintf($format, floatval($result)));
+    }
+
+    /**
+     * Get currency by abbr
+     *
+     * @param string $currency 
+     * @return mixed 
+     * @throws \Apirone\API\Exceptions\RuntimeException 
+     * @throws \Apirone\API\Exceptions\ValidationFailedException 
+     * @throws \Apirone\API\Exceptions\UnauthorizedException 
+     * @throws \Apirone\API\Exceptions\ForbiddenException 
+     * @throws \Apirone\API\Exceptions\NotFoundException 
+     * @throws \Apirone\API\Exceptions\MethodNotAllowedException 
+     */
+    public static function currency(string $currency)
+    {
+        $info = Service::account();
+        foreach($info->currencies as $item) {
+            if ($item->abbr == $currency) {
+                return $item;
+            }
+        }
+
+        return null;
     }
 }
