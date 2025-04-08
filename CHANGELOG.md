@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.1](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.1) (2025-04-03)
+## [1.1.1](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.1) (2025-04-08)
 
 - Request and Service updated
 
