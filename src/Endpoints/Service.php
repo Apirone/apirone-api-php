@@ -127,57 +127,23 @@ class Service
     }
 
     /**
-     * Convert fiat value to currency
-     * @param mixed $value 
-     * @param string $from 
-     * @param string $to 
-     * @return float 
-     * @throws \Apirone\API\Exceptions\RuntimeException 
-     * @throws \Apirone\API\Exceptions\ValidationFailedException 
-     * @throws \Apirone\API\Exceptions\UnauthorizedException 
-     * @throws \Apirone\API\Exceptions\ForbiddenException 
-     * @throws \Apirone\API\Exceptions\NotFoundException 
-     * @throws \Apirone\API\Exceptions\MethodNotAllowedException 
-     * @throws \Apirone\API\Exceptions\InternalServerErrorException 
-     * @throws \Apirone\API\Exceptions\JsonException 
+     * @deprecated
      */
     public static function fiat2crypto($value, $from = 'usd', $to = 'btc'): float
     {
         if ($from == $to) {
             return $value;
         }
-
         $rate = static::ticker($to, $from);
-        $result =  $value / (float) $rate->$from;
-        $currency = static::currency($to);
 
-        $decimals = strlen((string)((1 / $currency->{'units-factor'}) - 1));
-        $format = '%.' . $decimals . 'f';
-
-        return  floatval(sprintf($format, floatval($result)));
-    }
-
-    /**
-     * Get currency by abbr
-     *
-     * @param string $currency 
-     * @return mixed 
-     * @throws \Apirone\API\Exceptions\RuntimeException 
-     * @throws \Apirone\API\Exceptions\ValidationFailedException 
-     * @throws \Apirone\API\Exceptions\UnauthorizedException 
-     * @throws \Apirone\API\Exceptions\ForbiddenException 
-     * @throws \Apirone\API\Exceptions\NotFoundException 
-     * @throws \Apirone\API\Exceptions\MethodNotAllowedException 
-     */
-    public static function currency(string $currency)
-    {
-        $info = Service::account();
-        foreach($info->currencies as $item) {
-            if ($item->abbr == $currency) {
-                return $item;
+        foreach(Service::account()->currencies as $item) {
+            if ($item->abbr != $to) {
+                continue;
             }
+            $currency = $item;
         }
+        $decimals = strlen((string)((1 / $currency->{'units-factor'}) - 1));
 
-        return null;
+        return  floatval(sprintf('%.' . $decimals . 'f', floatval($value / (float) $rate->$from)));
     }
 }
