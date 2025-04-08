@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.1](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.1) (2025-04-03)
+
+- Request and Service updated
+
 # [1.1.0](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.0) (2025-04-03)
 
 - Logger logic improved
