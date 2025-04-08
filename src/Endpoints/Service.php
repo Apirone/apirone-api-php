@@ -134,14 +134,18 @@ class Service
         if ($from == $to) {
             return $value;
         }
-        $rate = static::ticker($to, $from);
-
+        $currency = null;
         foreach(Service::account()->currencies as $item) {
             if ($item->abbr != $to) {
                 continue;
             }
             $currency = $item;
         }
+        if ($currency == null) {
+            throw new NotFoundException('Unsupported currency: ' . $to);
+        }
+
+        $rate = static::ticker($to, $from);
         $decimals = strlen((string)((1 / $currency->{'units-factor'}) - 1));
 
         return  floatval(sprintf('%.' . $decimals . 'f', floatval($value / (float) $rate->$from)));
