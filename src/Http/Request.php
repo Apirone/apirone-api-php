@@ -474,7 +474,7 @@ final class Request
                 break;
             case 'string':
                 $data = json_decode($data);
-                if (json_last_error() === JSON_ERROR_NONE && !empty($data) && property_exists($data, $key)) {
+                if (is_object($data) && property_exists($data, $key)) {
                     $data->{$key} = $mask;
                 }
                 break;

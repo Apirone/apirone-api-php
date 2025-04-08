@@ -113,22 +113,37 @@ class Service
      * @throws NotFoundException
      * @throws MethodNotAllowedException
      */
-    public static function ticker(?string $currency = null): \stdClass
+    public static function ticker(?string $currency = null, ?string $fiat = null): \stdClass
     {
-        $options = $currency !== null ? ['currency' => $currency] : [];
+        $options = [];
+        if($currency) {
+            $options['currency'] = $currency;
+        }
+        if($fiat) {
+            $options['fiat'] = $fiat;
+        }
+
         return Request::get('v2/ticker', $options);
     }
 
+    /**
+     * @deprecated
+     */
     public static function fiat2crypto($value, $from = 'usd', $to = 'btc'): float
     {
-        if ($from == 'btc') {
+        if ($from == $to) {
             return $value;
         }
-        $url = sprintf('v1/to%s', $to);
-        $options = [];
-        $options['currency'] = $from;
-        $options['value']    = $value;
+        $rate = static::ticker($to, $from);
 
-        return (float) Request::get($url, $options);
+        foreach(Service::account()->currencies as $item) {
+            if ($item->abbr != $to) {
+                continue;
+            }
+            $currency = $item;
+        }
+        $decimals = strlen((string)((1 / $currency->{'units-factor'}) - 1));
+
+        return  floatval(sprintf('%.' . $decimals . 'f', floatval($value / (float) $rate->$from)));
     }
 }
