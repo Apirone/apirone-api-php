@@ -126,9 +126,6 @@ class Service
         return Request::get('v2/ticker', $options);
     }
 
-    /**
-     * @deprecated
-     */
     public static function fiat2crypto($value, $from = 'usd', $to = 'btc'): float
     {
         if ($from == $to) {
