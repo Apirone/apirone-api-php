@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.2](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.2) (2025-04-14)
+
+- JSON response add BIGINT_AS_STRING flag
+- decodeData() renamed to decodeResponseBody();
+
 ## [1.1.1](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.1) (2025-04-08)
 
 - Request and Service updated
