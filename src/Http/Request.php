@@ -97,7 +97,7 @@ final class Request
     {
         $result = static::execute('get', $path, $options, $headers);
 
-        return static::decodeResponse($result);
+        return static::decodeResponseBody($result);
     }
 
     /**
@@ -120,7 +120,7 @@ final class Request
     {
         $result = static::execute('post', $path, $options, $headers);
 
-        return static::decodeResponse($result);
+        return static::decodeResponseBody($result);
     }
 
     /**
@@ -143,7 +143,7 @@ final class Request
     {
         $result = static::execute('patch', $path, $options, $headers);
 
-        return static::decodeResponse($result);
+        return static::decodeResponseBody($result);
     }
 
     /**
@@ -166,7 +166,7 @@ final class Request
     {
         $result = static::execute('options', $path, $options, $headers);
 
-        return static::decodeResponse($result);
+        return static::decodeResponseBody($result);
     }
 
     /**
@@ -449,7 +449,7 @@ final class Request
      * @return mixed
      * @throws JsonException
      */
-    protected static function decodeResponse(Response $response)
+    protected static function decodeResponseBody(Response $response)
     {
         $result = json_decode($response->getBody(), false, 512, JSON_BIGINT_AS_STRING);
         if ($result === null) {
