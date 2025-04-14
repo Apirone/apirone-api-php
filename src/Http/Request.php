@@ -97,7 +97,7 @@ final class Request
     {
         $result = static::execute('get', $path, $options, $headers);
 
-        return static::decodeData($result);
+        return static::decodeResponse($result);
     }
 
     /**
@@ -120,7 +120,7 @@ final class Request
     {
         $result = static::execute('post', $path, $options, $headers);
 
-        return static::decodeData($result);
+        return static::decodeResponse($result);
     }
 
     /**
@@ -143,7 +143,7 @@ final class Request
     {
         $result = static::execute('patch', $path, $options, $headers);
 
-        return static::decodeData($result);
+        return static::decodeResponse($result);
     }
 
     /**
@@ -166,7 +166,7 @@ final class Request
     {
         $result = static::execute('options', $path, $options, $headers);
 
-        return static::decodeData($result);
+        return static::decodeResponse($result);
     }
 
     /**
@@ -449,9 +449,9 @@ final class Request
      * @return mixed
      * @throws JsonException
      */
-    protected static function decodeData(Response $response)
+    protected static function decodeResponse(Response $response)
     {
-        $result = json_decode($response->getBody());
+        $result = json_decode($response->getBody(), false, 512, JSON_BIGINT_AS_STRING);
         if ($result === null) {
             throw new JsonException('Failed to decode JSON', json_last_error());
         }
@@ -470,10 +470,10 @@ final class Request
                 if (array_key_exists($key, $data)) {
                     $data[$key] = $mask;
                 }
-                $data = json_decode(json_encode($data));
+                $data = json_decode(json_encode($data), false, 512, JSON_BIGINT_AS_STRING);
                 break;
             case 'string':
-                $data = json_decode($data);
+                $data = json_decode($data, false, 512, JSON_BIGINT_AS_STRING);
                 if (is_object($data) && property_exists($data, $key)) {
                     $data->{$key} = $mask;
                 }
