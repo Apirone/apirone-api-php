@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.3](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.3) (2025-04-17)
+
+- Service::fiat2crypto revert
+
 ## [1.1.2](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.2) (2025-04-14)
 
 - JSON response add BIGINT_AS_STRING flag
