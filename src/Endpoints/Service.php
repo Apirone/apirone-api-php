@@ -131,20 +131,11 @@ class Service
         if ($from == $to) {
             return $value;
         }
-        $currency = null;
-        foreach(Service::account()->currencies as $item) {
-            if ($item->abbr != $to) {
-                continue;
-            }
-            $currency = $item;
-        }
-        if ($currency == null) {
-            throw new NotFoundException('Unsupported currency: ' . $to);
-        }
+        $url = sprintf('v1/to%s', $to);
+        $options = [];
+        $options['currency'] = $from;
+        $options['value']    = $value;
 
-        $rate = static::ticker($to, $from);
-        $decimals = strlen((string)((1 / $currency->{'units-factor'}) - 1));
-
-        return  floatval(sprintf('%.' . $decimals . 'f', floatval($value / (float) $rate->$from)));
+        return (float) Request::get($url, $options);
     }
 }
