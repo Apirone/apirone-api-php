@@ -14,10 +14,10 @@ namespace Apirone\API\Log;
 
 use Apirone\API\Log\LogLevel;
 
-class LoggerWrapper 
+class LoggerWrapper
 {
     static $loggerCallback;
-    
+
     static $loggerInstance;
 
     static bool $handler = false;
@@ -25,19 +25,19 @@ class LoggerWrapper
     /**
      * Set Logger
      *
-     * @param mixed $logger 
-     * @throws \InvalidArgumentException 
+     * @param mixed $logger
+     * @throws \InvalidArgumentException
      */
     public static function setLogger($logger)
     {
         if (is_object($logger) && method_exists($logger, 'log')) {
             self::$loggerInstance = $logger;
             self::$handler = true;
-        } 
+        }
         elseif (is_callable($logger)) {
             self::$loggerCallback = $logger;
             self::$handler = true;
-        } 
+        }
         else {
             throw new \InvalidArgumentException('Invalid logger');
         }
@@ -59,9 +59,6 @@ class LoggerWrapper
     /**
      * Action must be taken immediately.
      *
-     * Example: Entire website down, database unavailable, etc. This should
-     * trigger the SMS alerts and wake you up.
-     *
      * @param string $message
      * @param array  $context
      *
@@ -75,8 +72,6 @@ class LoggerWrapper
     /**
      * Critical conditions.
      *
-     * Example: Application component unavailable, unexpected exception.
-     *
      * @param string $message
      * @param array  $context
      *
@@ -88,8 +83,7 @@ class LoggerWrapper
     }
 
     /**
-     * Runtime errors that do not require immediate action but should typically
-     * be logged and monitored.
+     * Runtime errors
      *
      * @param string $message
      * @param array  $context
@@ -103,9 +97,6 @@ class LoggerWrapper
 
     /**
      * Exceptional occurrences that are not errors.
-     *
-     * Example: Use of deprecated APIs, poor use of an API, undesirable things
-     * that are not necessarily wrong.
      *
      * @param string $message
      * @param array  $context
@@ -132,8 +123,6 @@ class LoggerWrapper
 
     /**
      * Interesting events.
-     *
-     * Example: User logs in, SQL logs.
      *
      * @param string $message
      * @param array  $context

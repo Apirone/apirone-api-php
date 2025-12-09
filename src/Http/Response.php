@@ -2,11 +2,6 @@
 
 namespace Apirone\API\Http;
 
-// use function Apirone\Api\Polyfill\JsonValidate;
-use function Apipone\API\Polyfill\JsonValidate;
-
-use Exception;
-
 class Response
 {
     /**
@@ -49,12 +44,14 @@ class Response
         if ($name == 'error') {
             return $this->getError();
         }
-        if (\property_exists($this, $name)) {
 
+        if (\property_exists($this, $name)) {
             $class = new \ReflectionClass(static::class);
 
             $property = $class->getProperty($name);
-            $property->setAccessible(true);
+            if (version_compare(phpversion(), '8.1.0', '<')) {
+                $property->setAccessible(true);
+            }
 
             if(!$property->isInitialized($this)) {
                 return null;
@@ -73,38 +70,6 @@ class Response
 
         return null;
     }
-    /**
-     * Get HTTP response headers
-     *
-     * @return  mixed
-     * @deprecated Just get by property name
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Get HTTP response code
-     *
-     * @return  mixed
-     * @deprecated Just get by property name
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * Get HTTP response body
-     *
-     * @return  mixed
-     * @deprecated Just get by property name
-     */
-    public function getBody()
-    {
-        return $this->body;
-    }
 
     /**
      * Is response has error
@@ -116,7 +81,7 @@ class Response
     }
 
     /**
-     
+
      */
     public function getError()
     {

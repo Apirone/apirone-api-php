@@ -24,57 +24,47 @@ use Apirone\API\Exceptions\UnauthorizedException;
 use Apirone\API\Exceptions\InternalServerErrorException;
 use ReflectionException;
 
+/**
+ * Make request to Apirone API
+ * @package Apirone\API\Http
+ *
+ *  @method public baseURI(string $baseURI)
+ *  @method public userAgent(string $userAgent)
+ *  @method public verifySSL(bool $verifySSL)
+ *  @method public curlOptions(array $options)
+ */
 final class Request
 {
     private static string $baseURI = 'https://apirone.com/api/';
 
-    private static string $userAgent = 'apirone-api-php/1.0';
+    private static string $userAgent = 'apirone-api-php/2.0';
 
     private static ?string $proxy = null;
 
     private static bool $verifySSL = true;
 
-    public static function setBaseUri($uri)
+    private static ?array $curlOptions = null;
+
+    public function __call($name, $args = [])
     {
-        $class = new \ReflectionClass('\Apirone\API\Http\Request');
-        $class->setStaticPropertyValue('baseURI', $uri);
+        return static::__callStatic($name, $args);
     }
 
-    /**
-     * Set additional UserAgent info
-     *
-     * @param mixed $value
-     * @return void
-     * @throws ReflectionException
-     */
-    public static function setUserAgent($value)
+    public static function __callStatic($name, $args = [])
     {
-        $class = new \ReflectionClass('\Apirone\API\Http\Request');
-        $baseUserAgent = $class->getProperty('userAgent');
-        $class->setStaticPropertyValue('userAgent', $baseUserAgent . ' ' . $value);
-    }
+        if (\property_exists(static::class, $name)) {
+            $class = new \ReflectionClass(static::class);
+            $class->setStaticPropertyValue($name, $args[0] ?? $class->getDefaultProperties()[$name]);
+        }
+        else {
+            $trace = \debug_backtrace();
+            \trigger_error(
+                sprintf('Undefined property or method <b>%s</b> in <b>%s</b> on line <b>%s</b>', $name, $trace[1]['file'], $trace[1]['line']),
+                \E_USER_NOTICE
+            );
+        }
 
-    /**
-     * Set cUPL proxy option
-     *
-     * @param mixed $proxy
-     * @return void
-     */
-    public static function setProxy($proxy)
-    {
-        $class = new \ReflectionClass('\Apirone\API\Http\Request');
-        $class->setStaticPropertyValue('proxy', $proxy);
-    }
-
-    /**
-     * Set SSL Verify cURL options
-     *
-     * @param bool $verify 
-     */
-    public static function setVerifySSL($verify = true)
-    {
-        $class = new \ReflectionClass('\Apirone\API\Http\Request');
-        $class->setStaticPropertyValue('verifySSL', $verify);
+        return new static();
     }
 
     /**
@@ -196,7 +186,6 @@ final class Request
         $headers    = static::parseResponseHeaders(substr((string)$result, 0, $headerSize));
         $body       = substr((string)$result, $headerSize);
         $info       = curl_getinfo($curlHandle);
-        curl_close($curlHandle);
 
         if ($result === false) {
             static::handleCurlError(curl_error($curlHandle), curl_errno($curlHandle), $info);
@@ -257,7 +246,7 @@ final class Request
             CURLOPT_HEADER => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_INFILESIZE => null,
-            CURLOPT_HTTPHEADER => array(),
+            CURLOPT_HTTPHEADER => [],
             CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_TIMEOUT => 10,
             CURLOPT_FOLLOWLOCATION => true,
@@ -272,8 +261,9 @@ final class Request
             $curlopt[CURLOPT_SSL_VERIFYHOST] = 0;
             $curlopt[CURLOPT_SSL_VERIFYPEER] = 0;
         }
-
-        $curlopt[CURLOPT_HTTPHEADER][] = 'User-Agent: ' . static::$userAgent;
+        if (static::$userAgent) {
+            $curlopt[CURLOPT_HTTPHEADER][] = 'User-Agent: ' . static::$userAgent;
+        }
         $curlopt[CURLOPT_HTTPHEADER][] = 'Accept-Charset: utf-8';
         $curlopt[CURLOPT_HTTPHEADER][] = 'Accept: application/json';
 
@@ -305,6 +295,11 @@ final class Request
 
             default:
                 $curlopt[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
+        }
+
+        // Override options if set
+        if (static::$curlOptions) {
+            $curlopt = array_replace($curlopt, static::$curlOptions);
         }
 
         return $curlopt;
@@ -443,7 +438,7 @@ final class Request
     }
 
     /**
-     * Decode response body to JSON
+     * Decode response body to stdClass
      *
      * @param Response $response
      * @return mixed
@@ -451,7 +446,7 @@ final class Request
      */
     protected static function decodeResponseBody(Response $response)
     {
-        $result = json_decode($response->getBody(), false, 512, JSON_BIGINT_AS_STRING);
+        $result = json_decode($response->body, false, 512, JSON_BIGINT_AS_STRING);
         if ($result === null) {
             throw new JsonException('Failed to decode JSON', json_last_error());
         }
