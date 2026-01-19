@@ -240,9 +240,14 @@ final class Request
      */
     protected static function prepareCurlOptions(string $method, string $path, array $options = [], array $headers = []): array
     {
+        // Set params via env
+        $baseURI = $_ENV['APIRONE_API_BASEURI'] ?? static::$baseURI;
+        $verifySSL = $_ENV['APIRONE_API_VERIFYSSL'] ?? static::$verifySSL;
+        $proxy = $_ENV['APIRONE_API_PROXY'] ?? static::$proxy;
+
         // Set options
         $curlopt = array(
-            CURLOPT_URL => static::$baseURI . $path,
+            CURLOPT_URL => $baseURI . $path,
             CURLOPT_HEADER => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_INFILESIZE => null,
@@ -252,12 +257,12 @@ final class Request
             CURLOPT_FOLLOWLOCATION => true,
         );
 
-        if (static::$proxy) {
+        if ($proxy) {
             $curlopt[CURLOPT_PROXY] = static::$proxy;
             $curlopt[CURLOPT_HTTPPROXYTUNNEL] = true;
         }
 
-        if (static::$verifySSL == false) {
+        if ($verifySSL == false) {
             $curlopt[CURLOPT_SSL_VERIFYHOST] = 0;
             $curlopt[CURLOPT_SSL_VERIFYPEER] = 0;
         }
