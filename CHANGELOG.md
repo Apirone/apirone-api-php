@@ -1,8 +1,10 @@
 # Changelog
 
-## [2.0.2](https://github.com/Apirone/apirone-api-php/releases/tag/2.0.1) (2026-04-16)
+## [2.0.2](https://github.com/Apirone/apirone-api-php/releases/tag/2.0.2) (2026-04-16)
 
 - Fixed log error on Response::getError() method
+- Release workflow & changelog updated
+
 
 ## [2.0.1](https://github.com/Apirone/apirone-api-php/releases/tag/2.0.1) (2026-01-19)
 

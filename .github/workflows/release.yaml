@@ -3,7 +3,7 @@ name: 'Draft release'
 on:
   push:
     tags:
-      - '1.*'
+      - '2.*'
   workflow_dispatch:
 
 jobs:
