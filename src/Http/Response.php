@@ -90,7 +90,7 @@ class Response
         }
         $message = json_decode($this->body);
         if (json_last_error() === JSON_ERROR_NONE && is_object($message)) {
-            return property_exists($message, 'message') ? $message->message : $message;
+            return property_exists($message, 'message') ? $message->message : $this->body;
         }
         if ($this->body == strip_tags($this->body)) {
             return $this->body;

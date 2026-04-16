@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.0.2](https://github.com/Apirone/apirone-api-php/releases/tag/2.0.1) (2026-04-16)
+
+- Fixed log error on Response::getError() method
+
+## [2.0.1](https://github.com/Apirone/apirone-api-php/releases/tag/2.0.1) (2026-01-19)
+
+- Set request params via environment variables
+
+## [2.0.0](https://github.com/Apirone/apirone-api-php/releases/tag/2.0.0) (2025-12-09)
+
+- Logger updated comments
+- Remove deprecated
+- Changed the setup logic for Reques & Added the ability to override cURL options.
+
 ## [1.1.3](https://github.com/Apirone/apirone-api-php/releases/tag/1.1.3) (2025-04-17)
 
 - Service::fiat2crypto revert
@@ -17,7 +31,7 @@
 
 - Logger logic improved
 - Мask credentials info
-- Addded verifySSL property. FixedsetUserUgent()
+- Added verifySSL property. Fixed setUserUgent()
 
 ## [1.0.2](https://github.com/Apirone/apirone-api-php/releases/tag/1.0.2) (2024-02-15)
 
